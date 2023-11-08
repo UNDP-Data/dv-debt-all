@@ -1,9 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import AppNetInterest from './AppNetInterest';
+import AppExternalDebt from './AppExternalDebt';
+import AppCreditDsaRating from './AppCreditDsaRating';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById('debtToGdp') as HTMLElement).render(
   <React.StrictMode>
     <App />
+  </React.StrictMode>,
+);
+ReactDOM.createRoot(
+  document.getElementById('debtNetInterest') as HTMLElement,
+).render(
+  <React.StrictMode>
+    <AppNetInterest />
+  </React.StrictMode>,
+);
+ReactDOM.createRoot(
+  document.getElementById('externalDebt') as HTMLElement,
+).render(
+  <React.StrictMode>
+    <AppExternalDebt />
+  </React.StrictMode>,
+);
+ReactDOM.createRoot(
+  document.getElementById('debtCreditDsaRating') as HTMLElement,
+).render(
+  <React.StrictMode>
+    <AppCreditDsaRating />
   </React.StrictMode>,
 );

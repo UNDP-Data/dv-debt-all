@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { csv } from 'd3-fetch';
 import { useEffect, useState } from 'react';
-import { DebtGdp, CategoryData } from './Types';
-import { RegionLineChart } from './RegionLineChart';
+import { CategoryData, DebtServiceType } from './Types';
+import { BarChart } from './BarChart';
 import './style.css';
 
 function App() {
-  const [debtToGdpData, setDebtToGdpData] = useState<DebtGdp[] | undefined>();
+  const [debtServiceData, setDebtServiceData] = useState<
+    DebtServiceType[] | undefined
+  >();
   const [categoriesData, setCategoriesData] = useState<
     CategoryData[] | undefined
   >(undefined);
@@ -14,17 +16,17 @@ function App() {
     'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/';
   useEffect(() => {
     Promise.all([
-      csv(`${dataurl}debtToGDPquantiles.csv`),
+      csv(`${dataurl}externalDebtService.csv`),
       csv(`${dataurl}categories.csv`),
     ]).then(([data, categories]) => {
-      setDebtToGdpData(data as any);
+      setDebtServiceData(data as any);
       setCategoriesData(categories as any);
     });
   }, []);
   return (
     <div className='undp-container'>
-      {debtToGdpData && categoriesData ? (
-        <RegionLineChart data={debtToGdpData} categories={categoriesData} />
+      {debtServiceData && categoriesData ? (
+        <BarChart data={debtServiceData} categories={categoriesData} />
       ) : null}
     </div>
   );
