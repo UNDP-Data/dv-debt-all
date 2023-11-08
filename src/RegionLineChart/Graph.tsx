@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { line, curveMonotoneX, area } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
 import { min, max } from 'd3-array';
-// import { format } from 'd3-format';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { select } from 'd3-selection';
 import UNDPColorModule from 'undp-viz-colors';
@@ -16,19 +15,6 @@ interface Props {
   svgWidth: number;
   svgHeight: number;
 }
-/*
-const XTickText = styled.text`
-  font-size: 12px;
-  @media (max-width: 980px) {
-    font-size: 10px;
-  }
-  @media (max-width: 600px) {
-    font-size: 9px;
-  }
-  @media (max-width: 420px) {
-    display: none;
-  }
-`; */
 const colors = {
   Median: UNDPColorModule.categoricalColors.colors[0],
   Q1: UNDPColorModule.categoricalColors.colors[1],

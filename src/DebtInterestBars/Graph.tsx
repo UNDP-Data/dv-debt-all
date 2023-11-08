@@ -49,7 +49,7 @@ export function Graph(props: Props) {
     .tickPadding(6)
     .tickFormat((d: any) => `> ${d}%`);
   useEffect(() => {
-    const svg = select('#debtNetInterest');
+    const svg = select('#debtNetInterestSvg');
     svg.select('.yAxis').call(yAxis as any);
     svg.select('.xAxis').call(xAxis as any);
     svg.selectAll('.domain').remove();
@@ -62,12 +62,7 @@ export function Graph(props: Props) {
   return (
     <div>
       {valueArray.length > 0 ? (
-        <svg
-          width='100%'
-          height='100%'
-          viewBox={`0 0 ${svgWidth1} ${svgHeight1}`}
-          id='debtNetInterest'
-        >
+        <svg viewBox={`0 0 ${svgWidth1} ${svgHeight1}`} id='debtNetInterestSvg'>
           <g transform={`translate(${margin.left},${margin.top})`}>
             <g className='xAxis' transform={`translate(0 ,${graphHeight})`} />
             <g className='yAxis' transform='translate(0,0)' />

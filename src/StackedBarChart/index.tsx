@@ -52,7 +52,7 @@ export function StackedBarChart(props: Props) {
         <div className='margin-bottom-03'>
           <div>
             <h6 className='undp-typography margin-bottom-01'>
-              Credit rating and debt sustainability analysis (DSA) rating
+              Credit and DSA rating: distribution of countries on rating classes
             </h6>
             <p className='undp-typography small-font margin-bottom-01'>
               Years: 1995-2023

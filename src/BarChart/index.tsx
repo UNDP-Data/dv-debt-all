@@ -85,8 +85,8 @@ export function BarChart(props: Props) {
           data={data.filter(d => d.region === categorySelection)}
           totalPercentOption={totalPercentSelection}
           revenueExportsOption={revenueExportsSelection}
-          svgWidth={980}
-          svgHeight={600}
+          svgWidth={960}
+          svgHeight={550}
         />
         <p className='source'>
           Source: Author based on World Bank IDS 2022 and IMF WEO April 2023

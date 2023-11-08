@@ -66,3 +66,14 @@
   border-radius: 11px;
   margin: 0;
 }
+
+@media (max-width: 600px) {
+  .yAxis text, .xAxis text{
+    font-size: 9px;
+  }
+}
+@media (max-width: 420px) {
+  .yAxis text, .xAxis text{
+    display: none;
+  }
+}

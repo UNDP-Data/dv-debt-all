@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
-import styled from 'styled-components';
 import UNDPColorModule from 'undp-viz-colors';
 import { DebtGdp, CategoryData } from '../Types';
 import { Graph } from './Graph';
@@ -11,28 +10,14 @@ interface Props {
   categories: CategoryData[];
 }
 
-const GraphDiv = styled.div`
-  @media (max-width: 960px) {
-    height: 500px;
-  }
-`;
 const totalExternalOptions = ['total', 'external'];
 
 export function RegionLineChart(props: Props) {
   const { data, categories } = props;
   const [totalExternalSelection, setTotalExternalSelection] = useState('total');
   const [categorySelection, setCategorySelection] = useState('All developing');
-  const [svgWidth, setSvgWidth] = useState(0);
-  const [svgHeight, setSvgHeight] = useState(0);
-  const graphDiv = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (graphDiv.current) {
-      setSvgHeight(graphDiv.current.clientHeight);
-      setSvgWidth(graphDiv.current.clientWidth);
-    }
-  }, [graphDiv]);
   return (
-    <GraphDiv ref={graphDiv}>
+    <>
       <div>
         <div className='margin-bottom-05'>
           <div>
@@ -99,16 +84,14 @@ export function RegionLineChart(props: Props) {
             </Radio.Group>
           </div>
         </div>
-        {svgHeight && svgWidth ? (
-          <Graph
-            data={data.filter(d => d.region === categorySelection)}
-            option={totalExternalSelection}
-            svgWidth={svgWidth}
-            svgHeight={svgHeight}
-          />
-        ) : null}
+        <Graph
+          data={data.filter(d => d.region === categorySelection)}
+          option={totalExternalSelection}
+          svgWidth={960}
+          svgHeight={550}
+        />
         <p className='source'>Source:</p>
       </div>
-    </GraphDiv>
+    </>
   );
 }

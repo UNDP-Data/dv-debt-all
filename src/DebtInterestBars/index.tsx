@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
-import styled from 'styled-components';
 import UNDPColorModule from 'undp-viz-colors';
 import { DebtNetInterestType, CategoryData } from '../Types';
 import { Graph } from './Graph';
@@ -11,11 +10,6 @@ interface Props {
   categories1: CategoryData[];
 }
 
-const GraphDiv1 = styled.div`
-  @media (max-width: 960px) {
-    max-height: 600px;
-  }
-`;
 const numberPercentOptions = ['Number', 'Percentage'];
 
 export function DebtInterestBars(props: Props) {
@@ -23,17 +17,8 @@ export function DebtInterestBars(props: Props) {
   const [totalPercentSelection, setTotalPercentSelection] = useState('Number');
   const [categorySelection1, setCategorySelection1] =
     useState('All developing');
-  const [svgWidth1, setSvgWidth1] = useState(0);
-  const [svgHeight1, setSvgHeight1] = useState(0);
-  const graphDiv1 = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (graphDiv1.current) {
-      setSvgHeight1(graphDiv1.current.clientHeight);
-      setSvgWidth1(graphDiv1.current.clientWidth);
-    }
-  }, [graphDiv1]);
   return (
-    <GraphDiv1 ref={graphDiv1}>
+    <>
       <div>
         <div className='margin-bottom-05'>
           <p className='label undp-typography'>Select a category</p>
@@ -101,20 +86,18 @@ export function DebtInterestBars(props: Props) {
             </div>
           </div>
         </div>
-        {svgHeight1 && svgWidth1 ? (
-          <Graph
-            data1={data1.filter(
-              d =>
-                d.region === categorySelection1 &&
-                d.option === totalPercentSelection,
-            )}
-            option1={totalPercentSelection}
-            svgWidth1={svgWidth1}
-            svgHeight1={svgHeight1}
-          />
-        ) : null}
+        <Graph
+          data1={data1.filter(
+            d =>
+              d.region === categorySelection1 &&
+              d.option === totalPercentSelection,
+          )}
+          option1={totalPercentSelection}
+          svgWidth1={960}
+          svgHeight1={550}
+        />
         <p className='source'>Source:</p>
       </div>
-    </GraphDiv1>
+    </>
   );
 }
