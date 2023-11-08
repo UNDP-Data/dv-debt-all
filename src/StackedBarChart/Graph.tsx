@@ -21,7 +21,7 @@ export function Graph(props: Props) {
   return (
     <div>
       {valueArray.length > 0 ? (
-        <svg width='500px' height='500px' id='creditRating'>
+        <svg width='550px' height='470px' id='creditRatingSvg'>
           <g transform={`translate(${margin.left},${margin.top})`}>
             <g>
               {stackedData.map((d, i) => (

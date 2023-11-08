@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
-import styled from 'styled-components';
 import { DebtServiceType, CategoryData } from '../Types';
 import { Graph } from './Graph';
 
@@ -9,11 +8,7 @@ interface Props {
   data: DebtServiceType[];
   categories: CategoryData[];
 }
-const GraphDiv = styled.div`
-  @media (max-width: 960px) {
-    height: 500px;
-  }
-`;
+
 const numberPercentOptions = ['number', 'percentage'];
 const revenueExportsOptions = ['revenue', 'exports'];
 
@@ -23,17 +18,8 @@ export function BarChart(props: Props) {
   const [revenueExportsSelection, setRevenueExportsSelection] =
     useState('revenue');
   const [categorySelection, setCategorySelection] = useState('All developing');
-  const [svgWidth, setSvgWidth] = useState(0);
-  const [svgHeight, setSvgHeight] = useState(0);
-  const graphDiv = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (graphDiv.current) {
-      setSvgHeight(graphDiv.current.clientHeight);
-      setSvgWidth(graphDiv.current.clientWidth);
-    }
-  }, [graphDiv]);
   return (
-    <GraphDiv ref={graphDiv}>
+    <>
       <div>
         <div className='margin-bottom-05'>
           <div>
@@ -95,19 +81,17 @@ export function BarChart(props: Props) {
             </div>
           </div>
         </div>
-        {svgHeight && svgWidth ? (
-          <Graph
-            data={data.filter(d => d.region === categorySelection)}
-            totalPercentOption={totalPercentSelection}
-            revenueExportsOption={revenueExportsSelection}
-            svgWidth={svgWidth}
-            svgHeight={svgHeight}
-          />
-        ) : null}
+        <Graph
+          data={data.filter(d => d.region === categorySelection)}
+          totalPercentOption={totalPercentSelection}
+          revenueExportsOption={revenueExportsSelection}
+          svgWidth={980}
+          svgHeight={600}
+        />
         <p className='source'>
           Source: Author based on World Bank IDS 2022 and IMF WEO April 2023
         </p>
       </div>
-    </GraphDiv>
+    </>
   );
 }

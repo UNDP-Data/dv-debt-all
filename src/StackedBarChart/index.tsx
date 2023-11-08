@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
-import styled from 'styled-components';
 import { CategoryData, CreditRatingType, DsaRatingType } from '../Types';
 import { Graph } from './Graph';
 
@@ -11,23 +10,12 @@ interface Props {
   categories: CategoryData[];
 }
 
-const GraphDiv = styled.div`
-  @media (max-width: 960px) {
-    height: 500px;
-  }
-`;
-// const numberPercentOptions = ['number', 'percentage'];
 const creditDsaOptions = ['credit', 'dsa'];
 
 export function StackedBarChart(props: Props) {
   const { dsaData, creditData, categories } = props;
-  // const [totalPercentSelection, setTotalPercentSelection] =
-  //   useState('percentage');
   const [creditDsaSelection, setCreditDsaSelection] = useState('credit');
   const [categorySelection, setCategorySelection] = useState('All developing');
-  // const [svgWidth, setSvgWidth] = useState(0);
-  // const [svgHeight, setSvgHeight] = useState(0);
-  const graphDiv = useRef<HTMLDivElement>(null);
   const [selectedData, setSelectedData] = useState<object[]>(
     creditData.filter(d => d.region === categorySelection),
   );
@@ -40,7 +28,7 @@ export function StackedBarChart(props: Props) {
     setSelectedData(data as any);
   }, [categorySelection, creditDsaSelection]);
   return (
-    <GraphDiv ref={graphDiv}>
+    <>
       <div>
         <div className='margin-bottom-05'>
           <div>
@@ -98,6 +86,6 @@ export function StackedBarChart(props: Props) {
           30, 2023.
         </p>
       </div>
-    </GraphDiv>
+    </>
   );
 }
