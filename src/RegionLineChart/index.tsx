@@ -90,7 +90,13 @@ export function RegionLineChart(props: Props) {
           svgWidth={960}
           svgHeight={550}
         />
-        <p className='source'>Source:</p>
+        <p className='source'>
+          Source: based on IMF World Economic Outlook, October 2023
+        </p>
+        <p className='source'>
+          Note: Interquartile range refers to the spread of the middle half of
+          the data.
+        </p>
       </div>
     </>
   );

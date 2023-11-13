@@ -52,11 +52,9 @@ export function StackedBarChart(props: Props) {
         <div className='margin-bottom-03'>
           <div>
             <h6 className='undp-typography margin-bottom-01'>
-              Credit and DSA rating: distribution of countries on rating classes
+              Credit and DSA Debt distress rating: distribution of countries on
+              rating classes
             </h6>
-            <p className='undp-typography small-font margin-bottom-01'>
-              Years: 1995-2023
-            </p>
           </div>
           <div className='flex-div flex-space-between flex-wrap'>
             <div>
@@ -79,11 +77,14 @@ export function StackedBarChart(props: Props) {
         <p className='source'>
           Source: Credit rating based on S&P, Moody’s and FITCH long-term
           sovereign credit ratings as of September 3, 2023 accessed through
-          Trading Economics. Note: Numerical rating is obtained using the
-          ratings scale in Jensen (2022) and as a simple average across ratings.
+          Trading Economics.
+        </p>
+        <p className='source'>
+          Note: Numerical rating is obtained using the ratings scale in Jensen
+          (2022) and as a simple average across ratings.
           <br />
-          DSA rating based on latest DSA ratings published by the IMF as of June
-          30, 2023.
+          DSA rating based on latest DSA ratings published by the IMF as of
+          August 31st, 2023.
         </p>
       </div>
     </>

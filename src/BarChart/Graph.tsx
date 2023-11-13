@@ -31,7 +31,10 @@ export function Graph(props: Props) {
   const combiOption = `${totalPercentOption}_${revenueExportsOption}`;
   const valueArray: number[] = data.map((d: any) => Number(d[combiOption]));
   const maxParam = max(valueArray) ? max(valueArray) : 0;
-  const xDomain = data.map((d: any) => d.year);
+  const xDomain: any[] = [];
+  data.forEach((d: any) => {
+    if (d[combiOption] !== '') xDomain.push(d.year);
+  });
   const x = scaleBand()
     .domain(xDomain as [])
     .range([0, graphWidth])
@@ -85,6 +88,7 @@ export function Graph(props: Props) {
                     x={x(d.year)}
                     dx={x.bandwidth() / 2}
                     y={y((d as any)[combiOption]) - 5}
+                    opacity={i >= xDomain.length ? 0 : 1}
                   >
                     {`${Math.round((d as any)[combiOption])}${
                       totalPercentOption === 'percentage' ? '%' : ''

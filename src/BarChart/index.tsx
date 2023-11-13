@@ -18,6 +18,7 @@ export function BarChart(props: Props) {
   const [revenueExportsSelection, setRevenueExportsSelection] =
     useState('revenue');
   const [categorySelection, setCategorySelection] = useState('All developing');
+  console.log('data', data);
   return (
     <>
       <div>
@@ -89,7 +90,7 @@ export function BarChart(props: Props) {
           svgHeight={550}
         />
         <p className='source'>
-          Source: Author based on World Bank IDS 2022 and IMF WEO April 2023
+          Source: Author based on World Bank IDS 2022 and IMF WEO October 2023
         </p>
       </div>
     </>

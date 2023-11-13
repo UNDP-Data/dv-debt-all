@@ -43,9 +43,6 @@ export function DebtInterestBars(props: Props) {
               Number of countries with net interest payments higher than 5 to 40
               percent of revenue today relative to a decade ago
             </h6>
-            <p className='undp-typography small-font margin-bottom-01'>
-              Years: 2000-2023
-            </p>
           </div>
           <div className='flex-div flex-space-between flex-wrap'>
             <div className='legend-container'>
@@ -96,7 +93,14 @@ export function DebtInterestBars(props: Props) {
           svgWidth1={960}
           svgHeight1={550}
         />
-        <p className='source'>Source:</p>
+        <p className='source'>
+          Source: based on IMF World Economic Outlook, October 2023
+        </p>
+        <p className='source'>
+          Notes: Numbers refer to averages across the three years. The
+          &apos;percentage&apos; option shows the number of countries as a share
+          of total.
+        </p>
       </div>
     </>
   );

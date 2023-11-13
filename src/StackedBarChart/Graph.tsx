@@ -10,7 +10,7 @@ interface Props {
 
 export function Graph(props: Props) {
   const { data } = props;
-  const margin = { top: 20, right: 30, bottom: 50, left: 0 };
+  const margin = { top: 20, right: 30, bottom: 50, left: 60 };
   const graphHeight = 500 - margin.top - margin.bottom;
   const valueArray: number[] = data.map((d: any) => Number(d.number));
   const percentageData = data.filter(d => (d as any).value === 'percentage');
@@ -21,7 +21,7 @@ export function Graph(props: Props) {
   return (
     <div>
       {valueArray.length > 0 ? (
-        <svg width='550px' height='470px' id='creditRatingSvg'>
+        <svg width='580px' height='470px' id='creditRatingSvg'>
           <g transform={`translate(${margin.left},${margin.top})`}>
             <g>
               {stackedData.map((d, i) => (
