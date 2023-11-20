@@ -42,3 +42,12 @@ export interface DsaRatingType extends RatingType {
   Moderate: number;
   Low: number;
 }
+export interface CountryType {
+  name: string;
+  code: string;
+}
+export interface CountryNetInterest {
+  code: string;
+  year: number;
+  percent: number;
+}
