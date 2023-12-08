@@ -46,8 +46,31 @@ export interface CountryType {
   name: string;
   code: string;
 }
-export interface CountryNetInterest {
+export interface CountryPercentType {
   code: string;
   year: number;
-  percent: number;
+  percentage: number;
+  million: number;
+}
+export interface CountryStatsType {
+  debtMillion: number;
+  debtPercent: number;
+  debtYear: number;
+  externalGovDebt: number;
+  externalGovDebtYear: number;
+  netInterestPayments: number;
+  netInterestPaymentsYear: number;
+  externalPPG: number;
+  externalPPGYear: number;
+}
+export interface ExternalDebtType {
+  code: string;
+  year: number;
+  multilateral: number;
+  bilateral: number;
+  bonds: number;
+  'other private': number;
+  total: number;
+  'principal payments': number;
+  'interest payment': number;
 }

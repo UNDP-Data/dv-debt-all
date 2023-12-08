@@ -3,57 +3,90 @@
 import { csv } from 'd3-fetch';
 import { useEffect, useState } from 'react';
 import { Select } from 'antd';
-import { CountryNetInterest, CountryType } from './Types';
-import { LineChart } from './LineChart';
+import { CountryPercentType, CountryType, ExternalDebtType } from './Types';
 import './style.css';
+import { AllCountries } from './AllCountries';
 
 function App() {
-  const [countryNetInterest, setCountryNetInterest] = useState<
-    CountryNetInterest[] | undefined
+  const [netInterest, setNetInterest] = useState<
+    CountryPercentType[] | undefined
   >();
   const [tdsExternalDebt, setTdsExternalDebt] = useState<
-    CountryNetInterest[] | undefined
+    CountryPercentType[] | undefined
+  >();
+  const [debtToGdp, setDebtToGdp] = useState<
+    CountryPercentType[] | undefined
+  >();
+  const [externalDebt, setExternalDebt] = useState<
+    ExternalDebtType[] | undefined
   >();
   const [countryList, setCountryList] = useState<CountryType[] | undefined>(
     undefined,
   );
-  const [selectedCountry, setSelectedCountry] = useState<string>('AFG');
+  const [selectedCountry, setSelectedCountry] = useState<string>('ALB');
   const dataurl =
     'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/countries/';
   useEffect(() => {
     Promise.all([
-      csv(`${dataurl}dsaRating.csv`),
-      csv(`${dataurl}netInterest.csv`),
-      csv(`${dataurl}tdsExternalDebt.csv`),
-    ]).then(([dsaRating, netInterest, tdsData]) => {
-      const countryData = dsaRating.map((d: any) => ({
-        label: d.name,
-        value: d.iso,
-      }));
-      const netInterestData = netInterest
-        .filter((d: any) => {
-          return Number(d['Net interest percent']);
-        })
-        .map((d: any) => ({
+      csv(`${dataurl}dsaRating.csv`), // 2. Ratings
+      csv(`${dataurl}netInterest.csv`), // 5. Net interest
+      csv(`${dataurl}tdsExternalDebt.csv`), // 5. TDS externaldebt
+      csv(`${dataurl}ggDebt.csv`), // 3.GG debt
+      csv(`${dataurl}externalDebt.csv`), // 4. External debt
+    ]).then(
+      ([
+        dsaRatingCsv,
+        netInterestCsv,
+        tdsExternalCsv,
+        ggDebtCsv,
+        externalDebtCsv,
+      ]) => {
+        const countryData = dsaRatingCsv.map((d: any) => ({
+          label: d.name,
+          value: d.iso,
+        }));
+        const netInterestData = netInterestCsv.map((d: any) => ({
           code: d.iso,
           year: Number(d.year),
           percentage: Number(d['Net interest percent']),
+          million: Number(d['Net interest USD']),
         }));
-      const tdsDebtData = tdsData
-        .filter((d: any) => {
-          return Number(d['%  of revenue']) || Number(d['%  of exports']);
-        })
-        .map((d: any) => ({
+        const tdsDebtData = tdsExternalCsv.map((d: any) => ({
           code: d.iso,
           year: Number(d.year),
           '% of revenue': Number(d['%  of revenue']),
           '% of exports': Number(d['%  of exports']),
         }));
-      // console.log('tdsDebtDAta', tdsDebtData);
-      setCountryList(countryData as []);
-      setCountryNetInterest(netInterestData as any);
-      setTdsExternalDebt(tdsDebtData as any);
-    });
+        const debtToGdpData = ggDebtCsv.map((d: any) => ({
+          code: d.iso,
+          year: Number(d.year),
+          percentage: Number(d['GG debt (% of GDP)']),
+          million: Number(d['GG debt ($ billion)']),
+        }));
+        const externalDebtData = externalDebtCsv.map((d: any) => ({
+          code: d.iso,
+          year: Number(d.year),
+          multilateral: Number(d['Multilateral ($ million)']),
+          bilateral: Number(d['Bilateral ($ million)']),
+          bonds: Number(d['Bonds ($ million)']),
+          'other private': Number(d['Other private ($ million)']),
+          total:
+            Number(d['Multilateral ($ million)']) +
+            Number(d['Bilateral ($ million)']) +
+            Number(d['Bonds ($ million)']) +
+            Number(d['Other private ($ million)']),
+          'principal payments': Number(d['INT ($ million)']),
+          'interest payment': Number(d['AMT ($ million)']),
+        }));
+        // console.log('externalDebt', externalDebt);
+        setCountryList(countryData as []);
+        setNetInterest(netInterestData);
+        setTdsExternalDebt(tdsDebtData as any);
+        setDebtToGdp(debtToGdpData);
+        setExternalDebt(externalDebtData);
+        console.log('data loaded ----------');
+      },
+    );
   }, []);
   return (
     <div className='undp-container'>
@@ -68,22 +101,21 @@ function App() {
           onChange={d => setSelectedCountry(d.trim())}
         />
       </div>
-      {countryNetInterest !== undefined ? (
-        <LineChart
-          data={countryNetInterest?.filter(d => d.code === selectedCountry)}
-          indicators={['percentage']}
-          id='countryNetInterest'
-          title='Net interest payments (% of revenue)'
-          yAxisLabel='% of revenue'
-        />
-      ) : null}
-      {tdsExternalDebt !== undefined ? (
-        <LineChart
-          data={tdsExternalDebt?.filter(d => d.code === selectedCountry)}
-          indicators={['% of revenue', '% of exports']}
-          id='countryDebtService'
-          title='Total debt service - PPG external debt'
-          yAxisLabel=''
+      {debtToGdp !== undefined &&
+      netInterest &&
+      tdsExternalDebt &&
+      externalDebt ? (
+        <AllCountries
+          countryDebtToGdp={debtToGdp?.filter(d => d.code === selectedCountry)}
+          countryNetInterest={netInterest?.filter(
+            d => d.code === selectedCountry,
+          )}
+          countryTdsExternal={tdsExternalDebt?.filter(
+            d => d.code === selectedCountry,
+          )}
+          countryExternalDebt={externalDebt?.filter(
+            d => d.code === selectedCountry,
+          )}
         />
       ) : null}
     </div>

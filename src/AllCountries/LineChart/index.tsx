@@ -11,11 +11,10 @@ interface Props {
   indicators: string[];
   id: string;
   title: string;
-  yAxisLabel: string;
 }
 
 export function LineChart(props: Props) {
-  const { data, indicators, id, title, yAxisLabel } = props;
+  const { data, indicators, id, title } = props;
   // year domain
   const yearsDomain = { min: 0, max: 3000 };
   indicators.forEach(indicator => {
@@ -54,10 +53,9 @@ export function LineChart(props: Props) {
         data={data}
         indicators={indicators}
         id={id}
-        yAxisLabel={yAxisLabel}
         yearDomain={yearDomain}
-        svgWidth={960}
-        svgHeight={550}
+        svgWidth={480}
+        svgHeight={275}
       />
       <p className='source'>
         Source: based on IMF World Economic Outlook, October 2023

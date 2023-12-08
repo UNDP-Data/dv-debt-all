@@ -12,16 +12,14 @@ interface Props {
   data: object[];
   indicators: string[];
   id: string;
-  yAxisLabel: string;
   yearDomain: number[];
   svgWidth: number;
   svgHeight: number;
 }
 /// two lines for mean and median
 export function Graph(props: Props) {
-  const { data, indicators, id, yAxisLabel, yearDomain, svgWidth, svgHeight } =
-    props;
-  const margin = { top: 20, right: 40, bottom: 50, left: 80 };
+  const { data, indicators, id, yearDomain, svgWidth, svgHeight } = props;
+  const margin = { top: 40, right: 40, bottom: 20, left: 40 };
   const graphWidth = svgWidth - margin.left - margin.right;
   const graphHeight = svgHeight - margin.top - margin.bottom;
   const [hoveredYear, setHoveredYear] = useState<undefined | string>(undefined);
@@ -31,8 +29,16 @@ export function Graph(props: Props) {
     if (maxIndValue > maxParam) maxParam = maxIndValue;
   });
   const minParam = 0;
-  console.log('data', data);
-
+  /* let numberOfTicksY = maxParam - minParam + 1;
+  numberOfTicksY = numberOfTicksY > 15 ? numberOfTicksY / 2 : numberOfTicksY;
+  let numberOfTicksX = yearDomain[1] - yearDomain[0];
+  numberOfTicksX = numberOfTicksX > 5 ? numberOfTicksX / 3 : numberOfTicksX;
+  console.log(
+    'number of ticks x',
+    numberOfTicksX,
+    'number of ticks y',
+    numberOfTicksY,
+  ); */
   const x = scaleLinear()
     .domain(yearDomain as [number, number])
     .range([0, graphWidth]);
@@ -43,12 +49,16 @@ export function Graph(props: Props) {
 
   const yAxis = axisLeft(y as any)
     .tickSize(-graphWidth)
-    .tickFormat((d: any) => `${d}%`);
+    .tickFormat((d: any) => `${d}%`)
+    .ticks(5);
+  // .ticks(numberOfTicksY);
   const xAxis = axisBottom(x)
     .tickSize(0)
     .tickSizeOuter(0)
     .tickPadding(6)
-    .tickFormat((d: any) => `${d}`);
+    .tickFormat((d: any) => `${d}`)
+    .ticks(5);
+
   const lineShape1 = (indicator: string) =>
     line()
       .defined((d: any) => d[indicator])
@@ -111,21 +121,29 @@ export function Graph(props: Props) {
                   {indicators.map((k, j) => (
                     <g
                       key={j}
-                      transform={`translate(0,${y((d as any)[k])})`}
                       style={{
                         display: (d as any)[k] !== '' ? 'block' : 'none',
                       }}
                     >
-                      <circle
-                        r={hoveredYear === (d as any).year ? 5 : 3}
-                        fill={UNDPColorModule.categoricalColors.colors[j]}
-                      />
+                      <g transform={`translate(0,${y((d as any)[k])})`}>
+                        <circle
+                          r={hoveredYear === (d as any).year ? 5 : 3}
+                          fill={UNDPColorModule.categoricalColors.colors[j]}
+                        />
+                        <text
+                          x={-25}
+                          y={-5}
+                          opacity={hoveredYear === (d as any).year ? 1 : 0}
+                        >
+                          {(d as any)[k].toFixed(2)}%
+                        </text>
+                      </g>
                       <text
-                        x={-25}
-                        y={-5}
                         opacity={hoveredYear === (d as any).year ? 1 : 0}
+                        textAnchor='middle'
+                        y={-20}
                       >
-                        {(d as any)[k].toFixed(2)}%
+                        {(d as any).year}
                       </text>
                     </g>
                   ))}
@@ -154,14 +172,6 @@ export function Graph(props: Props) {
               strokeWidth={2}
             />
           </g>
-          <text
-            x={-graphHeight / 2}
-            y='20'
-            transform='rotate(-90)'
-            textAnchor='middle'
-          >
-            {yAxisLabel}
-          </text>
         </svg>
       ) : (
         <div className='center-area-error-el'>No data available</div>

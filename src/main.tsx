@@ -25,7 +25,7 @@ ReactDOM.createRoot(
   <React.StrictMode>
     <AppExternalDebt />
   </React.StrictMode>,
-);
+); 
 ReactDOM.createRoot(
   document.getElementById('debtCreditDsaRating') as HTMLElement,
 ).render(
