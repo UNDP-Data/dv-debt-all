@@ -5,16 +5,20 @@ import {
   CountryPercentType,
   CountryStatsType,
   ExternalDebtType,
+  CountryValueType,
 } from '../Types';
 import { LineChart } from './LineChart';
 import '../style.css';
 import { StackedBarChartSimple } from './StackedBarChartSimple';
+import { LinearDotsComparison } from './LinearDotComparison';
 
 interface Props {
   countryDebtToGdp: CountryPercentType[];
   countryNetInterest: CountryPercentType[];
   countryTdsExternal: CountryPercentType[];
   countryExternalDebt: ExternalDebtType[];
+  selectedCountry: string;
+  creditRating: CountryValueType[];
 }
 
 export function AllCountries(props: Props) {
@@ -23,6 +27,8 @@ export function AllCountries(props: Props) {
     countryNetInterest,
     countryTdsExternal,
     countryExternalDebt,
+    creditRating,
+    selectedCountry,
   } = props;
   const [countryStats, setCountryStats] = useState<
     CountryStatsType | undefined
@@ -30,6 +36,7 @@ export function AllCountries(props: Props) {
   const yearGGDebt = 2023;
   const yearExternalDebt = 2021;
   const yearNetInterest = 2023;
+  console.log(creditRating, selectedCountry);
   useEffect(() => {
     // debtToGdp data from debtToGdp (percentage and total)
     // external public and ... debt (not loaded yet)
@@ -54,7 +61,22 @@ export function AllCountries(props: Props) {
   }, [countryNetInterest, countryExternalDebt, countryDebtToGdp]);
   return (
     <>
-      <h2 className='undp-typography margin-top-08'>Government debt</h2>
+      <h2>{selectedCountry}</h2>
+      <div className='flex-div'>
+        <div style={{ width: '50%' }}>
+          <LinearDotsComparison
+            data={creditRating}
+            title='Credit Rating'
+            id='countryCreditRatingScale'
+            year={2021}
+            svgHeight={100}
+            selectedCountry={selectedCountry}
+          />
+        </div>
+        <div>...</div>
+      </div>
+
+      <h3 className='undp-typography margin-top-08'>Government debt</h3>
       <p className='undp-typography'>
         The table below shows the value of general government debt in 2023 in
         million USD and as a percentage of GDP. The figure shows the development
@@ -90,9 +112,9 @@ export function AllCountries(props: Props) {
           ) : null}
         </div>
       </div>
-      <h2 className='undp-typography margin-top-08'>
+      <h3 className='undp-typography margin-top-08'>
         External government debt
-      </h2>
+      </h3>
       <p className='undp-typography'>
         The table and figure show the composition of external public and
         publicly guaranteed (PPG) debt in million USD based on the latest
@@ -118,7 +140,7 @@ export function AllCountries(props: Props) {
         </div>
       </div>
       <div>
-        <h2 className='undp-typography margin-top-08'>Debt servicing</h2>
+        <h3 className='undp-typography margin-top-08'>Debt servicing</h3>
         <p className='undp-typography'>
           The table shows the net interest payments on total government debt,
           and interest and principal payments on external PPG debt for 2023.
@@ -171,7 +193,6 @@ export function AllCountries(props: Props) {
                 indicators={['% of revenue', '% of exports']}
                 id='countryDebtService'
                 title='Total debt service - PPG external debt'
-                yAxisLabel=''
               />
             ) : null}
           </div>

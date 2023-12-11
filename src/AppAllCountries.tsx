@@ -3,7 +3,12 @@
 import { csv } from 'd3-fetch';
 import { useEffect, useState } from 'react';
 import { Select } from 'antd';
-import { CountryPercentType, CountryType, ExternalDebtType } from './Types';
+import {
+  CountryPercentType,
+  CountryType,
+  ExternalDebtType,
+  CountryValueType,
+} from './Types';
 import './style.css';
 import { AllCountries } from './AllCountries';
 
@@ -20,6 +25,9 @@ function App() {
   const [externalDebt, setExternalDebt] = useState<
     ExternalDebtType[] | undefined
   >();
+  const [creditRating, setCreditRating] = useState<
+    CountryValueType[] | undefined
+  >();
   const [countryList, setCountryList] = useState<CountryType[] | undefined>(
     undefined,
   );
@@ -29,6 +37,7 @@ function App() {
   useEffect(() => {
     Promise.all([
       csv(`${dataurl}dsaRating.csv`), // 2. Ratings
+      csv(`${dataurl}creditRating.csv`), // 2. Ratings
       csv(`${dataurl}netInterest.csv`), // 5. Net interest
       csv(`${dataurl}tdsExternalDebt.csv`), // 5. TDS externaldebt
       csv(`${dataurl}ggDebt.csv`), // 3.GG debt
@@ -36,6 +45,7 @@ function App() {
     ]).then(
       ([
         dsaRatingCsv,
+        creditRatingCsv,
         netInterestCsv,
         tdsExternalCsv,
         ggDebtCsv,
@@ -44,6 +54,11 @@ function App() {
         const countryData = dsaRatingCsv.map((d: any) => ({
           label: d.name,
           value: d.iso,
+        }));
+        const countryCreditData = creditRatingCsv.map((d: any) => ({
+          name: d.name,
+          code: d.iso,
+          value: d.Numeric_scale_average,
         }));
         const netInterestData = netInterestCsv.map((d: any) => ({
           code: d.iso,
@@ -84,6 +99,7 @@ function App() {
         setTdsExternalDebt(tdsDebtData as any);
         setDebtToGdp(debtToGdpData);
         setExternalDebt(externalDebtData);
+        setCreditRating(countryCreditData);
         console.log('data loaded ----------');
       },
     );
@@ -104,7 +120,8 @@ function App() {
       {debtToGdp !== undefined &&
       netInterest &&
       tdsExternalDebt &&
-      externalDebt ? (
+      externalDebt &&
+      creditRating ? (
         <AllCountries
           countryDebtToGdp={debtToGdp?.filter(d => d.code === selectedCountry)}
           countryNetInterest={netInterest?.filter(
@@ -116,6 +133,8 @@ function App() {
           countryExternalDebt={externalDebt?.filter(
             d => d.code === selectedCountry,
           )}
+          selectedCountry={selectedCountry}
+          creditRating={creditRating}
         />
       ) : null}
     </div>

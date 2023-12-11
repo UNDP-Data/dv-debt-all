@@ -46,6 +46,9 @@ export interface CountryType {
   name: string;
   code: string;
 }
+export interface CountryValueType extends CountryType {
+  value: number;
+}
 export interface CountryPercentType {
   code: string;
   year: number;

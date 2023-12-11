@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import UNDPColorModule from 'undp-viz-colors';
-// import { useState } from 'react';
 import { extent } from 'd3-array';
+import { useRef, useEffect, useState } from 'react';
 import { Graph } from './Graph';
 
 interface Props {
@@ -17,6 +17,9 @@ export function LineChart(props: Props) {
   const { data, indicators, id, title } = props;
   // year domain
   const yearsDomain = { min: 0, max: 3000 };
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [svgWidth, setSvgWidth] = useState<number | 400>(400);
+  const [svgHeight, setSvgHeight] = useState<number | 180>(180);
   indicators.forEach(indicator => {
     const indExtent = extent(data, (d: any) =>
       !d[indicator].isNaN ? d.year : null,
@@ -25,6 +28,12 @@ export function LineChart(props: Props) {
     if (indExtent[1] < yearsDomain.max) yearsDomain.max = indExtent[1];
   });
   const yearDomain = [yearsDomain.min as number, yearsDomain.max as number];
+  useEffect(() => {
+    if (containerRef.current) {
+      setSvgWidth(containerRef.current.clientWidth);
+      setSvgHeight(containerRef.current.clientHeight);
+    }
+  }, []);
   return (
     <div className='chart-container'>
       <div className='flex-div flex-space-between flex-wrap margin-bottom-03'>
@@ -49,14 +58,16 @@ export function LineChart(props: Props) {
           </div>
         </div>
       </div>
-      <Graph
-        data={data}
-        indicators={indicators}
-        id={id}
-        yearDomain={yearDomain}
-        svgWidth={480}
-        svgHeight={275}
-      />
+      <div ref={containerRef}>
+        <Graph
+          data={data}
+          indicators={indicators}
+          id={id}
+          yearDomain={yearDomain}
+          svgWidth={svgWidth}
+          svgHeight={svgHeight}
+        />
+      </div>
       <p className='source'>
         Source: based on IMF World Economic Outlook, October 2023
       </p>

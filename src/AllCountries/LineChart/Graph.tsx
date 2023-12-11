@@ -78,104 +78,98 @@ export function Graph(props: Props) {
       .attr('text-anchor', 'end');
   }, data);
   return (
-    <div>
-      {data.length > 0 ? (
-        <svg
-          width='100%'
-          height='100%'
-          viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-          id={id}
-        >
-          <g transform={`translate(${margin.left},${margin.top})`}>
-            <g className='xAxis' transform={`translate(0 ,${graphHeight})`} />
-            <g className='yAxis' transform='translate(0,0)' />
-            <g>
-              {indicators.map((d, i) => (
-                <g key={i}>
-                  <path
-                    d={lineShape1(d as string)(data as any) as string}
-                    fill='none'
-                    stroke={UNDPColorModule.categoricalColors.colors[i]}
-                    strokeWidth={2}
-                  />
-                </g>
-              ))}
+    <svg
+      width='100%'
+      height='100%'
+      viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+      id={id}
+    >
+      <g transform={`translate(${margin.left},${margin.top})`}>
+        <g className='xAxis' transform={`translate(0 ,${graphHeight})`} />
+        <g className='yAxis' transform='translate(0,0)' />
+        <g>
+          {indicators.map((d, i) => (
+            <g key={i}>
+              <path
+                d={lineShape1(d as string)(data as any) as string}
+                fill='none'
+                stroke={UNDPColorModule.categoricalColors.colors[i]}
+                strokeWidth={2}
+              />
             </g>
-            <g className='overlay'>
-              {data.map((d, i) => (
+          ))}
+        </g>
+        <g className='overlay'>
+          {data.map((d, i) => (
+            <g
+              className='focus'
+              style={{ display: 'block' }}
+              key={i}
+              transform={`translate(${x(Number((d as any).year))},0)`}
+            >
+              <line
+                x1={0}
+                y1={0}
+                x2={0}
+                y2={graphHeight}
+                stroke='#FFF'
+                strokeWidth={2}
+                opacity={hoveredYear === (d as any).year ? 1 : 0}
+              />
+              {indicators.map((k, j) => (
                 <g
-                  className='focus'
-                  style={{ display: 'block' }}
-                  key={i}
-                  transform={`translate(${x(Number((d as any).year))},0)`}
+                  key={j}
+                  style={{
+                    display: (d as any)[k] !== '' ? 'block' : 'none',
+                  }}
                 >
-                  <line
-                    x1={0}
-                    y1={0}
-                    x2={0}
-                    y2={graphHeight}
-                    stroke='#FFF'
-                    strokeWidth={2}
-                    opacity={hoveredYear === (d as any).year ? 1 : 0}
-                  />
-                  {indicators.map((k, j) => (
-                    <g
-                      key={j}
-                      style={{
-                        display: (d as any)[k] !== '' ? 'block' : 'none',
-                      }}
+                  <g transform={`translate(0,${y((d as any)[k])})`}>
+                    <circle
+                      r={hoveredYear === (d as any).year ? 5 : 3}
+                      fill={UNDPColorModule.categoricalColors.colors[j]}
+                    />
+                    <text
+                      x={-25}
+                      y={-5}
+                      opacity={hoveredYear === (d as any).year ? 1 : 0}
                     >
-                      <g transform={`translate(0,${y((d as any)[k])})`}>
-                        <circle
-                          r={hoveredYear === (d as any).year ? 5 : 3}
-                          fill={UNDPColorModule.categoricalColors.colors[j]}
-                        />
-                        <text
-                          x={-25}
-                          y={-5}
-                          opacity={hoveredYear === (d as any).year ? 1 : 0}
-                        >
-                          {(d as any)[k].toFixed(2)}%
-                        </text>
-                      </g>
-                      <text
-                        opacity={hoveredYear === (d as any).year ? 1 : 0}
-                        textAnchor='middle'
-                        y={-20}
-                      >
-                        {(d as any).year}
-                      </text>
-                    </g>
-                  ))}
-                  <rect
-                    onMouseEnter={() => {
-                      setHoveredYear((d as any).year);
-                    }}
-                    onMouseLeave={() => {
-                      setHoveredYear(undefined);
-                    }}
-                    x='-15px'
-                    y={0}
-                    width='30px'
-                    height={svgHeight}
-                    opacity={0}
-                  />
+                      {(d as any)[k].toFixed(2)}%
+                    </text>
+                  </g>
+                  <text
+                    opacity={hoveredYear === (d as any).year ? 1 : 0}
+                    textAnchor='middle'
+                    y={-20}
+                  >
+                    {(d as any).year}
+                  </text>
                 </g>
               ))}
+              <rect
+                onMouseEnter={() => {
+                  setHoveredYear((d as any).year);
+                }}
+                onMouseLeave={() => {
+                  setHoveredYear(undefined);
+                }}
+                x='-15px'
+                y={0}
+                width='30px'
+                height={svgHeight}
+                opacity={0}
+              />
             </g>
-            <line
-              x1={0}
-              y1={graphHeight}
-              x2={graphWidth}
-              y2={graphHeight}
-              stroke='#232E3D'
-              strokeWidth={2}
-            />
-          </g>
-        </svg>
-      ) : (
-        <div className='center-area-error-el'>No data available</div>
-      )}
-    </div>
+          ))}
+        </g>
+        <line
+          x1={0}
+          y1={graphHeight}
+          x2={graphWidth}
+          y2={graphHeight}
+          stroke='#232E3D'
+          strokeWidth={2}
+        />
+      </g>
+    </svg>
   );
 }
