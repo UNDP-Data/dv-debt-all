@@ -8,6 +8,7 @@ import {
   CountryType,
   ExternalDebtType,
   CountryValueType,
+  CountryCategoryType,
 } from './Types';
 import './style.css';
 import { AllCountries } from './AllCountries';
@@ -28,14 +29,21 @@ function App() {
   const [creditRating, setCreditRating] = useState<
     CountryValueType[] | undefined
   >();
+  const [dsaRating, setDsaRating] = useState<
+    CountryCategoryType[] | undefined
+  >();
   const [countryList, setCountryList] = useState<CountryType[] | undefined>(
     undefined,
   );
-  const [selectedCountry, setSelectedCountry] = useState<string>('ALB');
+  const [selectedCountry, setSelectedCountry] = useState<CountryType>({
+    label: 'Afghanistan',
+    value: 'AFG',
+  });
   const dataurl =
     'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/countries/';
   useEffect(() => {
     Promise.all([
+      csv(`${dataurl}groupings.csv`), // 1. Groupings
       csv(`${dataurl}dsaRating.csv`), // 2. Ratings
       csv(`${dataurl}creditRating.csv`), // 2. Ratings
       csv(`${dataurl}netInterest.csv`), // 5. Net interest
@@ -44,6 +52,7 @@ function App() {
       csv(`${dataurl}externalDebt.csv`), // 4. External debt
     ]).then(
       ([
+        groupingsCsv,
         dsaRatingCsv,
         creditRatingCsv,
         netInterestCsv,
@@ -51,33 +60,53 @@ function App() {
         ggDebtCsv,
         externalDebtCsv,
       ]) => {
-        const countryData = dsaRatingCsv.map((d: any) => ({
+        const countryData = groupingsCsv.map((d: any) => ({
           label: d.name,
           value: d.iso,
+        }));
+        const dsaRatingData = dsaRatingCsv.map((d: any) => ({
+          name: d.name,
+          code: d.iso,
+          category: d['Risk of debt distress'],
         }));
         const countryCreditData = creditRatingCsv.map((d: any) => ({
           name: d.name,
           code: d.iso,
           value: d.Numeric_scale_average,
         }));
-        const netInterestData = netInterestCsv.map((d: any) => ({
-          code: d.iso,
-          year: Number(d.year),
-          percentage: Number(d['Net interest percent']),
-          million: Number(d['Net interest USD']),
-        }));
-        const tdsDebtData = tdsExternalCsv.map((d: any) => ({
-          code: d.iso,
-          year: Number(d.year),
-          '% of revenue': Number(d['%  of revenue']),
-          '% of exports': Number(d['%  of exports']),
-        }));
-        const debtToGdpData = ggDebtCsv.map((d: any) => ({
-          code: d.iso,
-          year: Number(d.year),
-          percentage: Number(d['GG debt (% of GDP)']),
-          million: Number(d['GG debt ($ billion)']),
-        }));
+        const netInterestData = netInterestCsv
+          .filter((d: any) => {
+            return Number(d['Net interest percent']);
+          })
+          .map((d: any) => ({
+            code: d.iso,
+            year: Number(d.year),
+            percentage: Number(d['Net interest percent']),
+            million: Number(d['Net interest USD']),
+          }));
+        const tdsDebtData = tdsExternalCsv
+          .filter((d: any) => {
+            return Number(d['%  of revenue']) || Number(d['%  of exports']);
+          })
+          .map((d: any) => ({
+            code: d.iso,
+            year: Number(d.year),
+            '% of revenue': Number(d['%  of revenue']),
+            '% of exports': Number(d['%  of exports']),
+          }));
+        const debtToGdpData = ggDebtCsv
+          .filter((d: any) => {
+            return (
+              Number(d['GG debt (% of GDP)']) ||
+              Number(d['GG debt ($ billion)'])
+            );
+          })
+          .map((d: any) => ({
+            code: d.iso,
+            year: Number(d.year),
+            percentage: Number(d['GG debt (% of GDP)']),
+            million: Number(d['GG debt ($ billion)']),
+          }));
         const externalDebtData = externalDebtCsv.map((d: any) => ({
           code: d.iso,
           year: Number(d.year),
@@ -93,48 +122,64 @@ function App() {
           'principal payments': Number(d['INT ($ million)']),
           'interest payment': Number(d['AMT ($ million)']),
         }));
-        // console.log('externalDebt', externalDebt);
         setCountryList(countryData as []);
         setNetInterest(netInterestData);
         setTdsExternalDebt(tdsDebtData as any);
         setDebtToGdp(debtToGdpData);
         setExternalDebt(externalDebtData);
         setCreditRating(countryCreditData);
-        console.log('data loaded ----------');
+        setDsaRating(dsaRatingData);
       },
     );
   }, []);
   return (
     <div className='undp-container'>
-      <div className='margin-bottom-08'>
-        <p className='undp-typography label'>Select a country</p>
-        <Select
-          options={countryList}
-          className='undp-select'
-          value={selectedCountry}
-          showSearch
-          style={{ width: '400px' }}
-          onChange={d => setSelectedCountry(d.trim())}
-        />
-      </div>
+      {countryList !== undefined ? (
+        <div className='margin-bottom-08'>
+          <p className='undp-typography label'>Select a country</p>
+          <Select
+            options={countryList}
+            className='undp-select'
+            defaultValue={selectedCountry}
+            showSearch
+            style={{ width: '400px' }}
+            onChange={d => {
+              console.log(
+                'in country selection',
+                countryList.filter((k: CountryType) => k.value === d)[0],
+              );
+              console.log('d', d);
+              setSelectedCountry(
+                countryList.filter((k: CountryType) => k.value === d)[0],
+              );
+            }}
+          />
+        </div>
+      ) : null}
       {debtToGdp !== undefined &&
       netInterest &&
       tdsExternalDebt &&
       externalDebt &&
-      creditRating ? (
+      creditRating &&
+      dsaRating ? (
         <AllCountries
-          countryDebtToGdp={debtToGdp?.filter(d => d.code === selectedCountry)}
+          countryDebtToGdp={debtToGdp?.filter(
+            d => d.code === selectedCountry.value,
+          )}
           countryNetInterest={netInterest?.filter(
-            d => d.code === selectedCountry,
+            d => d.code === selectedCountry.value,
           )}
           countryTdsExternal={tdsExternalDebt?.filter(
-            d => d.code === selectedCountry,
+            d => d.code === selectedCountry.value,
           )}
           countryExternalDebt={externalDebt?.filter(
-            d => d.code === selectedCountry,
+            d => d.code === selectedCountry.value,
           )}
           selectedCountry={selectedCountry}
           creditRating={creditRating}
+          countryDsaRating={dsaRating?.filter(
+            d => d.code === selectedCountry.value,
+          )}
         />
       ) : null}
     </div>

@@ -19,7 +19,16 @@ export function StackedBarChartSimple(props: Props) {
           <h6 className='undp-typography margin-bottom-01'>{title}</h6>
         </div>
       </div>
-      <Graph data={data} sections={sections} id={id} maxValue={data[0].total} />
+      {data.length > 0 ? (
+        <Graph
+          data={data}
+          sections={sections}
+          id={id}
+          maxValue={data[0].total}
+        />
+      ) : (
+        <div>No data available</div>
+      )}
       <p className='source'>Source:</p>
       <p className='source'>Note:</p>
     </div>

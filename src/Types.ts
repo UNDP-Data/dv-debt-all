@@ -42,12 +42,20 @@ export interface DsaRatingType extends RatingType {
   Moderate: number;
   Low: number;
 }
+
 export interface CountryType {
-  name: string;
-  code: string;
+  label: string;
+  value: string;
 }
-export interface CountryValueType extends CountryType {
+export interface CountryValueType {
+  code: string;
+  name: string;
   value: number;
+}
+export interface CountryCategoryType {
+  code: string;
+  name: string;
+  category: string;
 }
 export interface CountryPercentType {
   code: string;
@@ -56,15 +64,15 @@ export interface CountryPercentType {
   million: number;
 }
 export interface CountryStatsType {
-  debtMillion: number;
-  debtPercent: number;
-  debtYear: number;
-  externalGovDebt: number;
-  externalGovDebtYear: number;
-  netInterestPayments: number;
-  netInterestPaymentsYear: number;
-  externalPPG: number;
-  externalPPGYear: number;
+  debtMillion: string;
+  debtPercent: string;
+  debtYear: string;
+  externalGovDebt: string;
+  externalGovDebtYear: string;
+  netInterestPayments: string;
+  netInterestPaymentsYear: string;
+  externalPPG: string;
+  externalPPGYear: string;
 }
 export interface ExternalDebtType {
   code: string;

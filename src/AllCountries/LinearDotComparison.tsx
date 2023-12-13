@@ -7,7 +7,7 @@ import { CountryValueType } from '../Types';
 
 interface Props {
   data: CountryValueType[];
-  selectedCountry: string;
+  selectedCountryCode: string;
   id: string;
   year: number;
   title: string;
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function LinearDotsComparison(props: Props) {
-  const { data, selectedCountry, id, year, title, svgHeight } = props;
+  const { data, selectedCountryCode, id, year, title, svgHeight } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
   const margin = { top: 40, right: 40, bottom: 20, left: 40 };
@@ -23,9 +23,7 @@ export function LinearDotsComparison(props: Props) {
   const x = scaleLinear()
     .domain(xDomain as [number, number])
     .range([0, svgWidth - margin.left - margin.right]);
-  const countryData = data.filter(d => d.code === selectedCountry)[0];
-  console.log('countryData', countryData);
-
+  const countryData = data.filter(d => d.code === selectedCountryCode)[0];
   useEffect(() => {
     if (containerRef.current) {
       setSvgWidth(containerRef.current.clientWidth);

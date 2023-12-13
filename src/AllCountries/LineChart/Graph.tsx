@@ -15,10 +15,18 @@ interface Props {
   yearDomain: number[];
   svgWidth: number;
   svgHeight: number;
+  selectedCountryCode: string;
 }
-/// two lines for mean and median
 export function Graph(props: Props) {
-  const { data, indicators, id, yearDomain, svgWidth, svgHeight } = props;
+  const {
+    data,
+    indicators,
+    id,
+    yearDomain,
+    svgWidth,
+    svgHeight,
+    selectedCountryCode,
+  } = props;
   const margin = { top: 40, right: 40, bottom: 20, left: 40 };
   const graphWidth = svgWidth - margin.left - margin.right;
   const graphHeight = svgHeight - margin.top - margin.bottom;
@@ -76,7 +84,7 @@ export function Graph(props: Props) {
       .attr('dy', '-4px')
       .attr('x', '-4px')
       .attr('text-anchor', 'end');
-  }, data);
+  }, [selectedCountryCode, svgWidth, svgHeight]);
   return (
     <svg
       width='100%'
@@ -123,23 +131,55 @@ export function Graph(props: Props) {
                     display: (d as any)[k] !== '' ? 'block' : 'none',
                   }}
                 >
-                  <g transform={`translate(0,${y((d as any)[k])})`}>
-                    <circle
-                      r={hoveredYear === (d as any).year ? 5 : 3}
-                      fill={UNDPColorModule.categoricalColors.colors[j]}
-                    />
+                  <g
+                    transform={`translate(0,${
+                      indicators.length === 1 ? y((d as any)[k]) : -30 + j * 20
+                    })`}
+                  >
+                    {indicators.length === 1 ? (
+                      <>
+                        <circle
+                          r={hoveredYear === (d as any).year ? 5 : 3}
+                          fill={UNDPColorModule.categoricalColors.colors[j]}
+                        />
+                        <rect
+                          x={-25}
+                          y={-32}
+                          width={65}
+                          height={20}
+                          fill='#F5F5F5'
+                          opacity={hoveredYear === (d as any).year ? 1 : 0}
+                        />
+                      </>
+                    ) : (
+                      <circle
+                        r={5}
+                        fill={UNDPColorModule.categoricalColors.colors[j]}
+                        opacity={hoveredYear === (d as any).year ? 1 : 0}
+                      />
+                    )}
                     <text
-                      x={-25}
-                      y={-5}
+                      className='label'
+                      x={indicators.length === 1 ? -25 : 10}
+                      y={indicators.length === 1 ? -15 : 5}
                       opacity={hoveredYear === (d as any).year ? 1 : 0}
                     >
                       {(d as any)[k].toFixed(2)}%
                     </text>
                   </g>
+                  <rect
+                    x={-30}
+                    y={graphHeight}
+                    width={60}
+                    height={20}
+                    fill='#F8F8F8'
+                    opacity={hoveredYear === (d as any).year ? 0.7 : 0}
+                  />
                   <text
                     opacity={hoveredYear === (d as any).year ? 1 : 0}
+                    className='highlightYear'
                     textAnchor='middle'
-                    y={-20}
+                    y={graphHeight + 17}
                   >
                     {(d as any).year}
                   </text>

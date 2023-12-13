@@ -11,11 +11,11 @@ interface Props {
   indicators: string[];
   id: string;
   title: string;
+  selectedCountryCode: string;
 }
 
 export function LineChart(props: Props) {
-  const { data, indicators, id, title } = props;
-  // year domain
+  const { data, indicators, id, title, selectedCountryCode } = props;
   const yearsDomain = { min: 0, max: 3000 };
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
@@ -24,6 +24,7 @@ export function LineChart(props: Props) {
     const indExtent = extent(data, (d: any) =>
       !d[indicator].isNaN ? d.year : null,
     );
+    // (indicator, indExtent);
     if (indExtent[0] > yearsDomain.min) yearsDomain.min = indExtent[0];
     if (indExtent[1] < yearsDomain.max) yearsDomain.max = indExtent[1];
   });
@@ -66,6 +67,7 @@ export function LineChart(props: Props) {
           yearDomain={yearDomain}
           svgWidth={svgWidth}
           svgHeight={svgHeight}
+          selectedCountryCode={selectedCountryCode}
         />
       </div>
       <p className='source'>

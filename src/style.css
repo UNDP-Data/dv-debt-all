@@ -1,10 +1,10 @@
 /* general charts styles */
 .chart-container{
   background-color: var(--gray-200);
-  padding: 24px 32px;
+  padding: 24px 32px 6px 32px;
   position:relative;
 }
-.yAxis text, .xAxis text{
+.yAxis text, .xAxis text, .highlightYear{
   font-family: 'ProximaNova', 'proxima-nova', 'Helvetica Neue', 'sans-serif';
   font-size: 1rem;
 }
@@ -22,9 +22,10 @@
   stroke: var(--gray-500);
   stroke-width: 1;
 }
-.source{
+p.source{
   font-size: 1rem;
   color: var(--gray-500);
+  margin-bottom:0;
 }
 .barLabel{
   text-anchor:middle;
@@ -71,6 +72,10 @@
 }
 .flex-vertical .stat-card{
   flex-basis: unset;
+}
+.highlightScale{
+  stroke: #000;
+  stroke-width: 4px;
 }
 @media (max-width: 600px) {
   .yAxis text, .xAxis text{
