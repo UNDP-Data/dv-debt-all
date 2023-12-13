@@ -144,13 +144,8 @@ function App() {
             showSearch
             style={{ width: '400px' }}
             onChange={d => {
-              console.log(
-                'in country selection',
-                countryList.filter((k: CountryType) => k.value === d)[0],
-              );
-              console.log('d', d);
               setSelectedCountry(
-                countryList.filter((k: CountryType) => k.value === d)[0],
+                countryList.filter((k: any) => k.value === d)[0],
               );
             }}
           />

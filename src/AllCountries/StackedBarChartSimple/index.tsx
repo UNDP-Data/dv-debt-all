@@ -11,7 +11,6 @@ interface Props {
 
 export function StackedBarChartSimple(props: Props) {
   const { data, sections, id, title } = props;
-  console.log('data', data);
   return (
     <div className='chart-container'>
       <div className='margin-bottom-03'>
