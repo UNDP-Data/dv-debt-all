@@ -59,7 +59,7 @@ export function LineChart(props: Props) {
           </div>
         </div>
       </div>
-      <div ref={containerRef}>
+      <div ref={containerRef} className='margin-bottom-02'>
         <Graph
           data={data}
           indicators={indicators}

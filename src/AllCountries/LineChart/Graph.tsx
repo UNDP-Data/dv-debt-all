@@ -27,7 +27,7 @@ export function Graph(props: Props) {
     svgHeight,
     selectedCountryCode,
   } = props;
-  const margin = { top: 40, right: 40, bottom: 20, left: 40 };
+  const margin = { top: 40, right: 40, bottom: 20, left: 50 };
   const graphWidth = svgWidth - margin.left - margin.right;
   const graphHeight = svgHeight - margin.top - margin.bottom;
   const [hoveredYear, setHoveredYear] = useState<undefined | string>(undefined);

@@ -16,7 +16,7 @@ export function HorizontalScale(props: Props) {
   const { countryDsa, categories, id, year, title, svgHeight } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
-  const margin = { top: 0, right: 40, bottom: 20, left: 0 };
+  const margin = { top: 20, right: 40, bottom: 20, left: 0 };
   const value = countryDsa.length > 0 ? countryDsa[0].category : '';
   const colors = UNDPColorModule.sequentialColors.negativeColorsx04
     .slice()
@@ -28,10 +28,11 @@ export function HorizontalScale(props: Props) {
     }
   }, []);
   return (
-    <div ref={containerRef}>
-      <h5>
-        {title} ({year})
-      </h5>
+    <div ref={containerRef} className='chart-container rating'>
+      <h6 className='undp-typography margin-bottom-01'>{title}</h6>
+      <p className='undp-typography small-font margin-bottom-01'>
+        Year: {year}
+      </p>
       {value !== '' && categories.length > 0 ? (
         <svg
           width='100%'

@@ -18,7 +18,7 @@ export function LinearDotsComparison(props: Props) {
   const { data, selectedCountryCode, id, year, title, svgHeight } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
-  const margin = { top: 40, right: 40, bottom: 20, left: 40 };
+  const margin = { top: 50, right: 10, bottom: 20, left: 10 };
   const xDomain = extent(data, d => Number(d.value));
   const x = scaleLinear()
     .domain(xDomain as [number, number])
@@ -33,10 +33,11 @@ export function LinearDotsComparison(props: Props) {
     x.range([0, svgWidth - margin.left - margin.right]);
   }, [svgWidth]);
   return (
-    <div ref={containerRef}>
-      <h5>
-        {title} ({year})
-      </h5>
+    <div ref={containerRef} className='chart-container rating'>
+      <h6 className='undp-typography margin-bottom-01'>{title}</h6>
+      <p className='undp-typography small-font margin-bottom-01'>
+        Year: {year}
+      </p>
       {countryData !== undefined && data.length > 0 ? (
         <svg
           width='100%'
@@ -52,14 +53,14 @@ export function LinearDotsComparison(props: Props) {
             ))}
             <circle
               r={10}
-              fill='red'
+              fill='#006eb5'
               cy={0}
               transform={`translate(${x(countryData.value)},0)`}
             />
             <text
               className='label'
               x={x(countryData.value as number)}
-              y='25'
+              y='30'
               textAnchor='middle'
             >
               {countryData.value as number}
@@ -67,7 +68,7 @@ export function LinearDotsComparison(props: Props) {
             <text
               className='label'
               x={x(xDomain[0] as number)}
-              y='25'
+              y='30'
               textAnchor='middle'
             >
               {xDomain[0] as number}
@@ -75,7 +76,7 @@ export function LinearDotsComparison(props: Props) {
             <text
               className='label'
               x={x(xDomain[1] as number)}
-              y='25'
+              y='30'
               textAnchor='middle'
             >
               {xDomain[1] as number}

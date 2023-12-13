@@ -1,8 +1,11 @@
 /* general charts styles */
 .chart-container{
   background-color: var(--gray-200);
-  padding: 24px 32px 6px 32px;
+  padding: 24px 32px 24px 32px;
   position:relative;
+}
+.chart-container.rating{
+  min-height: 140px;
 }
 .yAxis text, .xAxis text, .highlightYear{
   font-family: 'ProximaNova', 'proxima-nova', 'Helvetica Neue', 'sans-serif';
@@ -26,6 +29,7 @@ p.source{
   font-size: 1rem;
   color: var(--gray-500);
   margin-bottom:0;
+  margin-top:0;
 }
 .barLabel{
   text-anchor:middle;

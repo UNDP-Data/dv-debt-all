@@ -143,11 +143,7 @@ export function AllCountries(props: Props) {
       <h3 className='undp-typography margin-top-08'>
         External government debt
       </h3>
-      <p className='undp-typography'>
-        The table and figure show the composition of external public and
-        publicly guaranteed (PPG) debt in million USD based on the latest
-        available datapoint 2021.
-      </p>
+
       <div className='flex-div'>
         <div style={{ width: '50%' }}>
           <div className='stat-card'>
@@ -157,6 +153,11 @@ export function AllCountries(props: Props) {
               External government debt ({countryStats?.externalGovDebtYear})
             </p>
           </div>
+          <p className='undp-typography margin-top-08'>
+            The table and figure show the composition of external public and
+            publicly guaranteed (PPG) debt in million USD based on the latest
+            available datapoint 2021.
+          </p>
         </div>
         <div style={{ width: '50%' }}>
           <StackedBarChartSimple
