@@ -6,7 +6,6 @@ import AppExternalDebt from './AppExternalDebt';
 import AppCreditDsaRating from './AppCreditDsaRating';
 import AppAllCountries from './AppAllCountries';
 
-
 ReactDOM.createRoot(document.getElementById('debtToGdp') as HTMLElement).render(
   <React.StrictMode>
     <App />
@@ -25,7 +24,7 @@ ReactDOM.createRoot(
   <React.StrictMode>
     <AppExternalDebt />
   </React.StrictMode>,
-); 
+);
 ReactDOM.createRoot(
   document.getElementById('debtCreditDsaRating') as HTMLElement,
 ).render(
