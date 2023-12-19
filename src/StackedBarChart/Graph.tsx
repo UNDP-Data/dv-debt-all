@@ -13,10 +13,12 @@ export function Graph(props: Props) {
   const margin = { top: 20, right: 30, bottom: 50, left: 60 };
   const graphHeight = 500 - margin.top - margin.bottom;
   const valueArray: number[] = data.map((d: any) => Number(d.number));
-  const percentageData = data.filter(d => (d as any).value === 'percentage');
-  const numberData = data.filter(d => (d as any).value === 'number')[0];
+  const percentageData = data.filter(d => (d as any).value === 'Percentage');
+  const numberData = data.filter(d => (d as any).value === 'Number')[0];
   const subgroups = Object.keys(data[0]).slice(2);
   const stackedData = stack().keys(subgroups)(percentageData as any);
+  console.log('stackedData', stackedData);
+  console.log('data', data);
   const y = scaleLinear().domain([0, 100]).range([0, graphHeight]).nice();
   return (
     <div>

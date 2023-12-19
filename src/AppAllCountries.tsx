@@ -65,14 +65,14 @@ function App() {
           value: d.iso,
         }));
         const dsaRatingData = dsaRatingCsv.map((d: any) => ({
-          name: d.name,
+          name: d.Country,
           code: d.iso,
-          category: d['Risk of debt distress'],
+          category: d['CRA rating'],
         }));
         const countryCreditData = creditRatingCsv.map((d: any) => ({
-          name: d.name,
+          name: d.Country,
           code: d.iso,
-          value: d.Numeric_scale_average,
+          value: Number(d['Credit rating score']),
         }));
         const netInterestData = netInterestCsv
           .filter((d: any) => {
@@ -81,8 +81,8 @@ function App() {
           .map((d: any) => ({
             code: d.iso,
             year: Number(d.year),
-            percentage: Number(d['Net interest percent']),
-            million: Number(d['Net interest USD']),
+            percentage: Number(d['Net interest (% of revenue)']),
+            million: Number(d['Net interest ($ million)']),
           }));
         const tdsDebtData = tdsExternalCsv
           .filter((d: any) => {

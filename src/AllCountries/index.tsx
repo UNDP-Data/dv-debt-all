@@ -40,7 +40,7 @@ export function AllCountries(props: Props) {
   >(undefined);
   const dsaCategories = ['In debt distress', 'High', 'Moderate', 'Low'];
   const yearGGDebt = 2023;
-  const yearExternalDebt = 2021;
+  const yearExternalDebt = 2023;
   const yearNetInterest = 2023;
   useEffect(() => {
     const debtValue = countryDebtToGdp.filter(d => d.year === yearGGDebt)[0];
