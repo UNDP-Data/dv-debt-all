@@ -20,6 +20,7 @@ export function LinearDotsComparison(props: Props) {
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
   const margin = { top: 50, right: 10, bottom: 20, left: 10 };
   const xDomain = extent(data, d => Number(d.value));
+  //  const colors=[1,4,6,9,12]
   const x = scaleLinear()
     .domain(xDomain as [number, number])
     .range([0, svgWidth - margin.left - margin.right]);
@@ -39,50 +40,69 @@ export function LinearDotsComparison(props: Props) {
         Year: {year}
       </p>
       {countryData !== undefined && data.length > 0 ? (
-        <svg
-          width='100%'
-          height='100%'
-          viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-          id={id}
-        >
-          <g transform={`translate(${margin.left},${margin.top})`}>
-            {data.map((d, i) => (
-              <g key={i} cy={5} transform={`translate(${x(d.value)},0)`}>
-                <circle r={10} fill='#ccc' opacity={0.2} />
-              </g>
-            ))}
-            <circle
-              r={10}
-              fill='#006eb5'
-              cy={0}
-              transform={`translate(${x(countryData.value)},0)`}
-            />
-            <text
-              className='label'
-              x={x(countryData.value as number)}
-              y='30'
-              textAnchor='middle'
+        <>
+          <svg
+            width='100%'
+            height='100%'
+            viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+            id={id}
+          >
+            <g transform={`translate(${margin.left},${margin.top})`}>
+              {data.map((d, i) => (
+                <g key={i} cy={5} transform={`translate(${x(d.value)},0)`}>
+                  <circle r={10} fill='#ccc' opacity={0.2} />
+                </g>
+              ))}
+              <circle
+                r={10}
+                fill='#006eb5'
+                cy={0}
+                transform={`translate(${x(countryData.value)},0)`}
+              />
+              <text
+                className='label'
+                x={x(countryData.value as number)}
+                y='30'
+                textAnchor='middle'
+              >
+                {countryData.value as number}
+              </text>
+              <text
+                className='label'
+                x={x(xDomain[0] as number)}
+                y='30'
+                textAnchor='middle'
+              >
+                {xDomain[0] as number}
+              </text>
+              <text
+                className='label'
+                x={x(xDomain[1] as number)}
+                y='30'
+                textAnchor='middle'
+              >
+                {xDomain[1] as number}
+              </text>
+            </g>
+          </svg>
+          <p className='source'>
+            Source: based on ratings from the three major ratings firms S&P,
+            Moodys and Fitch accessed through{' '}
+            <a
+              href='https://www.tradingeconomics.com'
+              target='_blank'
+              rel='noreferrer'
+              className='undp-style small-font'
             >
-              {countryData.value as number}
-            </text>
-            <text
-              className='label'
-              x={x(xDomain[0] as number)}
-              y='30'
-              textAnchor='middle'
-            >
-              {xDomain[0] as number}
-            </text>
-            <text
-              className='label'
-              x={x(xDomain[1] as number)}
-              y='30'
-              textAnchor='middle'
-            >
-              {xDomain[1] as number}
-            </text>
-          </g>
-        </svg>
+              https://www.tradingeconomics.com
+            </a>
+            &nbsp;Ultimo-October 2023.
+          </p>
+          <p className='source'>
+            Note: The graphic shows the average numeric rating across the three
+            major rating agencies.
+          </p>
+        </>
       ) : (
         <div>N/A</div>
       )}
