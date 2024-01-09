@@ -39,10 +39,12 @@ export function AllCountries(props: Props) {
     selectedCountry,
     countriesSources,
   } = props;
-  const formatMillion = (d: undefined | number) => {
-    if (d === undefined) return d;
+  const formatMillion = (d: number | undefined) => {
+    if (d === undefined) return 'N/A';
     const k = d * 1000000;
-    return Math.abs(k) < 1 ? d : format('~s')(k).replace('G', 'B');
+    return Math.abs(k) < 1
+      ? d.toString()
+      : format('~s')(k).replace('G', 'B').toString();
   };
   const [countryStats, setCountryStats] = useState<
     CountryStatsType | undefined
@@ -59,17 +61,17 @@ export function AllCountries(props: Props) {
         debtValue !== undefined ? `${debtValue.percentage.toFixed(1)}%` : 'N/A',
       debtMillion:
         debtValue !== undefined
-          ? formatMillion(Math.round(debtValue.million)).toString()
+          ? formatMillion(Math.round(debtValue.million))
           : 'N/A',
       debtYear: debtValue.year.toString(),
       externalGovDebt:
         externalDebt !== undefined
-          ? formatMillion(Math.round(externalDebt.total)).toString()
+          ? formatMillion(Math.round(externalDebt.total))
           : 'N/A',
       externalGovDebtYear: yearExternalDebt.toString(),
       netInterestPayments: formatMillion(
         countryNetInterest[countryNetInterest.length - 1].million,
-      ).toString(),
+      ),
       netInterestPaymentsYear:
         countryNetInterest[countryNetInterest.length - 1].year.toString(),
       externalPPG:
@@ -77,7 +79,7 @@ export function AllCountries(props: Props) {
           ? formatMillion(
               externalDebt['principal payments'] +
                 externalDebt['interest payment'],
-            ).toString()
+            )
           : 'N/A',
       externalPPGYear: yearExternalDebt.toString(),
     };
