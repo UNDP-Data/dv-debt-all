@@ -38,6 +38,9 @@ p.source{
 .chartLabel {
   font-size: 0.875rem;
 }
+.labelSelected{
+  font-size: 1.3rem;
+}
 /* color legend styles for charts */
 .legend-container{
   display: flex;

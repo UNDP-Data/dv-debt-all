@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { useRef, useState, useEffect } from 'react';
 import UNDPColorModule from 'undp-viz-colors';
-import { CountryCategoryType } from '../Types';
+import { ChartSourceType, CountryCategoryType } from '../Types';
 
 interface Props {
   countryDsa: CountryCategoryType[];
@@ -10,10 +10,12 @@ interface Props {
   year: number;
   title: string;
   svgHeight: number;
+  chartSource: ChartSourceType;
 }
 
 export function HorizontalScale(props: Props) {
-  const { countryDsa, categories, id, year, title, svgHeight } = props;
+  const { countryDsa, categories, id, year, title, svgHeight, chartSource } =
+    props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
   const margin = { top: 20, right: 40, bottom: 20, left: 0 };
@@ -34,33 +36,41 @@ export function HorizontalScale(props: Props) {
         Year: {year}
       </p>
       {value !== '' && categories.length > 0 ? (
-        <svg
-          width='100%'
-          height='100%'
-          viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-          id={id}
-        >
-          <g transform={`translate(${margin.left},${margin.top})`}>
-            {categories.map((d, i) => (
-              <g key={i} transform={`translate(${i * 120},0)`}>
-                <rect
-                  key={i}
-                  x={d === value ? 2 : 0}
-                  y={2}
-                  height={46}
-                  width={d === value ? 116 : 120}
-                  fill={colors[i]}
-                  className={d === value ? 'highlightScale' : ''}
-                />
-                <text y={70} className='label '>
-                  {d}
-                </text>
-              </g>
-            ))}
-          </g>
-        </svg>
+        <>
+          <svg
+            width='100%'
+            height='100%'
+            viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+            id={id}
+          >
+            <g transform={`translate(${margin.left},${margin.top})`}>
+              {categories.map((d, i) => (
+                <g key={i} transform={`translate(${i * 120},0)`}>
+                  <rect
+                    key={i}
+                    x={d === value ? 2 : 0}
+                    y={2}
+                    height={46}
+                    width={d === value ? 116 : 120}
+                    fill={colors[i]}
+                    className={d === value ? 'highlightScale' : ''}
+                  />
+                  <text y={70} className='label '>
+                    {d}
+                  </text>
+                </g>
+              ))}
+            </g>
+          </svg>
+          {chartSource.note ? (
+            <p className='source'>{`Note: ${chartSource.note}`}</p>
+          ) : null}
+          {chartSource.source ? (
+            <p className='source'>{`Source: ${chartSource.source}`}</p>
+          ) : null}
+        </>
       ) : (
-        <div>N/A</div>
+        <div className='margin-top-06'>N/A</div>
       )}
     </div>
   );

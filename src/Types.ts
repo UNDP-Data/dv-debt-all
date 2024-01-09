@@ -85,3 +85,16 @@ export interface ExternalDebtType {
   'principal payments': number;
   'interest payment': number;
 }
+export interface CompositionGroupsType {
+  groups: string;
+  Bilateral: number;
+  Multilateral: number;
+  Bonds: number;
+  'Other private': number;
+  Total: number;
+}
+export interface ChartSourceType {
+  graph: string;
+  note: string;
+  source: string;
+}

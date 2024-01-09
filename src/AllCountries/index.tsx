@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import { useState, useEffect } from 'react';
+import { format } from 'd3-format';
 import {
   CountryPercentType,
   CountryStatsType,
@@ -8,6 +9,7 @@ import {
   CountryValueType,
   CountryCategoryType,
   CountryType,
+  ChartSourceType,
 } from '../Types';
 import { LineChart } from './LineChart';
 import '../style.css';
@@ -23,6 +25,7 @@ interface Props {
   selectedCountry: CountryType;
   creditRating: CountryValueType[];
   countryDsaRating: CountryCategoryType[];
+  countriesSources: ChartSourceType[];
 }
 
 export function AllCountries(props: Props) {
@@ -34,16 +37,20 @@ export function AllCountries(props: Props) {
     creditRating,
     countryDsaRating,
     selectedCountry,
+    countriesSources,
   } = props;
+  const formatMillion = (d: undefined | number) => {
+    if (d === undefined) return d;
+    const k = d * 1000000;
+    return Math.abs(k) < 1 ? d : format('~s')(k).replace('G', 'B');
+  };
   const [countryStats, setCountryStats] = useState<
     CountryStatsType | undefined
   >(undefined);
   const dsaCategories = ['In debt distress', 'High', 'Moderate', 'Low'];
-  const yearGGDebt = 2023;
-  const yearExternalDebt = 2023;
-  const yearNetInterest = 2023;
+  const yearExternalDebt = 2022;
   useEffect(() => {
-    const debtValue = countryDebtToGdp.filter(d => d.year === yearGGDebt)[0];
+    const debtValue = countryDebtToGdp[countryDebtToGdp.length - 1];
     const externalDebt = countryExternalDebt.filter(
       d => d.year === yearExternalDebt,
     )[0];
@@ -52,26 +59,24 @@ export function AllCountries(props: Props) {
         debtValue !== undefined ? `${debtValue.percentage.toFixed(1)}%` : 'N/A',
       debtMillion:
         debtValue !== undefined
-          ? Math.round(debtValue.million).toString()
+          ? formatMillion(Math.round(debtValue.million)).toString()
           : 'N/A',
-      debtYear: yearGGDebt.toString(),
+      debtYear: debtValue.year.toString(),
       externalGovDebt:
         externalDebt !== undefined
-          ? Math.round(externalDebt.total).toString()
+          ? formatMillion(Math.round(externalDebt.total)).toString()
           : 'N/A',
       externalGovDebtYear: yearExternalDebt.toString(),
-      netInterestPayments:
-        countryNetInterest.filter(d => d.year === yearNetInterest).length > 0
-          ? countryNetInterest
-              .filter(d => d.year === yearNetInterest)[0]
-              .million.toString()
-          : 'N/A',
-      netInterestPaymentsYear: yearNetInterest.toString(),
+      netInterestPayments: formatMillion(
+        countryNetInterest[countryNetInterest.length - 1].million,
+      ).toString(),
+      netInterestPaymentsYear:
+        countryNetInterest[countryNetInterest.length - 1].year.toString(),
       externalPPG:
         externalDebt !== undefined
-          ? (
+          ? formatMillion(
               externalDebt['principal payments'] +
-              externalDebt['interest payment']
+                externalDebt['interest payment'],
             ).toString()
           : 'N/A',
       externalPPGYear: yearExternalDebt.toString(),
@@ -85,36 +90,42 @@ export function AllCountries(props: Props) {
         <div style={{ width: '50%' }}>
           <LinearDotsComparison
             data={creditRating}
-            title='Credit Rating'
+            title='Credit Ratings'
             id='countryCreditRatingScale'
             year={2023}
             svgHeight={100}
             selectedCountryCode={selectedCountry.value}
+            chartSource={
+              countriesSources.filter(d => d.graph === 'Credit ratings')[0]
+            }
           />
         </div>
         <div style={{ width: '50%' }}>
           <HorizontalScale
             countryDsa={countryDsaRating}
             categories={dsaCategories}
-            title='DSA Rating'
+            title='DSA Ratings'
             id='countryDsaRatingScale'
             year={2023}
             svgHeight={100}
+            chartSource={
+              countriesSources.filter(d => d.graph === 'DSA Ratings')[0]
+            }
           />
         </div>
       </div>
       <h3 className='undp-typography margin-top-08'>Government debt</h3>
       <p className='undp-typography'>
-        The table below shows the value of general government debt in 2023 in
-        million USD and as a percentage of GDP. The figure shows the development
-        of debt (in % of GDP) from 2000-2023.
+        The table below shows the value of general gross government debt in 2023
+        in million USD and as a percentage of GDP. The figure shows the
+        development of debt (in % of GDP) from 2000-2023.
       </p>
       <div className='flex-div'>
         {countryStats !== undefined ? (
           <div style={{ width: '33%' }} className='flex-div flex-vertical'>
             <div className='stat-card'>
               <h3 className='undp-typography'>{countryStats.debtMillion}</h3>
-              <h5 className='undp-typography'>USD million</h5>
+              <h5 className='undp-typography'>USD</h5>
               <p className='undp-typography'>
                 Government Debt ({countryStats?.debtYear})
               </p>
@@ -131,11 +142,16 @@ export function AllCountries(props: Props) {
         <div style={{ width: '65%' }}>
           {countryDebtToGdp !== undefined ? (
             <LineChart
-              data={countryDebtToGdp.filter(d => d.year <= yearGGDebt)}
+              data={countryDebtToGdp}
               indicators={['percentage']}
               id='countryDebtToGdp'
               title='Government debt as percentage of GDP'
               selectedCountryCode={selectedCountry.value}
+              chartSource={
+                countriesSources.filter(
+                  d => d.graph === 'Government debt as a percentage of GDP',
+                )[0]
+              }
             />
           ) : null}
         </div>
@@ -148,7 +164,7 @@ export function AllCountries(props: Props) {
         <div style={{ width: '50%' }}>
           <div className='stat-card'>
             <h3 className='undp-typography'>{countryStats?.externalGovDebt}</h3>
-            <h5 className='undp-typography'>USD million</h5>
+            <h5 className='undp-typography'>USD</h5>
             <p className='undp-typography'>
               External government debt ({countryStats?.externalGovDebtYear})
             </p>
@@ -165,6 +181,11 @@ export function AllCountries(props: Props) {
             sections={['multilateral', 'bilateral', 'bonds', 'other private']}
             id='debtComposition'
             title='Public external debt composition ($ million)'
+            chartSource={
+              countriesSources.filter(
+                d => d.graph === 'Public external debt composition',
+              )[0]
+            }
           />
         </div>
       </div>
@@ -184,7 +205,7 @@ export function AllCountries(props: Props) {
               <h3 className='undp-typography'>
                 {countryStats?.netInterestPayments}
               </h3>
-              <h5 className='undp-typography'>USD million</h5>
+              <h5 className='undp-typography'>USD</h5>
               <p className='undp-typography'>
                 Net interest payments General Government Debt (
                 {countryStats?.netInterestPaymentsYear})
@@ -194,7 +215,7 @@ export function AllCountries(props: Props) {
           <div style={{ width: '50%' }}>
             <div className='stat-card'>
               <h3 className='undp-typography'>{countryStats?.externalPPG}</h3>
-              <h5 className='undp-typography'>USD million</h5>
+              <h5 className='undp-typography'>USD</h5>
               <p className='undp-typography'>
                 Total external PPG debt service payments (
                 {countryStats?.externalPPGYear})
@@ -206,11 +227,16 @@ export function AllCountries(props: Props) {
           <div style={{ width: '50%' }}>
             {countryNetInterest !== undefined ? (
               <LineChart
-                data={countryNetInterest.filter(d => d.year <= yearNetInterest)}
+                data={countryNetInterest}
                 indicators={['percentage']}
                 id='countryNetInterest'
                 title='Net interest payments (% of revenue)'
                 selectedCountryCode={selectedCountry.value}
+                chartSource={
+                  countriesSources.filter(
+                    d => d.graph === 'Net interest payments',
+                  )[0]
+                }
               />
             ) : null}
           </div>
@@ -224,6 +250,11 @@ export function AllCountries(props: Props) {
                 id='countryDebtService'
                 title='Total debt service - PPG external debt'
                 selectedCountryCode={selectedCountry.value}
+                chartSource={
+                  countriesSources.filter(
+                    d => d.graph === 'Total debt service',
+                  )[0]
+                }
               />
             ) : null}
           </div>

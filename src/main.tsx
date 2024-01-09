@@ -4,6 +4,7 @@ import App from './App';
 import AppNetInterest from './AppNetInterest';
 import AppExternalDebt from './AppExternalDebt';
 import AppCreditDsaRating from './AppCreditDsaRating';
+import AppCompositionGroups from './AppCompositionGroups';
 import AppAllCountries from './AppAllCountries';
 
 ReactDOM.createRoot(document.getElementById('debtToGdp') as HTMLElement).render(
@@ -30,6 +31,13 @@ ReactDOM.createRoot(
 ).render(
   <React.StrictMode>
     <AppCreditDsaRating />
+  </React.StrictMode>,
+);
+ReactDOM.createRoot(
+  document.getElementById('compositionGroups') as HTMLElement,
+).render(
+  <React.StrictMode>
+    <AppCompositionGroups />
   </React.StrictMode>,
 );
 ReactDOM.createRoot(

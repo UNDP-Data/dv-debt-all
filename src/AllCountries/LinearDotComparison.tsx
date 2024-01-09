@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import { scaleLinear } from 'd3-scale';
 import { extent } from 'd3-array';
-
+import UNDPColorModule from 'undp-viz-colors';
 import { useRef, useState, useEffect } from 'react';
-import { CountryValueType } from '../Types';
+import { ChartSourceType, CountryValueType } from '../Types';
 
 interface Props {
   data: CountryValueType[];
@@ -12,19 +13,33 @@ interface Props {
   year: number;
   title: string;
   svgHeight: number;
+  chartSource: ChartSourceType;
 }
 
 export function LinearDotsComparison(props: Props) {
-  const { data, selectedCountryCode, id, year, title, svgHeight } = props;
+  const { data, selectedCountryCode, id, year, title, svgHeight, chartSource } =
+    props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
   const margin = { top: 50, right: 10, bottom: 20, left: 10 };
   const xDomain = extent(data, d => Number(d.value));
-  //  const colors=[1,4,6,9,12]
+  const colors = UNDPColorModule.sequentialColors.negativeColorsx07
+    .slice()
+    .reverse();
+
+  const colorScale = (d: number) => {
+    if (d < 4) return colors[0];
+    if (d < 6) return colors[1];
+    if (d < 9) return colors[2];
+    if (d < 12) return colors[3];
+    return colors[4];
+  };
   const x = scaleLinear()
     .domain(xDomain as [number, number])
     .range([0, svgWidth - margin.left - margin.right]);
+
   const countryData = data.filter(d => d.code === selectedCountryCode)[0];
+  console.log('data', data);
   useEffect(() => {
     if (containerRef.current) {
       setSvgWidth(containerRef.current.clientWidth);
@@ -48,19 +63,28 @@ export function LinearDotsComparison(props: Props) {
             id={id}
           >
             <g transform={`translate(${margin.left},${margin.top})`}>
+              <rect
+                x={x(1) - 6}
+                y={-6}
+                width={x(17) - x(1) + 12}
+                rx='5'
+                height='12px'
+                fill='#FFF'
+              />
               {data.map((d, i) => (
-                <g key={i} cy={5} transform={`translate(${x(d.value)},0)`}>
-                  <circle r={10} fill='#ccc' opacity={0.2} />
+                <g key={i} transform={`translate(${x(d.value)},0)`}>
+                  <circle r={6} fill={colorScale(d.value)} opacity={0.3} />
                 </g>
               ))}
               <circle
                 r={10}
-                fill='#006eb5'
+                fill={colorScale(countryData.value)}
                 cy={0}
-                transform={`translate(${x(countryData.value)},0)`}
+                cx={x(countryData.value)}
+                stroke='#000'
               />
               <text
-                className='label'
+                className='labelSelected'
                 x={x(countryData.value as number)}
                 y='30'
                 textAnchor='middle'
@@ -85,26 +109,15 @@ export function LinearDotsComparison(props: Props) {
               </text>
             </g>
           </svg>
-          <p className='source'>
-            Source: based on ratings from the three major ratings firms S&P,
-            Moodys and Fitch accessed through{' '}
-            <a
-              href='https://www.tradingeconomics.com'
-              target='_blank'
-              rel='noreferrer'
-              className='undp-style small-font'
-            >
-              https://www.tradingeconomics.com
-            </a>
-            &nbsp;Ultimo-October 2023.
-          </p>
-          <p className='source'>
-            Note: The graphic shows the average numeric rating across the three
-            major rating agencies.
-          </p>
+          {chartSource.note ? (
+            <p className='source'>{`Note: ${chartSource.note}`}</p>
+          ) : null}
+          {chartSource.source ? (
+            <p className='source'>{`Source: ${chartSource.source}`}</p>
+          ) : null}
         </>
       ) : (
-        <div>N/A</div>
+        <div className='margin-top-06'>N/A</div>
       )}
     </div>
   );

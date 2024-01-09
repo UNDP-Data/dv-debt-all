@@ -9,6 +9,7 @@ import {
   ExternalDebtType,
   CountryValueType,
   CountryCategoryType,
+  ChartSourceType,
 } from './Types';
 import './style.css';
 import { AllCountries } from './AllCountries';
@@ -39,6 +40,9 @@ function App() {
     label: 'Afghanistan',
     value: 'AFG',
   });
+  const [countriesSources, setCountriesSources] = useState<ChartSourceType[]>(
+    [],
+  );
   const dataurl =
     'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/countries/';
   useEffect(() => {
@@ -50,6 +54,7 @@ function App() {
       csv(`${dataurl}tdsExternalDebt.csv`), // 5. TDS externaldebt
       csv(`${dataurl}ggDebt.csv`), // 3.GG debt
       csv(`${dataurl}externalDebt.csv`), // 4. External debt
+      csv(`${dataurl}countries-sources.csv`),
     ]).then(
       ([
         groupingsCsv,
@@ -59,7 +64,15 @@ function App() {
         tdsExternalCsv,
         ggDebtCsv,
         externalDebtCsv,
+        countriesSourcesCsv,
       ]) => {
+        const countriesSourcesData = countriesSourcesCsv.map((d: any) => ({
+          graph: d.graph,
+          source: d.source,
+          note: d.note,
+        }));
+        setCountriesSources(countriesSourcesData);
+        console.log('countriesSources', countriesSourcesData);
         const countryData = groupingsCsv.map((d: any) => ({
           label: d.name,
           value: d.iso,
@@ -76,7 +89,7 @@ function App() {
         }));
         const netInterestData = netInterestCsv
           .filter((d: any) => {
-            return Number(d['Net interest percent']);
+            return Number(d['Net interest (% of revenue)']);
           })
           .map((d: any) => ({
             code: d.iso,
@@ -84,6 +97,7 @@ function App() {
             percentage: Number(d['Net interest (% of revenue)']),
             million: Number(d['Net interest ($ million)']),
           }));
+        console.log('netInterest', netInterestData);
         const tdsDebtData = tdsExternalCsv
           .filter((d: any) => {
             return Number(d['%  of revenue']) || Number(d['%  of exports']);
@@ -96,10 +110,7 @@ function App() {
           }));
         const debtToGdpData = ggDebtCsv
           .filter((d: any) => {
-            return (
-              Number(d['GG debt (% of GDP)']) ||
-              Number(d['GG debt ($ billion)'])
-            );
+            return Number(d['GG debt ($ billion)']);
           })
           .map((d: any) => ({
             code: d.iso,
@@ -156,7 +167,8 @@ function App() {
       tdsExternalDebt &&
       externalDebt &&
       creditRating &&
-      dsaRating ? (
+      dsaRating &&
+      countriesSources ? (
         <AllCountries
           countryDebtToGdp={debtToGdp?.filter(
             d => d.code === selectedCountry.value,
@@ -175,6 +187,7 @@ function App() {
           countryDsaRating={dsaRating?.filter(
             d => d.code === selectedCountry.value,
           )}
+          countriesSources={countriesSources}
         />
       ) : null}
     </div>

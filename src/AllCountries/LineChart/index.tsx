@@ -5,6 +5,7 @@ import UNDPColorModule from 'undp-viz-colors';
 import { extent } from 'd3-array';
 import { useRef, useEffect, useState } from 'react';
 import { Graph } from './Graph';
+import { ChartSourceType } from '../../Types';
 
 interface Props {
   data: object[];
@@ -12,10 +13,13 @@ interface Props {
   id: string;
   title: string;
   selectedCountryCode: string;
+  chartSource: ChartSourceType;
 }
 
 export function LineChart(props: Props) {
-  const { data, indicators, id, title, selectedCountryCode } = props;
+  const { data, indicators, id, title, selectedCountryCode, chartSource } =
+    props;
+  console.log('chartSource', chartSource, 'title', title);
   const yearsDomain = { min: 0, max: 3000 };
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
@@ -70,10 +74,12 @@ export function LineChart(props: Props) {
           selectedCountryCode={selectedCountryCode}
         />
       </div>
-      <p className='source'>
-        Source: based on IMF World Economic Outlook, October 2023
-      </p>
-      <p className='source'>Note:</p>
+      {chartSource?.note ? (
+        <p className='source'>{`Note: ${chartSource.note}`}</p>
+      ) : null}
+      {chartSource?.source ? (
+        <p className='source'>{`Source: ${chartSource.source}`}</p>
+      ) : null}
     </div>
   );
 }
