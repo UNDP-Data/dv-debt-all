@@ -149,6 +149,7 @@ export function AllCountries(props: Props) {
               id='countryDebtToGdp'
               title='Government debt as percentage of GDP'
               selectedCountryCode={selectedCountry.value}
+              svgHeight={350}
               chartSource={
                 countriesSources.filter(
                   d => d.graph === 'Government debt as a percentage of GDP',
@@ -234,6 +235,7 @@ export function AllCountries(props: Props) {
                 id='countryNetInterest'
                 title='Net interest payments (% of revenue)'
                 selectedCountryCode={selectedCountry.value}
+                svgHeight={300}
                 chartSource={
                   countriesSources.filter(
                     d => d.graph === 'Net interest payments',
@@ -252,6 +254,7 @@ export function AllCountries(props: Props) {
                 id='countryDebtService'
                 title='Total debt service - PPG external debt'
                 selectedCountryCode={selectedCountry.value}
+                svgHeight={300}
                 chartSource={
                   countriesSources.filter(
                     d => d.graph === 'Total debt service',

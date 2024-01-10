@@ -12,17 +12,24 @@ interface Props {
   indicators: string[];
   id: string;
   title: string;
+  svgHeight: number;
   selectedCountryCode: string;
   chartSource: ChartSourceType;
 }
 
 export function LineChart(props: Props) {
-  const { data, indicators, id, title, selectedCountryCode, chartSource } =
-    props;
+  const {
+    data,
+    indicators,
+    id,
+    title,
+    selectedCountryCode,
+    svgHeight,
+    chartSource,
+  } = props;
   const yearsDomain = { min: 0, max: 3000 };
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
-  const [svgHeight, setSvgHeight] = useState<number | 180>(180);
   indicators.forEach(indicator => {
     const indExtent = extent(data, (d: any) =>
       !d[indicator].isNaN ? d.year : null,
@@ -34,15 +41,8 @@ export function LineChart(props: Props) {
   const yearDomain = [yearsDomain.min as number, yearsDomain.max as number];
 
   useEffect(() => {
-    console.log('in use effect line chart');
-    /* if (containerRef.current) {
-      setSvgWidth(containerRef.current.clientWidth);
-      setSvgHeight(containerRef.current.clientHeight);
-    } */
     const resizeObserver = new ResizeObserver(entries => {
-      console.log('entries', entries[0].target.clientWidth);
       setSvgWidth(entries[0].target.clientWidth);
-      setSvgHeight(350);
     });
     if (containerRef.current) resizeObserver.observe(containerRef.current);
     return () => resizeObserver.disconnect();

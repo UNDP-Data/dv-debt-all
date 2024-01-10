@@ -161,6 +161,22 @@ export function Graph(props: Props) {
                     </g>
                   ))}
                   <rect
+                    x={-30}
+                    y={graphHeight}
+                    width={60}
+                    height={20}
+                    fill='#F8F8F8'
+                    opacity={hoveredYear === (d as any).year ? 0.7 : 0}
+                  />
+                  <text
+                    opacity={hoveredYear === (d as any).year ? 1 : 0}
+                    className='highlightYear'
+                    textAnchor='middle'
+                    y={graphHeight + 17}
+                  >
+                    {(d as any).year}
+                  </text>
+                  <rect
                     onMouseEnter={() => {
                       setHoveredYear(d.year);
                     }}

@@ -25,9 +25,11 @@ export function HorizontalScale(props: Props) {
     .reverse();
 
   useEffect(() => {
-    if (containerRef.current) {
-      setSvgWidth(containerRef.current.clientWidth);
-    }
+    const resizeObserver = new ResizeObserver(entries => {
+      setSvgWidth(entries[0].target.clientWidth);
+    });
+    if (containerRef.current) resizeObserver.observe(containerRef.current);
+    return () => resizeObserver.disconnect();
   }, []);
   return (
     <div ref={containerRef} className='chart-container rating'>

@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import { scaleLinear } from 'd3-scale';
 import { extent } from 'd3-array';
+import { Tooltip } from 'antd';
 import UNDPColorModule from 'undp-viz-colors';
 import { useRef, useState, useEffect } from 'react';
 import { ChartSourceType, CountryValueType } from '../Types';
@@ -40,9 +41,11 @@ export function LinearDotsComparison(props: Props) {
 
   const countryData = data.filter(d => d.code === selectedCountryCode)[0];
   useEffect(() => {
-    if (containerRef.current) {
-      setSvgWidth(containerRef.current.clientWidth);
-    }
+    const resizeObserver = new ResizeObserver(entries => {
+      setSvgWidth(entries[0].target.clientWidth);
+    });
+    if (containerRef.current) resizeObserver.observe(containerRef.current);
+    return () => resizeObserver.disconnect();
   }, []);
   useEffect(() => {
     x.range([0, svgWidth - margin.left - margin.right]);
@@ -72,16 +75,21 @@ export function LinearDotsComparison(props: Props) {
               />
               {data.map((d, i) => (
                 <g key={i} transform={`translate(${x(d.value)},0)`}>
-                  <circle r={6} fill={colorScale(d.value)} opacity={0.3} />
+                  <Tooltip title={`${d.name}: ${d.value}`}>
+                    <circle r={6} fill={colorScale(d.value)} opacity={0.3} />
+                  </Tooltip>
                 </g>
               ))}
-              <circle
-                r={10}
-                fill={colorScale(countryData.value)}
-                cy={0}
-                cx={x(countryData.value)}
-                stroke='#000'
-              />
+              <Tooltip title={`${countryData.name}: ${countryData.value}`}>
+                <circle
+                  r={10}
+                  fill={colorScale(countryData.value)}
+                  cy={0}
+                  cx={x(countryData.value)}
+                  stroke='#000'
+                />
+              </Tooltip>
+
               <text
                 className='labelSelected'
                 x={x(countryData.value as number)}

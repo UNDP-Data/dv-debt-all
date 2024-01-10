@@ -37,16 +37,6 @@ export function Graph(props: Props) {
     if (maxIndValue > maxParam) maxParam = maxIndValue;
   });
   const minParam = 0;
-  /* let numberOfTicksY = maxParam - minParam + 1;
-  numberOfTicksY = numberOfTicksY > 15 ? numberOfTicksY / 2 : numberOfTicksY;
-  let numberOfTicksX = yearDomain[1] - yearDomain[0];
-  numberOfTicksX = numberOfTicksX > 5 ? numberOfTicksX / 3 : numberOfTicksX;
-  console.log(
-    'number of ticks x',
-    numberOfTicksX,
-    'number of ticks y',
-    numberOfTicksY,
-  ); */
   const x = scaleLinear()
     .domain(yearDomain as [number, number])
     .range([0, graphWidth]);
@@ -59,7 +49,6 @@ export function Graph(props: Props) {
     .tickSize(-graphWidth)
     .tickFormat((d: any) => `${d}%`)
     .ticks(5);
-  // .ticks(numberOfTicksY);
   const xAxis = axisBottom(x)
     .tickSize(0)
     .tickSizeOuter(0)
