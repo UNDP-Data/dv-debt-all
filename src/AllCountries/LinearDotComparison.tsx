@@ -39,7 +39,6 @@ export function LinearDotsComparison(props: Props) {
     .range([0, svgWidth - margin.left - margin.right]);
 
   const countryData = data.filter(d => d.code === selectedCountryCode)[0];
-  console.log('data', data);
   useEffect(() => {
     if (containerRef.current) {
       setSvgWidth(containerRef.current.clientWidth);

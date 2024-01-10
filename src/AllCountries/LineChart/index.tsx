@@ -19,7 +19,6 @@ interface Props {
 export function LineChart(props: Props) {
   const { data, indicators, id, title, selectedCountryCode, chartSource } =
     props;
-  console.log('chartSource', chartSource, 'title', title);
   const yearsDomain = { min: 0, max: 3000 };
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
@@ -37,8 +36,13 @@ export function LineChart(props: Props) {
     if (containerRef.current) {
       setSvgWidth(containerRef.current.clientWidth);
       setSvgHeight(containerRef.current.clientHeight);
+      console.log(
+        'size container',
+        containerRef.current.clientWidth,
+        containerRef.current.clientHeight,
+      );
     }
-  }, []);
+  }, [containerRef.current]);
   return (
     <div className='chart-container'>
       <div className='flex-div flex-space-between flex-wrap margin-bottom-03'>

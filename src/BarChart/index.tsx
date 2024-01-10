@@ -18,7 +18,6 @@ export function BarChart(props: Props) {
   const [revenueExportsSelection, setRevenueExportsSelection] =
     useState('revenue');
   const [categorySelection, setCategorySelection] = useState('All developing');
-  // console.log('data', data);
   return (
     <>
       <div>

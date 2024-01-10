@@ -72,7 +72,6 @@ function App() {
           note: d.note,
         }));
         setCountriesSources(countriesSourcesData);
-        console.log('countriesSources', countriesSourcesData);
         const countryData = groupingsCsv.map((d: any) => ({
           label: d.name,
           value: d.iso,
@@ -97,7 +96,6 @@ function App() {
             percentage: Number(d['Net interest (% of revenue)']),
             million: Number(d['Net interest ($ million)']),
           }));
-        console.log('netInterest', netInterestData);
         const tdsDebtData = tdsExternalCsv
           .filter((d: any) => {
             return Number(d['%  of revenue']) || Number(d['%  of exports']);

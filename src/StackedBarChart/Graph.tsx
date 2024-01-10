@@ -17,8 +17,6 @@ export function Graph(props: Props) {
   const numberData = data.filter(d => (d as any).value === 'Number')[0];
   const subgroups = Object.keys(data[0]).slice(2);
   const stackedData = stack().keys(subgroups)(percentageData as any);
-  console.log('stackedData', stackedData);
-  console.log('data', data);
   const y = scaleLinear().domain([0, 100]).range([0, graphHeight]).nice();
   return (
     <div>
