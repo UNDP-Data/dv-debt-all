@@ -32,17 +32,21 @@ export function LineChart(props: Props) {
     if (indExtent[1] < yearsDomain.max) yearsDomain.max = indExtent[1];
   });
   const yearDomain = [yearsDomain.min as number, yearsDomain.max as number];
+
   useEffect(() => {
-    if (containerRef.current) {
+    console.log('in use effect line chart');
+    /* if (containerRef.current) {
       setSvgWidth(containerRef.current.clientWidth);
       setSvgHeight(containerRef.current.clientHeight);
-      console.log(
-        'size container',
-        containerRef.current.clientWidth,
-        containerRef.current.clientHeight,
-      );
-    }
-  }, [containerRef.current]);
+    } */
+    const resizeObserver = new ResizeObserver(entries => {
+      console.log('entries', entries[0].target.clientWidth);
+      setSvgWidth(entries[0].target.clientWidth);
+      setSvgHeight(350);
+    });
+    if (containerRef.current) resizeObserver.observe(containerRef.current);
+    return () => resizeObserver.disconnect();
+  }, []);
   return (
     <div className='chart-container'>
       <div className='flex-div flex-space-between flex-wrap margin-bottom-03'>
