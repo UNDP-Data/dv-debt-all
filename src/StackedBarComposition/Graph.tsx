@@ -6,10 +6,11 @@ import UNDPColorModule from 'undp-viz-colors';
 
 interface Props {
   data: object;
+  svgWidth: number;
 }
 
 export function Graph(props: Props) {
-  const { data } = props;
+  const { data, svgWidth } = props;
   const margin = { top: 20, right: 30, bottom: 50, left: 60 };
   const graphHeight = 500 - margin.top - margin.bottom;
   const subgroups = Object.keys(data).slice(2);
@@ -21,8 +22,8 @@ export function Graph(props: Props) {
   return (
     <div>
       {Object.keys(data).length > 0 ? (
-        <svg width='580px' height='470px' id='compositionGroupsSvg'>
-          <g transform={`translate(${margin.left},${margin.top})`}>
+        <svg width={`${svgWidth}px`} height='470px' id='compositionGroupsSvg'>
+          <g transform={`translate(${svgWidth / 2 - 200},${margin.top})`}>
             <g>
               {stackedData.map((d, i) => (
                 <g key={i}>

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Select } from 'antd';
 import { CategoryData, CompositionGroupsType } from '../Types';
 import { Graph } from './Graph';
@@ -15,6 +15,15 @@ export function StackedBarComposition(props: Props) {
   const [selectedData, setSelectedData] = useState<object>(
     data.filter(d => d.groups === categorySelection)[0],
   );
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [svgWidth, setSvgWidth] = useState<number | 400>(400);
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(entries => {
+      setSvgWidth(entries[0].target.clientWidth);
+    });
+    if (containerRef.current) resizeObserver.observe(containerRef.current);
+    return () => resizeObserver.disconnect();
+  }, []);
   useEffect(() => {
     const groupData = data.filter(d => d.groups === categorySelection)[0];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,7 +58,9 @@ export function StackedBarComposition(props: Props) {
             </h6>
           </div>
         </div>
-        <Graph data={selectedData} />
+        <div ref={containerRef}>
+          <Graph data={selectedData} svgWidth={svgWidth} />
+        </div>
         <p className='source'>Source: -- </p>
         <p className='source'>Note: -- </p>
       </div>

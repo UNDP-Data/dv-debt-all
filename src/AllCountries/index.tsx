@@ -63,17 +63,22 @@ export function AllCountries(props: Props) {
         debtValue !== undefined
           ? formatMillion(Math.round(debtValue.million))
           : 'N/A',
-      debtYear: debtValue.year.toString(),
+      debtYear: debtValue !== undefined ? debtValue.year.toString() : 'N/A',
       externalGovDebt:
         externalDebt !== undefined
           ? formatMillion(Math.round(externalDebt.total))
           : 'N/A',
       externalGovDebtYear: yearExternalDebt.toString(),
-      netInterestPayments: formatMillion(
-        countryNetInterest[countryNetInterest.length - 1].million,
-      ),
+      netInterestPayments:
+        countryNetInterest[countryNetInterest.length - 1] !== undefined
+          ? formatMillion(
+              countryNetInterest[countryNetInterest.length - 1].million,
+            )
+          : 'N/A',
       netInterestPaymentsYear:
-        countryNetInterest[countryNetInterest.length - 1].year.toString(),
+        countryNetInterest[countryNetInterest.length - 1] !== undefined
+          ? countryNetInterest[countryNetInterest.length - 1].year.toString()
+          : 'N/A',
       externalPPG:
         externalDebt !== undefined
           ? formatMillion(

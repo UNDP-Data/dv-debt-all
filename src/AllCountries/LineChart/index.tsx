@@ -52,42 +52,52 @@ export function LineChart(props: Props) {
       <div className='flex-div flex-space-between flex-wrap margin-bottom-03'>
         <div>
           <h6 className='undp-typography margin-bottom-01'>{title}</h6>
-          <p className='undp-typography small-font margin-bottom-01'>
-            Years: {yearsDomain.min} - {yearsDomain.max}
-          </p>
-          <div className='legend-container'>
-            {indicators.map((k, j) => (
-              <div key={j} className='legend-item'>
-                <div
-                  className='legend-circle-medium'
-                  style={{
-                    backgroundColor:
-                      UNDPColorModule.categoricalColors.colors[j],
-                  }}
-                />
-                <div className='small-font'>{k}</div>
+          {data.length > 0 ? (
+            <>
+              <p className='undp-typography small-font margin-bottom-01'>
+                Years: {yearsDomain.min} - {yearsDomain.max}
+              </p>
+              <div className='legend-container'>
+                {indicators.map((k, j) => (
+                  <div key={j} className='legend-item'>
+                    <div
+                      className='legend-circle-medium'
+                      style={{
+                        backgroundColor:
+                          UNDPColorModule.categoricalColors.colors[j],
+                      }}
+                    />
+                    <div className='small-font'>{k}</div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          ) : null}
         </div>
       </div>
-      <div ref={containerRef} className='margin-bottom-02'>
-        <Graph
-          data={data}
-          indicators={indicators}
-          id={id}
-          yearDomain={yearDomain}
-          svgWidth={svgWidth}
-          svgHeight={svgHeight}
-          selectedCountryCode={selectedCountryCode}
-        />
-      </div>
-      {chartSource?.note ? (
-        <p className='source'>{`Note: ${chartSource.note}`}</p>
-      ) : null}
-      {chartSource?.source ? (
-        <p className='source'>{`Source: ${chartSource.source}`}</p>
-      ) : null}
+      {data.length > 0 ? (
+        <>
+          <div ref={containerRef} className='margin-bottom-02'>
+            <Graph
+              data={data}
+              indicators={indicators}
+              id={id}
+              yearDomain={yearDomain}
+              svgWidth={svgWidth}
+              svgHeight={svgHeight}
+              selectedCountryCode={selectedCountryCode}
+            />
+          </div>
+          {chartSource?.note ? (
+            <p className='source'>{`Note: ${chartSource.note}`}</p>
+          ) : null}
+          {chartSource?.source ? (
+            <p className='source'>{`Source: ${chartSource.source}`}</p>
+          ) : null}
+        </>
+      ) : (
+        <div className='center-area-error-el'>No data available</div>
+      )}
     </div>
   );
 }

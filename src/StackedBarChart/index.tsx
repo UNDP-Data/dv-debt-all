@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
 import { CategoryData, CreditRatingType, DsaRatingType } from '../Types';
 import { Graph } from './Graph';
@@ -19,6 +19,15 @@ export function StackedBarChart(props: Props) {
   const [selectedData, setSelectedData] = useState<object[]>(
     creditData.filter(d => d.region === categorySelection),
   );
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [svgWidth, setSvgWidth] = useState<number | 400>(400);
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(entries => {
+      setSvgWidth(entries[0].target.clientWidth);
+    });
+    if (containerRef.current) resizeObserver.observe(containerRef.current);
+    return () => resizeObserver.disconnect();
+  }, []);
   useEffect(() => {
     const data =
       creditDsaSelection === 'credit'
@@ -73,7 +82,9 @@ export function StackedBarChart(props: Props) {
             </div>
           </div>
         </div>
-        <Graph data={selectedData} />
+        <div ref={containerRef}>
+          <Graph data={selectedData} svgWidth={svgWidth} />
+        </div>
         <p className='source'>
           Source: Credit rating based on S&P, Moody’s and FITCH long-term
           sovereign credit ratings as of September 3, 2023 accessed through
