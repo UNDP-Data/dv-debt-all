@@ -27,7 +27,7 @@ export function Graph(props: Props) {
     svgHeight,
     selectedCountryCode,
   } = props;
-  const margin = { top: 40, right: 40, bottom: 20, left: 50 };
+  const margin = { top: 40, right: 30, bottom: 20, left: 50 };
   const graphWidth = svgWidth - margin.left - margin.right;
   const graphHeight = svgHeight - margin.top - margin.bottom;
   const [hoveredYear, setHoveredYear] = useState<undefined | string>(undefined);
@@ -149,11 +149,17 @@ export function Graph(props: Props) {
                     )}
                     <text
                       className='label'
-                      x={indicators.length === 1 ? -25 : 10}
+                      x={
+                        indicators.length === 1
+                          ? -25
+                          : i > data.length - 3
+                          ? -60
+                          : 10
+                      }
                       y={indicators.length === 1 ? -15 : 5}
                       opacity={hoveredYear === (d as any).year ? 1 : 0}
                     >
-                      {(d as any)[k].toFixed(2)}%
+                      {(d as any)[k] ? `${(d as any)[k].toFixed(2)}%` : '-'}
                     </text>
                   </g>
                   <rect

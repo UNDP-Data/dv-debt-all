@@ -52,27 +52,27 @@ export function HorizontalScale(props: Props) {
                     key={i}
                     x={d === value ? 2 : 0}
                     y={2}
-                    height={46}
+                    height={25}
                     width={d === value ? 116 : 120}
                     fill={colors[i]}
                     className={d === value ? 'highlightScale' : ''}
                   />
-                  <text y={70} className='label '>
+                  <text y={45} className='label '>
                     {d}
                   </text>
                 </g>
               ))}
             </g>
           </svg>
-          {chartSource.note ? (
-            <p className='source'>{`Note: ${chartSource.note}`}</p>
-          ) : null}
           {chartSource.source ? (
             <p className='source'>{`Source: ${chartSource.source}`}</p>
           ) : null}
+          {chartSource.note ? (
+            <p className='source'>{`Note: ${chartSource.note}`}</p>
+          ) : null}
         </>
       ) : (
-        <div className='margin-top-06'>N/A</div>
+        <div className='not-available'>N/A</div>
       )}
     </div>
   );

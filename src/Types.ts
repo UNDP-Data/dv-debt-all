@@ -67,6 +67,7 @@ export interface CountryStatsType {
   debtMillion: string;
   debtPercent: string;
   debtYear: string;
+  dataDebtYear: number;
   externalGovDebt: string;
   externalGovDebtYear: string;
   netInterestPayments: string;
@@ -97,4 +98,5 @@ export interface ChartSourceType {
   graph: string;
   note: string;
   source: string;
+  year: number;
 }

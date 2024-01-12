@@ -70,6 +70,7 @@ function App() {
           graph: d.graph,
           source: d.source,
           note: d.note,
+          year: Number(d.year),
         }));
         setCountriesSources(countriesSourcesData);
         const countryData = groupingsCsv.map((d: any) => ({
@@ -108,7 +109,7 @@ function App() {
           }));
         const debtToGdpData = ggDebtCsv
           .filter((d: any) => {
-            return Number(d['GG debt ($ billion)']);
+            return Number(d['GG debt (% of GDP)']);
           })
           .map((d: any) => ({
             code: d.iso,

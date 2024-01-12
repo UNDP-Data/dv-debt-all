@@ -67,7 +67,9 @@ export function LineChart(props: Props) {
                           UNDPColorModule.categoricalColors.colors[j],
                       }}
                     />
-                    <div className='small-font'>{k}</div>
+                    <div className='small-font'>
+                      {k[0].toUpperCase() + k.slice(1)}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -88,11 +90,11 @@ export function LineChart(props: Props) {
               selectedCountryCode={selectedCountryCode}
             />
           </div>
-          {chartSource?.note ? (
-            <p className='source'>{`Note: ${chartSource.note}`}</p>
-          ) : null}
           {chartSource?.source ? (
             <p className='source'>{`Source: ${chartSource.source}`}</p>
+          ) : null}
+          {chartSource?.note ? (
+            <p className='source'>{`Note: ${chartSource.note}`}</p>
           ) : null}
         </>
       ) : (

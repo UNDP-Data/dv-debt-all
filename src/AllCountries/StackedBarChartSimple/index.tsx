@@ -38,11 +38,11 @@ export function StackedBarChartSimple(props: Props) {
             maxValue={data[0].total}
             svgWidth={svgWidth}
           />
-          {chartSource.note ? (
-            <p className='source'>{`Note: ${chartSource.note}`}</p>
-          ) : null}
           {chartSource.source ? (
             <p className='source'>{`Source: ${chartSource.source}`}</p>
+          ) : null}
+          {chartSource.note ? (
+            <p className='source'>{`Note: ${chartSource.note}`}</p>
           ) : null}
         </div>
       ) : (

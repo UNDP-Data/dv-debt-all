@@ -94,3 +94,7 @@ p.source{
     display: none;
   }
 }
+.not-available{
+  font-size: 2rem;
+  font-weight: bold;
+}

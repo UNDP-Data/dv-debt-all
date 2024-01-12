@@ -22,19 +22,27 @@ export function LinearDotsComparison(props: Props) {
     props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
-  const margin = { top: 50, right: 10, bottom: 20, left: 10 };
+  const margin = { top: 30, right: 10, bottom: 20, left: 10 };
   const xDomain = extent(data, d => Number(d.value));
   const colors = UNDPColorModule.sequentialColors.negativeColorsx07
     .slice()
     .reverse();
 
-  const colorScale = (d: number) => {
-    if (d < 4) return colors[0];
-    if (d < 6) return colors[1];
-    if (d < 9) return colors[2];
-    if (d < 12) return colors[3];
-    return colors[4];
+  const ratingScale = (d: number) => {
+    if (d < 4) return 0;
+    if (d < 6) return 1;
+    if (d < 9) return 2;
+    if (d < 12) return 3;
+    return 4;
   };
+  const colorScale = (d: number) => colors[ratingScale(d)];
+  const categories = [
+    'In default',
+    'Substantial risk or extremely speculative',
+    'Highly speculative',
+    'Non-investment grade',
+    'Investment grade',
+  ];
   const x = scaleLinear()
     .domain(xDomain as [number, number])
     .range([0, svgWidth - margin.left - margin.right]);
@@ -100,6 +108,14 @@ export function LinearDotsComparison(props: Props) {
               </text>
               <text
                 className='label'
+                x={x(countryData.value as number)}
+                y='50'
+                textAnchor='middle'
+              >
+                {categories[ratingScale(countryData.value as number)]}
+              </text>
+              <text
+                className='label'
                 x={x(xDomain[0] as number)}
                 y='30'
                 textAnchor='middle'
@@ -116,11 +132,11 @@ export function LinearDotsComparison(props: Props) {
               </text>
             </g>
           </svg>
-          {chartSource.note ? (
-            <p className='source'>{`Note: ${chartSource.note}`}</p>
-          ) : null}
           {chartSource.source ? (
             <p className='source'>{`Source: ${chartSource.source}`}</p>
+          ) : null}
+          {chartSource.note ? (
+            <p className='source'>{`Note: ${chartSource.note}`}</p>
           ) : null}
         </>
       ) : (
