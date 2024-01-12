@@ -67,7 +67,6 @@ export interface CountryStatsType {
   debtMillion: string;
   debtPercent: string;
   debtYear: string;
-  dataDebtYear: number;
   externalGovDebt: string;
   externalGovDebtYear: string;
   netInterestPayments: string;

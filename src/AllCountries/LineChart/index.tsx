@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import UNDPColorModule from 'undp-viz-colors';
-import { extent } from 'd3-array';
+// import { extent } from 'd3-array';
 import { useRef, useEffect, useState } from 'react';
 import { Graph } from './Graph';
 import { ChartSourceType } from '../../Types';
@@ -27,18 +27,20 @@ export function LineChart(props: Props) {
     svgHeight,
     chartSource,
   } = props;
-  const yearsDomain = { min: 0, max: 3000 };
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
-  indicators.forEach(indicator => {
+  const yearsDomain = [2000, 2025];
+  // dynamic years domain
+  // const yearsDomain = { min: 0, max: 3000 };
+  /* indicators.forEach(indicator => {
     const indExtent = extent(data, (d: any) =>
       !d[indicator].isNaN ? d.year : null,
     );
     // (indicator, indExtent);
     if (indExtent[0] > yearsDomain.min) yearsDomain.min = indExtent[0];
-    if (indExtent[1] < yearsDomain.max) yearsDomain.max = indExtent[1];
-  });
-  const yearDomain = [yearsDomain.min as number, yearsDomain.max as number];
+    if (indExtent[1] < yearsDomain.max) yearsDomain.max = indExtent[1]; 
+  }); */
+  // const yearDomain = [yearsDomain.min as number, yearsDomain.max as number];
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver(entries => {
@@ -55,7 +57,7 @@ export function LineChart(props: Props) {
           {data.length > 0 ? (
             <>
               <p className='undp-typography small-font margin-bottom-01'>
-                Years: {yearsDomain.min} - {yearsDomain.max}
+                Years: {yearsDomain[0]} - {yearsDomain[1]}
               </p>
               <div className='legend-container'>
                 {indicators.map((k, j) => (
@@ -84,7 +86,7 @@ export function LineChart(props: Props) {
               data={data}
               indicators={indicators}
               id={id}
-              yearDomain={yearDomain}
+              yearDomain={yearsDomain}
               svgWidth={svgWidth}
               svgHeight={svgHeight}
               selectedCountryCode={selectedCountryCode}

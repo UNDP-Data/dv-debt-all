@@ -58,7 +58,10 @@ export function AllCountries(props: Props) {
     )[0].year;
     // for countries with no data for the latest year
     const debtYear =
-      countryDebtToGdp.filter(d => d.year === debtChartYear)[0] === undefined
+      countryDebtToGdp[countryDebtToGdp.length - 1] === undefined
+        ? undefined
+        : countryDebtToGdp.filter(d => d.year === debtChartYear)[0] ===
+          undefined
         ? countryDebtToGdp[countryDebtToGdp.length - 1].year
         : debtChartYear;
     const debtValue = countryDebtToGdp.filter(d => d.year === debtYear)[0];
@@ -77,8 +80,10 @@ export function AllCountries(props: Props) {
       d => d.graph === 'Net interest payments',
     )[0].year;
     const yearNetInterest: any =
-      countryNetInterest.filter(d => d.year === yearNetInterestChart)[0] ===
-      undefined
+      countryNetInterest[countryNetInterest.length - 1] === undefined
+        ? undefined
+        : countryNetInterest.filter(d => d.year === yearNetInterestChart)[0] ===
+          undefined
         ? countryNetInterest[countryNetInterest.length - 1].year
         : yearNetInterestChart;
 
@@ -95,13 +100,13 @@ export function AllCountries(props: Props) {
           ? formatMillion(Math.round(debtValue.million))
           : 'N/A',
       debtYear: debtValue !== undefined ? debtValue.year.toString() : 'N/A',
-      dataDebtYear: countryDebtToGdp[countryDebtToGdp.length - 1].year,
       // --- external gov debt ---
       externalGovDebt:
         externalDebt !== undefined
           ? formatMillion(Math.round(externalDebt.total))
           : 'N/A',
-      externalGovDebtYear: externalDebt.year.toString(),
+      externalGovDebtYear:
+        externalDebt !== undefined ? externalDebt.year.toString() : 'N/A',
       // -- net interest payments
       netInterestPayments:
         netInterest !== undefined ? formatMillion(netInterest.million) : 'N/A',
@@ -114,7 +119,8 @@ export function AllCountries(props: Props) {
                 debtServicing['interest payment'],
             )
           : 'N/A',
-      externalPPGYear: debtServicing.year.toString(),
+      externalPPGYear:
+        debtServicing !== undefined ? debtServicing.year.toString() : 'N/A',
     };
     setCountryStats(allStats);
   }, [countryNetInterest, countryExternalDebt, countryDebtToGdp]);
@@ -167,8 +173,10 @@ export function AllCountries(props: Props) {
       <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
         <h2 className='undp-typography margin-top-10'>Government debt</h2>
         <p className='undp-typography'>
-          The graph shows the development of debt (as a percentage of GDP) from
-          2000 - {countryStats?.dataDebtYear}.
+          Figures below show the value of general gross government debt in 2023
+          (or latest available datapoint) in Million (Mn) USD and as a
+          percentage of GDP. The graph shows the development of debt (as a
+          percentage of GDP) from 2000-2025.
         </p>
       </div>
       <div className='flex-div'>
@@ -213,7 +221,9 @@ export function AllCountries(props: Props) {
           External government debt
         </h2>
         <p className='undp-typography'>
-          The graph shows the debt composition on the four categories bilateral,
+          The figure shows the value of the external public and publicly
+          guaranteed (PPG) debt stock in million (Mn) USD for 2022. The graph
+          shows the debt composition on the four categories bilateral,
           multilateral, bonds and ‘other private’ creditors.
         </p>
       </div>
@@ -248,10 +258,13 @@ export function AllCountries(props: Props) {
         <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
           <h2 className='undp-typography margin-top-10'>Debt servicing</h2>
           <p className='undp-typography'>
-            The graph on the left depicts government net interest payments (as a
-            percentage of revenue), and the graph on the right total external
-            debt servicing on external PPG debt (as a percentage of revenue or
-            exports). Both graphs cover the period 2000 - 2025 (if available).
+            Figures show the value of net interest payments on total government
+            debt, and interest and principal payments on external PPG debt for
+            2023 in million (Mn) USD. The graph on the left depicts government
+            net interest payments (as a percentage of revenue), and the graph on
+            the right total external debt servicing on external PPG debt (as a
+            percentage of revenue or exports). Both graphs cover the period
+            2000-2025.
           </p>
         </div>
         <div className='flex-div'>
