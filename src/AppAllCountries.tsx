@@ -145,7 +145,10 @@ function App() {
   return (
     <div className='undp-container'>
       {countryList !== undefined ? (
-        <div className='margin-bottom-08'>
+        <div
+          className='margin-bottom-08'
+          style={{ maxWidth: '1024px', margin: '0 auto' }}
+        >
           <p className='undp-typography label'>Select a country</p>
           <Select
             options={countryList}

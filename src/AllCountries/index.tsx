@@ -73,9 +73,15 @@ export function AllCountries(props: Props) {
       d => d.year === yearExternalDebt,
     )[0];
     // Net interest payments
-    const yearNetInterest = countriesSources.filter(
+    const yearNetInterestChart = countriesSources.filter(
       d => d.graph === 'Net interest payments',
     )[0].year;
+    const yearNetInterest: any =
+      countryNetInterest.filter(d => d.year === yearNetInterestChart)[0] ===
+      undefined
+        ? countryNetInterest[countryNetInterest.length - 1].year
+        : yearNetInterestChart;
+
     const netInterest = countryNetInterest.filter(
       d => d.year === yearNetInterest,
     )[0];
@@ -114,54 +120,57 @@ export function AllCountries(props: Props) {
   }, [countryNetInterest, countryExternalDebt, countryDebtToGdp]);
   return (
     <>
-      <h2 className='undp-typography'>{selectedCountry.label}</h2>
-      <h3 className='undp-typography margin-top-10'>Ratings</h3>
-      <div className='flex-div'>
-        <div style={{ width: '50%' }}>
-          <LinearDotsComparison
-            data={creditRating}
-            title='Credit Ratings'
-            id='countryCreditRatingScale'
-            year={
-              countriesSources.filter(d => d.graph === 'Credit Ratings')[0].year
-            }
-            svgHeight={100}
-            selectedCountryCode={selectedCountry.value}
-            chartSource={
-              countriesSources.filter(d => d.graph === 'Credit ratings')[0]
-            }
-          />
-          <p className='undp-typography margin-top-05'>
-            Credit ratings are translated into a numerical rating following the
-            scale and categories used in Jensen (2022).<sup>1</sup>
-          </p>
-        </div>
-        <div style={{ width: '50%' }}>
-          <HorizontalScale
-            countryDsa={countryDsaRating}
-            categories={dsaCategories}
-            title='DSA Ratings'
-            id='countryDsaRatingScale'
-            year={
-              countriesSources.filter(d => d.graph === 'DSA Ratings')[0].year
-            }
-            svgHeight={100}
-            chartSource={
-              countriesSources.filter(d => d.graph === 'DSA Ratings')[0]
-            }
-          />
-          <p className='undp-typography margin-top-05'>
-            Debts Sustainability Analysis (DSA) ratings are the latest rating
-            for countries that have debt evaluated under the LIC-DSF framework.
-            <sup>2</sup>
-          </p>
+      <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
+        <h2 className='undp-typography margin-top-10'>Ratings</h2>
+        <p className='undp-typography margin-top-05'>
+          Credit ratings are translated into a numerical rating following the
+          scale and categories used in Jensen (2022).<sup>1</sup>
+          <br />
+          Debts Sustainability Analysis (DSA) ratings are the latest rating for
+          countries that have debt evaluated under the LIC-DSF framework.
+          <sup>2</sup>
+        </p>
+        <div className='flex-div'>
+          <div style={{ width: '50%' }}>
+            <LinearDotsComparison
+              data={creditRating}
+              title='Credit Ratings'
+              id='countryCreditRatingScale'
+              year={
+                countriesSources.filter(d => d.graph === 'Credit Ratings')[0]
+                  .year
+              }
+              svgHeight={100}
+              selectedCountryCode={selectedCountry.value}
+              chartSource={
+                countriesSources.filter(d => d.graph === 'Credit Ratings')[0]
+              }
+            />
+          </div>
+          <div style={{ width: '50%' }}>
+            <HorizontalScale
+              countryDsa={countryDsaRating}
+              categories={dsaCategories}
+              title='DSA Ratings'
+              id='countryDsaRatingScale'
+              year={
+                countriesSources.filter(d => d.graph === 'DSA Ratings')[0].year
+              }
+              svgHeight={100}
+              chartSource={
+                countriesSources.filter(d => d.graph === 'DSA Ratings')[0]
+              }
+            />
+          </div>
         </div>
       </div>
-      <h3 className='undp-typography margin-top-10'>Government debt</h3>
-      <p className='undp-typography'>
-        The graph shows the development of debt (as a percentage of GDP) from
-        2000 - {countryStats?.dataDebtYear}.
-      </p>
+      <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
+        <h2 className='undp-typography margin-top-10'>Government debt</h2>
+        <p className='undp-typography'>
+          The graph shows the development of debt (as a percentage of GDP) from
+          2000 - {countryStats?.dataDebtYear}.
+        </p>
+      </div>
       <div className='flex-div'>
         {countryStats !== undefined ? (
           <div style={{ width: '33%' }} className='flex-div flex-vertical'>
@@ -199,13 +208,15 @@ export function AllCountries(props: Props) {
           ) : null}
         </div>
       </div>
-      <h3 className='undp-typography margin-top-10'>
-        External government debt
-      </h3>
-      <p className='undp-typography'>
-        The graph shows the debt composition on the four categories bilateral,
-        multilateral, bonds and ‘other private’ creditors.
-      </p>
+      <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
+        <h2 className='undp-typography margin-top-10'>
+          External government debt
+        </h2>
+        <p className='undp-typography'>
+          The graph shows the debt composition on the four categories bilateral,
+          multilateral, bonds and ‘other private’ creditors.
+        </p>
+      </div>
       <div className='flex-div'>
         <div style={{ width: '50%' }}>
           <div className='stat-card'>
@@ -234,13 +245,15 @@ export function AllCountries(props: Props) {
         </div>
       </div>
       <div>
-        <h3 className='undp-typography margin-top-10'>Debt servicing</h3>
-        <p className='undp-typography'>
-          The graph on the left depicts government net interest payments (as a
-          percentage of revenue), and the graph on the right total external debt
-          servicing on external PPG debt (as a percentage of revenue or
-          exports). Both graphs cover the period 2000-2025.
-        </p>
+        <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
+          <h2 className='undp-typography margin-top-10'>Debt servicing</h2>
+          <p className='undp-typography'>
+            The graph on the left depicts government net interest payments (as a
+            percentage of revenue), and the graph on the right total external
+            debt servicing on external PPG debt (as a percentage of revenue or
+            exports). Both graphs cover the period 2000 - 2025 (if available).
+          </p>
+        </div>
         <div className='flex-div'>
           <div style={{ width: '50%' }}>
             <div className='stat-card'>

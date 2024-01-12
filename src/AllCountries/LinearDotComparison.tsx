@@ -140,7 +140,7 @@ export function LinearDotsComparison(props: Props) {
           ) : null}
         </>
       ) : (
-        <div className='margin-top-06'>N/A</div>
+        <div className='not-available'>N/A</div>
       )}
     </div>
   );
