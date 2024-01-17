@@ -83,17 +83,19 @@ export function Graph(props: Props) {
                     fill={UNDPColorModule.categoricalColors.colors[0]}
                     opacity={0.8}
                   />
-                  <text
-                    className='barLabel'
-                    x={x(d.year)}
-                    dx={x.bandwidth() / 2}
-                    y={y((d as any)[combiOption]) - 5}
-                    opacity={i >= xDomain.length ? 0 : 1}
-                  >
-                    {`${Math.round((d as any)[combiOption])}${
-                      totalPercentOption === 'percentage' ? '%' : ''
-                    }`}
-                  </text>
+                  {Number((d as any)[combiOption]) ? (
+                    <text
+                      className='barLabel'
+                      x={x(d.year)}
+                      dx={x.bandwidth() / 2}
+                      y={y((d as any)[combiOption]) - 5}
+                      opacity={i >= xDomain.length ? 0 : 1}
+                    >
+                      {`${Math.round((d as any)[combiOption])}${
+                        totalPercentOption === 'percentage' ? '%' : ''
+                      }`}
+                    </text>
+                  ) : null}
                 </g>
               ))}
             </g>
