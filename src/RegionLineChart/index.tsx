@@ -2,18 +2,19 @@
 import { useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
 import UNDPColorModule from 'undp-viz-colors';
-import { DebtGdp, CategoryData } from '../Types';
+import { DebtGdp, CategoryData, ChartSourceType } from '../Types';
 import { Graph } from './Graph';
 
 interface Props {
   data: DebtGdp[];
   categories: CategoryData[];
+  chartSource: ChartSourceType;
 }
 
 const totalExternalOptions = ['total', 'external'];
 
 export function RegionLineChart(props: Props) {
-  const { data, categories } = props;
+  const { data, categories, chartSource } = props;
   const [totalExternalSelection, setTotalExternalSelection] = useState('total');
   const [categorySelection, setCategorySelection] = useState('All developing');
   return (
@@ -90,13 +91,12 @@ export function RegionLineChart(props: Props) {
           svgWidth={960}
           svgHeight={550}
         />
-        <p className='source'>
-          Source: based on IMF World Economic Outlook, October 2023
-        </p>
-        <p className='source'>
-          Note: Interquartile range refers to the spread of the middle half of
-          the data.
-        </p>
+        {chartSource?.source ? (
+          <p className='source'>{`Source: ${chartSource.source}`}</p>
+        ) : null}
+        {chartSource?.note ? (
+          <p className='source'>{`Note: ${chartSource.note}`}</p>
+        ) : null}
       </div>
     </>
   );

@@ -60,7 +60,7 @@ export function BarChart(props: Props) {
               >
                 {numberPercentOptions.map((d, i) => (
                   <Radio key={i} className='undp-radio' value={d}>
-                    {d}
+                    {d.charAt(0).toUpperCase() + d.slice(1)}
                   </Radio>
                 ))}
               </Radio.Group>
@@ -74,7 +74,7 @@ export function BarChart(props: Props) {
               >
                 {revenueExportsOptions.map((d, i) => (
                   <Radio key={i} className='undp-radio' value={d}>
-                    {d}
+                    {d.charAt(0).toUpperCase() + d.slice(1)}
                   </Radio>
                 ))}
               </Radio.Group>

@@ -22,7 +22,7 @@ export function Graph(props: Props) {
   return (
     <div>
       <svg width={`${svgWidth}px`} height='470px' id={id}>
-        <g transform={`translate(${svgWidth / 2 - 190},${margin.top})`}>
+        <g transform={`translate(${svgWidth / 2 - 210},${margin.top})`}>
           {stackedData.map((d, i) => (
             <g key={i}>
               <rect
@@ -41,7 +41,10 @@ export function Graph(props: Props) {
                     y={y(d[0][0]) + y(d[0][1] - d[0][0]) / 2 + 5}
                     x={230}
                   >
-                    {`${(d[0][1] - d[0][0]).toFixed(1)} USD million`}
+                    {`${(d[0][1] - d[0][0]).toFixed(1)} USD million (${(
+                      ((d[0][1] - d[0][0]) / maxValue) *
+                      100
+                    ).toFixed(1)}%)`}
                   </text>
                   <text
                     textAnchor='end'

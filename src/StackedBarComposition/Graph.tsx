@@ -43,7 +43,10 @@ export function Graph(props: Props) {
                         y={y(d[0][0]) + y(d[0][1] - d[0][0]) / 2 + 5}
                         x={230}
                       >
-                        {`${(d[0][1] - d[0][0]).toFixed(1)} USD million`}
+                        {`${(d[0][1] - d[0][0]).toFixed(1)} USD million (${(
+                          ((d[0][1] - d[0][0]) / (data as any).Total) *
+                          100
+                        ).toFixed(1)}%)`}
                       </text>
                       <text
                         textAnchor='end'

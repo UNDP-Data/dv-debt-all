@@ -1,20 +1,26 @@
 /* eslint-disable no-console */
 import { useEffect, useRef, useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
-import { CategoryData, CreditRatingType, DsaRatingType } from '../Types';
+import {
+  CategoryData,
+  ChartSourceType,
+  CreditRatingType,
+  DsaRatingType,
+} from '../Types';
 import { Graph } from './Graph';
 
 interface Props {
   creditData: CreditRatingType[];
   dsaData: DsaRatingType[];
   categories: CategoryData[];
+  chartSource: ChartSourceType;
 }
 
-const creditDsaOptions = ['credit', 'dsa'];
+const creditDsaOptions = ['Credit', 'DSA'];
 
 export function StackedBarChart(props: Props) {
-  const { dsaData, creditData, categories } = props;
-  const [creditDsaSelection, setCreditDsaSelection] = useState('credit');
+  const { dsaData, creditData, categories, chartSource } = props;
+  const [creditDsaSelection, setCreditDsaSelection] = useState('Credit');
   const [categorySelection, setCategorySelection] = useState('All developing');
   const [selectedData, setSelectedData] = useState<object[]>(
     creditData.filter(d => d.Group === categorySelection),
@@ -30,7 +36,7 @@ export function StackedBarChart(props: Props) {
   }, []);
   useEffect(() => {
     const data =
-      creditDsaSelection === 'credit'
+      creditDsaSelection === 'Credit'
         ? creditData.filter(d => d.Group === categorySelection)
         : dsaData.filter(d => d.Group === categorySelection);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -85,18 +91,12 @@ export function StackedBarChart(props: Props) {
         <div ref={containerRef}>
           <Graph data={selectedData} svgWidth={svgWidth} />
         </div>
-        <p className='source'>
-          Source: Credit rating based on S&P, Moody’s and FITCH long-term
-          sovereign credit ratings as of September 3, 2023 accessed through
-          Trading Economics.
-        </p>
-        <p className='source'>
-          Note: Numerical rating is obtained using the ratings scale in Jensen
-          (2022) and as a simple average across ratings.
-          <br />
-          DSA rating based on latest DSA ratings published by the IMF as of
-          August 31st, 2023.
-        </p>
+        {chartSource?.source ? (
+          <p className='source'>{`Source: ${chartSource.source}`}</p>
+        ) : null}
+        {chartSource?.note ? (
+          <p className='source'>{`Note: ${chartSource.note}`}</p>
+        ) : null}
       </div>
     </>
   );

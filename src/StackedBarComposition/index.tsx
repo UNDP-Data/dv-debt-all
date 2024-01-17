@@ -1,16 +1,17 @@
 /* eslint-disable no-console */
 import { useEffect, useRef, useState } from 'react';
 import { Select } from 'antd';
-import { CategoryData, CompositionGroupsType } from '../Types';
+import { CategoryData, ChartSourceType, CompositionGroupsType } from '../Types';
 import { Graph } from './Graph';
 
 interface Props {
   data: CompositionGroupsType[];
   categories: CategoryData[];
+  chartSource: ChartSourceType;
 }
 
 export function StackedBarComposition(props: Props) {
-  const { data, categories } = props;
+  const { data, categories, chartSource } = props;
   const [categorySelection, setCategorySelection] = useState('All developing');
   const [selectedData, setSelectedData] = useState<object>(
     data.filter(d => d.Group === categorySelection)[0],
@@ -61,8 +62,12 @@ export function StackedBarComposition(props: Props) {
         <div ref={containerRef}>
           <Graph data={selectedData} svgWidth={svgWidth} />
         </div>
-        <p className='source'>Source: -- </p>
-        <p className='source'>Note: -- </p>
+        {chartSource?.source ? (
+          <p className='source'>{`Source: ${chartSource.source}`}</p>
+        ) : null}
+        {chartSource?.note ? (
+          <p className='source'>{`Note: ${chartSource.note}`}</p>
+        ) : null}
       </div>
     </>
   );

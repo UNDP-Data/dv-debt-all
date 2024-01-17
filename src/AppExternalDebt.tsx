@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { csv } from 'd3-fetch';
 import { useEffect, useState } from 'react';
-import { CategoryData, DebtServiceType } from './Types';
+import { CategoryData, ChartSourceType, DebtServiceType } from './Types';
 import { BarChart } from './BarChart';
 import './style.css';
 
@@ -12,21 +12,28 @@ function App() {
   const [categoriesData, setCategoriesData] = useState<
     CategoryData[] | undefined
   >(undefined);
+  const [sourcesData, setSourcesData] = useState<ChartSourceType[]>([]);
   const dataurl =
     'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/';
   useEffect(() => {
     Promise.all([
       csv(`${dataurl}externalDebtService.csv`),
       csv(`${dataurl}categories.csv`),
-    ]).then(([data, categories]) => {
+      csv(`${dataurl}groups-sources.csv`),
+    ]).then(([data, categories, sources]) => {
       setDebtServiceData(data as any);
       setCategoriesData(categories as any);
+      setSourcesData(sources as any);
     });
   }, []);
   return (
     <div className='undp-container'>
       {debtServiceData && categoriesData ? (
-        <BarChart data={debtServiceData} categories={categoriesData} />
+        <BarChart
+          data={debtServiceData}
+          categories={categoriesData}
+          sources={sourcesData}
+        />
       ) : null}
     </div>
   );

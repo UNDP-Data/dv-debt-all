@@ -2,7 +2,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { csv } from 'd3-fetch';
 import { useEffect, useState } from 'react';
-import { CategoryData, CreditRatingType, DsaRatingType } from './Types';
+import {
+  CategoryData,
+  ChartSourceType,
+  CreditRatingType,
+  DsaRatingType,
+} from './Types';
 import { StackedBarChart } from './StackedBarChart';
 import './style.css';
 
@@ -16,6 +21,7 @@ function App() {
   const [categoriesData, setCategoriesData] = useState<
     CategoryData[] | undefined
   >(undefined);
+  const [sourcesData, setSourcesData] = useState<ChartSourceType[]>([]);
   const dataurl =
     'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/';
   useEffect(() => {
@@ -23,10 +29,12 @@ function App() {
       csv(`${dataurl}creditRating.csv`),
       csv(`${dataurl}dsaRating.csv`),
       csv(`${dataurl}categories.csv`),
-    ]).then(([creditData, dsaData, regions]) => {
+      csv(`${dataurl}groups-sources.csv`),
+    ]).then(([creditData, dsaData, regions, sources]) => {
       setCreditRatingData(creditData as any);
       setDsaRatingData(dsaData as any);
       setCategoriesData(regions as any);
+      setSourcesData(sources as any);
     });
   }, []);
   return (
@@ -36,6 +44,9 @@ function App() {
           creditData={creditRatingData}
           dsaData={dsaRatingData}
           categories={categoriesData}
+          chartSource={
+            sourcesData.filter(d => d.graph === 'Credit and DSA Ratings')[0]
+          }
         />
       ) : null}
     </div>

@@ -2,18 +2,19 @@
 import { useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
 import UNDPColorModule from 'undp-viz-colors';
-import { DebtNetInterestType, CategoryData } from '../Types';
+import { DebtNetInterestType, CategoryData, ChartSourceType } from '../Types';
 import { Graph } from './Graph';
 
 interface Props {
   data: DebtNetInterestType[];
   categories: CategoryData[];
+  chartSource: ChartSourceType;
 }
 
 const numberPercentOptions = ['Number', 'Percentage'];
 
 export function DebtInterestBars(props: Props) {
-  const { data, categories } = props;
+  const { data, categories, chartSource } = props;
   const [totalPercentSelection, setTotalPercentSelection] = useState('Number');
   const [categorySelection, setCategorySelection] = useState('All developing');
   return (
@@ -92,14 +93,12 @@ export function DebtInterestBars(props: Props) {
           svgWidth1={960}
           svgHeight1={550}
         />
-        <p className='source'>
-          Source: based on IMF World Economic Outlook, October 2023
-        </p>
-        <p className='source'>
-          Notes: Numbers refer to averages across the three years. The
-          &apos;percentage&apos; option shows the number of countries as a share
-          of total.
-        </p>
+        {chartSource?.source ? (
+          <p className='source'>{`Source: ${chartSource.source}`}</p>
+        ) : null}
+        {chartSource?.note ? (
+          <p className='source'>{`Note: ${chartSource.note}`}</p>
+        ) : null}
       </div>
     </>
   );
