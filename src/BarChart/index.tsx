@@ -1,19 +1,20 @@
 /* eslint-disable no-console */
 import { useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
-import { DebtServiceType, CategoryData } from '../Types';
+import { DebtServiceType, CategoryData, ChartSourceType } from '../Types';
 import { Graph } from './Graph';
 
 interface Props {
   data: DebtServiceType[];
   categories: CategoryData[];
+  chartSource: ChartSourceType;
 }
 
 const numberPercentOptions = ['number', 'percentage'];
 const revenueExportsOptions = ['revenue', 'exports'];
 
 export function BarChart(props: Props) {
-  const { data, categories } = props;
+  const { data, categories, chartSource } = props;
   const [totalPercentSelection, setTotalPercentSelection] = useState('number');
   const [revenueExportsSelection, setRevenueExportsSelection] =
     useState('revenue');
@@ -88,9 +89,12 @@ export function BarChart(props: Props) {
           svgWidth={960}
           svgHeight={550}
         />
-        <p className='source'>
-          Source: Author based on World Bank IDS 2022 and IMF WEO October 2023
-        </p>
+        {chartSource?.source ? (
+          <p className='source'>{`Source: ${chartSource.source}`}</p>
+        ) : null}
+        {chartSource?.note ? (
+          <p className='source'>{`Note: ${chartSource.note}`}</p>
+        ) : null}
       </div>
     </>
   );

@@ -32,7 +32,9 @@ function App() {
         <BarChart
           data={debtServiceData}
           categories={categoriesData}
-          sources={sourcesData}
+          chartSource={
+            sourcesData.filter(d => d.graph === 'External debt service')[0]
+          }
         />
       ) : null}
     </div>
