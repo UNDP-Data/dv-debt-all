@@ -43,7 +43,7 @@ export function AllCountries(props: Props) {
     if (d === undefined) return 'N/A';
     const k = d * 1000000;
     return Math.abs(k) < 1
-      ? d.toString()
+      ? d.toFixed(2)
       : format('~s')(k).replace('G', 'B').toString();
   };
   const [countryStats, setCountryStats] = useState<
@@ -178,42 +178,42 @@ export function AllCountries(props: Props) {
           percentage of GDP. The graph shows the development of debt (as a
           percentage of GDP) from 2000-2025.
         </p>
-      </div>
-      <div className='flex-div'>
-        {countryStats !== undefined ? (
-          <div style={{ width: '33%' }} className='flex-div flex-vertical'>
-            <div className='stat-card'>
-              <h3 className='undp-typography'>{countryStats.debtMillion}</h3>
-              <h5 className='undp-typography'>USD</h5>
-              <p className='undp-typography'>
-                General gross government debt ({countryStats?.debtYear})
-              </p>
+        <div className='flex-div'>
+          {countryStats !== undefined ? (
+            <div style={{ width: '33%' }} className='flex-div flex-vertical'>
+              <div className='stat-card'>
+                <h3 className='undp-typography'>{countryStats.debtMillion}</h3>
+                <h5 className='undp-typography'>USD</h5>
+                <p className='undp-typography'>
+                  General gross government debt ({countryStats?.debtYear})
+                </p>
+              </div>
+              <div className='stat-card'>
+                <h3 className='undp-typography'>{countryStats.debtPercent}</h3>
+                <h5 className='undp-typography'>% of GDP</h5>
+                <p className='undp-typography'>
+                  General gross government debt ({countryStats?.debtYear})
+                </p>
+              </div>
             </div>
-            <div className='stat-card'>
-              <h3 className='undp-typography'>{countryStats.debtPercent}</h3>
-              <h5 className='undp-typography'>% of GDP</h5>
-              <p className='undp-typography'>
-                General gross government debt ({countryStats?.debtYear})
-              </p>
-            </div>
-          </div>
-        ) : null}
-        <div style={{ width: '65%' }}>
-          {countryDebtToGdp !== undefined ? (
-            <LineChart
-              data={countryDebtToGdp}
-              indicators={['percentage']}
-              id='countryDebtToGdp'
-              title='Government debt as percentage of GDP'
-              selectedCountryCode={selectedCountry.value}
-              svgHeight={350}
-              chartSource={
-                countriesSources.filter(
-                  d => d.graph === 'Government debt as a percentage of GDP',
-                )[0]
-              }
-            />
           ) : null}
+          <div style={{ width: '65%' }}>
+            {countryDebtToGdp !== undefined ? (
+              <LineChart
+                data={countryDebtToGdp}
+                indicators={['percentage']}
+                id='countryDebtToGdp'
+                title='Government debt as percentage of GDP'
+                selectedCountryCode={selectedCountry.value}
+                svgHeight={350}
+                chartSource={
+                  countriesSources.filter(
+                    d => d.graph === 'Government debt as a percentage of GDP',
+                  )[0]
+                }
+              />
+            ) : null}
+          </div>
         </div>
       </div>
       <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
@@ -226,32 +226,34 @@ export function AllCountries(props: Props) {
           shows the debt composition on the four categories bilateral,
           multilateral, bonds and ‘other private’ creditors.
         </p>
-      </div>
-      <div className='flex-div'>
-        <div style={{ width: '50%' }}>
-          <div className='stat-card'>
-            <h3 className='undp-typography'>{countryStats?.externalGovDebt}</h3>
-            <h5 className='undp-typography'>USD</h5>
-            <p className='undp-typography'>
-              External public and publicly guaranteed (PPG) debt stock (
-              {countryStats?.externalGovDebtYear})
-            </p>
+        <div className='flex-div'>
+          <div style={{ width: '50%' }}>
+            <div className='stat-card'>
+              <h3 className='undp-typography'>
+                {countryStats?.externalGovDebt}
+              </h3>
+              <h5 className='undp-typography'>USD</h5>
+              <p className='undp-typography'>
+                External public and publicly guaranteed (PPG) debt stock (
+                {countryStats?.externalGovDebtYear})
+              </p>
+            </div>
           </div>
-        </div>
-        <div style={{ width: '50%' }}>
-          <StackedBarChartSimple
-            data={countryExternalDebt.filter(
-              d => d.year === Number(countryStats?.externalGovDebtYear),
-            )}
-            sections={['multilateral', 'bilateral', 'bonds', 'other private']}
-            id='debtComposition'
-            title='Public external debt composition ($ million)'
-            chartSource={
-              countriesSources.filter(
-                d => d.graph === 'Public external debt composition',
-              )[0]
-            }
-          />
+          <div style={{ width: '50%' }}>
+            <StackedBarChartSimple
+              data={countryExternalDebt.filter(
+                d => d.year === Number(countryStats?.externalGovDebtYear),
+              )}
+              sections={['multilateral', 'bilateral', 'bonds', 'other private']}
+              id='debtComposition'
+              title='Public external debt composition ($ million)'
+              chartSource={
+                countriesSources.filter(
+                  d => d.graph === 'Public external debt composition',
+                )[0]
+              }
+            />
+          </div>
         </div>
       </div>
       <div>

@@ -82,7 +82,7 @@ export function BarChart(props: Props) {
           </div>
         </div>
         <Graph
-          data={data.filter(d => d.region === categorySelection)}
+          data={data.filter(d => d.Group === categorySelection)}
           totalPercentOption={totalPercentSelection}
           revenueExportsOption={revenueExportsSelection}
           svgWidth={960}

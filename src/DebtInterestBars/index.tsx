@@ -6,33 +6,32 @@ import { DebtNetInterestType, CategoryData } from '../Types';
 import { Graph } from './Graph';
 
 interface Props {
-  data1: DebtNetInterestType[];
-  categories1: CategoryData[];
+  data: DebtNetInterestType[];
+  categories: CategoryData[];
 }
 
 const numberPercentOptions = ['Number', 'Percentage'];
 
 export function DebtInterestBars(props: Props) {
-  const { data1, categories1 } = props;
+  const { data, categories } = props;
   const [totalPercentSelection, setTotalPercentSelection] = useState('Number');
-  const [categorySelection1, setCategorySelection1] =
-    useState('All developing');
+  const [categorySelection, setCategorySelection] = useState('All developing');
   return (
     <>
       <div>
         <div className='margin-bottom-05'>
           <p className='label undp-typography'>Select a category</p>
           <Select
-            options={categories1.map(d => ({
+            options={categories.map(d => ({
               label: d.description,
               value: d.description,
             }))}
             className='undp-select'
             style={{ width: '100%' }}
             onChange={el => {
-              setCategorySelection1(el);
+              setCategorySelection(el);
             }}
-            value={categorySelection1}
+            value={categorySelection}
           />
         </div>
       </div>
@@ -84,9 +83,9 @@ export function DebtInterestBars(props: Props) {
           </div>
         </div>
         <Graph
-          data1={data1.filter(
+          data={data.filter(
             d =>
-              d.region === categorySelection1 &&
+              d.Group === categorySelection &&
               d.option === totalPercentSelection,
           )}
           option1={totalPercentSelection}

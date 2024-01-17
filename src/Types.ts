@@ -4,7 +4,7 @@ export interface CategoryData {
   source: number;
 }
 export interface DebtGdp {
-  region: string;
+  Group: string;
   year: string;
   totalDebtMean: number;
   totalDebtMedian: number;
@@ -12,13 +12,13 @@ export interface DebtGdp {
   externalDebtMedian: number;
 }
 export interface DebtNetInterestType {
-  region: string;
+  Group: string;
   option: string;
   period: string;
   percentages: [];
 }
 export interface DebtServiceType {
-  region: string;
+  Group: string;
   year: string;
   number_revenue: number;
   percentage_revenue: number;
@@ -26,7 +26,7 @@ export interface DebtServiceType {
   percentage_exports: number;
 }
 export interface RatingType {
-  region: string;
+  Group: string;
   value: string;
 }
 export interface CreditRatingType extends RatingType {
@@ -86,7 +86,7 @@ export interface ExternalDebtType {
   'interest payment': number;
 }
 export interface CompositionGroupsType {
-  groups: string;
+  Group: string;
   Bilateral: number;
   Multilateral: number;
   Bonds: number;

@@ -13,7 +13,7 @@ export function StackedBarComposition(props: Props) {
   const { data, categories } = props;
   const [categorySelection, setCategorySelection] = useState('All developing');
   const [selectedData, setSelectedData] = useState<object>(
-    data.filter(d => d.groups === categorySelection)[0],
+    data.filter(d => d.Group === categorySelection)[0],
   );
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
@@ -25,7 +25,7 @@ export function StackedBarComposition(props: Props) {
     return () => resizeObserver.disconnect();
   }, []);
   useEffect(() => {
-    const groupData = data.filter(d => d.groups === categorySelection)[0];
+    const groupData = data.filter(d => d.Group === categorySelection)[0];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setSelectedData(groupData as object);
   }, [categorySelection]);
@@ -38,7 +38,7 @@ export function StackedBarComposition(props: Props) {
             <Select
               options={categories.map(d => ({
                 label: d.description,
-                value: d.category,
+                value: d.description,
               }))}
               className='undp-select'
               style={{ width: '100%' }}

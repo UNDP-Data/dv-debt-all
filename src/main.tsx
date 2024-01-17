@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import AppNetInterest from './AppNetInterest';
 import AppExternalDebt from './AppExternalDebt';
-import AppCreditDsaRating from './AppCreditDsaRating';
 import AppCompositionGroups from './AppCompositionGroups';
 import AppAllCountries from './AppAllCountries';
+import AppCreditDsaRating from './AppCreditDsaRating';
 
 ReactDOM.createRoot(document.getElementById('debtToGdp') as HTMLElement).render(
   <React.StrictMode>

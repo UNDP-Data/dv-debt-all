@@ -9,20 +9,20 @@ import UNDPColorModule from 'undp-viz-colors';
 import { DebtNetInterestType } from '../Types';
 
 interface Props {
-  data1: DebtNetInterestType[];
+  data: DebtNetInterestType[];
   option1: string;
   svgWidth1: number;
   svgHeight1: number;
 }
 
 export function Graph(props: Props) {
-  const { data1, option1, svgWidth1, svgHeight1 } = props;
+  const { data, option1, svgWidth1, svgHeight1 } = props;
   const periods = ['2011-2013', '2021-2023'];
   const margin = { top: 20, right: 30, bottom: 50, left: 80 };
   const graphWidth = svgWidth1 - margin.left - margin.right;
   const graphHeight = svgHeight1 - margin.top - margin.bottom;
   const minParam = 0;
-  const valueArray = data1
+  const valueArray = data
     .filter(d => d.option === option1)[0]
     .percentages.map(k => Number(k[1]));
   const maxParam = max(valueArray) ? max(valueArray) : 0;
@@ -58,7 +58,7 @@ export function Graph(props: Props) {
       .attr('dy', '-4px')
       .attr('x', '-4px')
       .attr('text-anchor', 'end');
-  }, [data1]);
+  }, [data]);
   return (
     <div>
       {valueArray.length > 0 ? (
@@ -69,7 +69,7 @@ export function Graph(props: Props) {
             <g>
               {periods.map((k, j) => (
                 <g key={j} transform={`translate(${j * 35},0)`}>
-                  {data1
+                  {data
                     .filter(h => h.period === k)[0]
                     .percentages.map((d, i) => (
                       <g key={i} className={`percent${x(d[0])}_value${d[1]}`}>

@@ -17,7 +17,7 @@ export function StackedBarChart(props: Props) {
   const [creditDsaSelection, setCreditDsaSelection] = useState('credit');
   const [categorySelection, setCategorySelection] = useState('All developing');
   const [selectedData, setSelectedData] = useState<object[]>(
-    creditData.filter(d => d.region === categorySelection),
+    creditData.filter(d => d.Group === categorySelection),
   );
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
@@ -31,8 +31,8 @@ export function StackedBarChart(props: Props) {
   useEffect(() => {
     const data =
       creditDsaSelection === 'credit'
-        ? creditData.filter(d => d.region === categorySelection)
-        : dsaData.filter(d => d.region === categorySelection);
+        ? creditData.filter(d => d.Group === categorySelection)
+        : dsaData.filter(d => d.Group === categorySelection);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setSelectedData(data as any);
   }, [categorySelection, creditDsaSelection]);
@@ -45,7 +45,7 @@ export function StackedBarChart(props: Props) {
             <Select
               options={categories.map(d => ({
                 label: d.description,
-                value: d.category,
+                value: d.description,
               }))}
               className='undp-select'
               style={{ width: '100%' }}

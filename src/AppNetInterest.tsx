@@ -20,7 +20,7 @@ function App() {
       csv(`${dataUrl1}categories.csv`),
     ]).then(([data, categories]) => {
       const newData = data.map((d: any) => ({
-        region: d.region,
+        Group: d.Group,
         option: d.option,
         period: d.period,
         percentages: Object.entries(d).filter(k => Number(k[0])),
@@ -32,10 +32,7 @@ function App() {
   return (
     <div className='undp-container'>
       {debtNetInterest && categoriesData1 ? (
-        <DebtInterestBars
-          data1={debtNetInterest}
-          categories1={categoriesData1}
-        />
+        <DebtInterestBars data={debtNetInterest} categories={categoriesData1} />
       ) : null}
     </div>
   );

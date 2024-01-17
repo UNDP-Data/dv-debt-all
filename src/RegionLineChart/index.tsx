@@ -25,7 +25,7 @@ export function RegionLineChart(props: Props) {
             <Select
               options={categories.map(d => ({
                 label: d.description,
-                value: d.category,
+                value: d.description,
               }))}
               className='undp-select'
               style={{ width: '100%' }}
@@ -85,7 +85,7 @@ export function RegionLineChart(props: Props) {
           </div>
         </div>
         <Graph
-          data={data.filter(d => d.region === categorySelection)}
+          data={data.filter(d => d.Group === categorySelection)}
           option={totalExternalSelection}
           svgWidth={960}
           svgHeight={550}

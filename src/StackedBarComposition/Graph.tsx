@@ -13,7 +13,7 @@ export function Graph(props: Props) {
   const { data, svgWidth } = props;
   const margin = { top: 20, right: 30, bottom: 50, left: 60 };
   const graphHeight = 500 - margin.top - margin.bottom;
-  const subgroups = Object.keys(data).slice(2);
+  const subgroups = ['Bilateral', 'Multilateral', 'Bonds', 'Other private'];
   const stackedData = stack().keys(subgroups)([data as any]);
   const y = scaleLinear()
     .domain([0, (data as any).Total])
