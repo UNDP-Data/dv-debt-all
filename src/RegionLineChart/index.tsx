@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import { useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
-import UNDPColorModule from 'undp-viz-colors';
 import { DebtGdp, CategoryData, ChartSourceType } from '../Types';
 import { Graph } from './Graph';
 
@@ -39,36 +38,11 @@ export function RegionLineChart(props: Props) {
         </div>
       </div>
       <div className='chart-container'>
-        <div className='flex-div flex-space-between flex-wrap margin-bottom-03'>
+        <div className='flex-div flex-space-between flex-wrap'>
           <div>
-            <h6 className='undp-typography margin-bottom-01'>
+            <h6 className='undp-typography margin-bottom-01 margin-top-03'>
               General government debt as a percentage of GDP
             </h6>
-            <p className='undp-typography small-font margin-bottom-01'>
-              Years: 2000-2023
-            </p>
-            <div className='legend-container'>
-              <div className='legend-item'>
-                <div
-                  className='legend-circle-medium'
-                  style={{
-                    backgroundColor:
-                      UNDPColorModule.categoricalColors.colors[0],
-                  }}
-                />
-                <div className='small-font'>Median</div>
-              </div>
-              <div className='legend-item'>
-                <div
-                  className='legend-circle-medium'
-                  style={{
-                    backgroundColor:
-                      UNDPColorModule.categoricalColors.colors[1],
-                  }}
-                />
-                <div className='small-font'>Interquartile range</div>
-              </div>
-            </div>
           </div>
           <div>
             <Radio.Group

@@ -89,7 +89,7 @@ export function Graph(props: Props) {
                         >
                           {option1 === 'Percentage'
                             ? `${Number(d[1]).toFixed(1)}%`
-                            : d[1]}
+                            : Number(d[1]).toFixed(0)}
                         </text>
                       </g>
                     ))}

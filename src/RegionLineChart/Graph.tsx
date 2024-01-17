@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { line, curveMonotoneX, area } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
-import { min, max } from 'd3-array';
+import { min, max, extent } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { select } from 'd3-selection';
 import UNDPColorModule from 'undp-viz-colors';
@@ -37,8 +37,10 @@ export function Graph(props: Props) {
       : min(valueArray)
     : 0;
   const maxParam = max(valueArray) ? max(valueArray) : 0;
-  const dateDomain = option === 'total' ? [2000, 2023] : [2000, 2021];
-
+  // eslint-disable-next-line consistent-return
+  const dateDomain = extent(data, d => {
+    if ((d as any)[`${option}DebtMedian`] !== '') return Number(d.year);
+  });
   const x = scaleLinear()
     .domain(dateDomain as [number, number])
     .range([0, graphWidth]);
@@ -82,134 +84,161 @@ export function Graph(props: Props) {
   return (
     <div>
       {valueArray.length > 0 ? (
-        <svg
-          width='100%'
-          height='100%'
-          viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-          id='debtToGdpLine'
-        >
-          <g transform={`translate(${margin.left},${margin.top})`}>
-            <g className='xAxis' transform={`translate(0 ,${graphHeight})`} />
-            <g className='yAxis' transform='translate(0,0)' />
-            <g>
-              <path
-                d={
-                  areaBetween(
-                    data.filter(k => (k as any)[`${option}DebtMedian`]) as any,
-                  ) as string
-                }
-                fill={(colors as any).Q1}
-                strokeWidth={2}
-                opacity='0.2'
+        <>
+          <p className='undp-typography small-font margin-bottom-01'>
+            {`${dateDomain[0]} - ${dateDomain[1]}`}
+          </p>
+          <div className='legend-container'>
+            <div className='legend-item'>
+              <div
+                className='legend-circle-medium'
+                style={{
+                  backgroundColor: UNDPColorModule.categoricalColors.colors[0],
+                }}
               />
-              {indicators.map((d, i) => (
-                <g key={i}>
-                  <path
-                    d={
-                      lineShape1(`${option}Debt${d}` as string)(
-                        data as any,
-                      ) as string
-                    }
-                    fill='none'
-                    stroke={(colors as any)[d]}
-                    strokeWidth={2}
-                  />
-                </g>
-              ))}
-            </g>
-            <g className='overlay'>
-              {data.map((d, i) => (
-                <g
-                  className='focus'
-                  style={{ display: 'block' }}
-                  key={i}
-                  transform={`translate(${x(Number(d.year))},0)`}
-                >
-                  <line
-                    x1={0}
-                    y1={0}
-                    x2={0}
-                    y2={graphHeight}
-                    stroke='#FFF'
-                    strokeWidth={2}
-                    opacity={hoveredYear === d.year ? 1 : 0}
-                  />
-                  {indicators.map((k, j) => (
-                    <g
-                      key={j}
-                      transform={`translate(0,${y(
-                        (d as any)[`${option}Debt${k}`],
-                      )})`}
-                      style={{
-                        display:
-                          (d as any)[`${option}Debt${k}`] !== ''
-                            ? 'block'
-                            : 'none',
-                      }}
-                    >
-                      <circle
-                        r={hoveredYear === d.year ? 5 : 3}
-                        fill={(colors as any)[k]}
-                      />
-                      <text
-                        x={-25}
-                        y={-5}
-                        opacity={hoveredYear === d.year ? 1 : 0}
-                      >
-                        {(d as any)[`${option}Debt${k}`]}%
-                      </text>
-                    </g>
-                  ))}
-                  <rect
-                    x={-30}
-                    y={graphHeight}
-                    width={60}
-                    height={20}
-                    fill='#F8F8F8'
-                    opacity={hoveredYear === (d as any).year ? 0.7 : 0}
-                  />
-                  <text
-                    opacity={hoveredYear === (d as any).year ? 1 : 0}
-                    className='highlightYear'
-                    textAnchor='middle'
-                    y={graphHeight + 17}
-                  >
-                    {(d as any).year}
-                  </text>
-                  <rect
-                    onMouseEnter={() => {
-                      setHoveredYear(d.year);
-                    }}
-                    onMouseLeave={() => {
-                      setHoveredYear(undefined);
-                    }}
-                    x='-15px'
-                    y={0}
-                    width='30px'
-                    height={svgHeight}
-                    opacity={0}
-                  />
-                </g>
-              ))}
-            </g>
-            <line
-              x1={0}
-              y1={graphHeight}
-              x2={graphWidth}
-              y2={graphHeight}
-              stroke='#232E3D'
-              strokeWidth={2}
-            />
-          </g>
-          <text
-            x={-graphHeight / 2}
-            y='20'
-            transform='rotate(-90)'
-            textAnchor='middle'
+              <div className='small-font'>Median</div>
+            </div>
+            <div className='legend-item'>
+              <div
+                className='legend-circle-medium'
+                style={{
+                  backgroundColor: UNDPColorModule.categoricalColors.colors[1],
+                }}
+              />
+              <div className='small-font'>Interquartile range</div>
+            </div>
+          </div>
+          <svg
+            width='100%'
+            height='100%'
+            viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+            id='debtToGdpLine'
           >
-            Debt as % of GDP
-          </text>
-        </svg>
+            <g transform={`translate(${margin.left},${margin.top})`}>
+              <g className='xAxis' transform={`translate(0 ,${graphHeight})`} />
+              <g className='yAxis' transform='translate(0,0)' />
+              <g>
+                <path
+                  d={
+                    areaBetween(
+                      data.filter(
+                        k => (k as any)[`${option}DebtMedian`],
+                      ) as any,
+                    ) as string
+                  }
+                  fill={(colors as any).Q1}
+                  strokeWidth={2}
+                  opacity='0.2'
+                />
+                {indicators.map((d, i) => (
+                  <g key={i}>
+                    <path
+                      d={
+                        lineShape1(`${option}Debt${d}` as string)(
+                          data as any,
+                        ) as string
+                      }
+                      fill='none'
+                      stroke={(colors as any)[d]}
+                      strokeWidth={2}
+                    />
+                  </g>
+                ))}
+              </g>
+              <g className='overlay'>
+                {data.map((d, i) => (
+                  <g
+                    className='focus'
+                    style={{ display: 'block' }}
+                    key={i}
+                    transform={`translate(${x(Number(d.year))},0)`}
+                  >
+                    <line
+                      x1={0}
+                      y1={0}
+                      x2={0}
+                      y2={graphHeight}
+                      stroke='#FFF'
+                      strokeWidth={2}
+                      opacity={hoveredYear === d.year ? 1 : 0}
+                    />
+                    {indicators.map((k, j) => (
+                      <g
+                        key={j}
+                        transform={`translate(0,${y(
+                          (d as any)[`${option}Debt${k}`],
+                        )})`}
+                        style={{
+                          display:
+                            (d as any)[`${option}Debt${k}`] !== ''
+                              ? 'block'
+                              : 'none',
+                        }}
+                      >
+                        <circle
+                          r={hoveredYear === d.year ? 5 : 3}
+                          fill={(colors as any)[k]}
+                        />
+                        <text
+                          x={-25}
+                          y={-5}
+                          opacity={hoveredYear === d.year ? 1 : 0}
+                        >
+                          {(d as any)[`${option}Debt${k}`]}%
+                        </text>
+                      </g>
+                    ))}
+                    <rect
+                      x={-30}
+                      y={graphHeight}
+                      width={60}
+                      height={20}
+                      fill='#F8F8F8'
+                      opacity={hoveredYear === (d as any).year ? 0.7 : 0}
+                    />
+                    <text
+                      opacity={hoveredYear === (d as any).year ? 1 : 0}
+                      className='highlightYear'
+                      textAnchor='middle'
+                      y={graphHeight + 17}
+                    >
+                      {(d as any).year}
+                    </text>
+                    <rect
+                      onMouseEnter={() => {
+                        setHoveredYear(d.year);
+                      }}
+                      onMouseLeave={() => {
+                        setHoveredYear(undefined);
+                      }}
+                      x='-15px'
+                      y={0}
+                      width='30px'
+                      height={svgHeight}
+                      opacity={0}
+                    />
+                  </g>
+                ))}
+              </g>
+              <line
+                x1={0}
+                y1={graphHeight}
+                x2={graphWidth}
+                y2={graphHeight}
+                stroke='#232E3D'
+                strokeWidth={2}
+              />
+            </g>
+            <text
+              x={-graphHeight / 2}
+              y='20'
+              transform='rotate(-90)'
+              textAnchor='middle'
+            >
+              Debt as % of GDP
+            </text>
+          </svg>
+        </>
       ) : (
         <div className='center-area-error-el'>No data available</div>
       )}
