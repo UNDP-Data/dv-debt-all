@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
+import { extent } from 'd3-array';
 import { DebtServiceType, CategoryData, ChartSourceType } from '../Types';
 import { Graph } from './Graph';
 
@@ -19,6 +21,17 @@ export function BarChart(props: Props) {
   const [revenueExportsSelection, setRevenueExportsSelection] =
     useState('revenue');
   const [categorySelection, setCategorySelection] = useState('All developing');
+  const [domain, setDomain] = useState<
+    [number, number] | [undefined, undefined]
+  >([2000, 2024]);
+  useEffect(() => {
+    const combiOption = `number_${revenueExportsSelection}`;
+    const categoryData = data.filter(d => d.Group === categorySelection);
+    const extentValue = extent(categoryData, d =>
+      Number((d as any)[combiOption]) ? Number(d.year) : null,
+    );
+    setDomain(extentValue);
+  }, [revenueExportsSelection, categorySelection]);
   return (
     <>
       <div>
@@ -48,7 +61,7 @@ export function BarChart(props: Props) {
               service exceeds 20% of revenue/exports and primary income
             </h6>
             <p className='undp-typography small-font margin-bottom-01'>
-              Years: 1995-2023
+              Years: {domain[0]} - {domain[1]}
             </p>
           </div>
           <div className='flex-div flex-space-between flex-wrap'>

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { scaleBand, scaleLinear } from 'd3-scale';
 import { max } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
@@ -32,6 +32,7 @@ export function Graph(props: Props) {
   const valueArray: number[] = data.map((d: any) => Number(d[combiOption]));
   const maxParam = max(valueArray) ? max(valueArray) : 0;
   const xDomain: any[] = [];
+  const [hoveredYear, setHoveredYear] = useState<undefined | string>(undefined);
   data.forEach((d: any) => {
     if (d[combiOption] !== '') xDomain.push(d.year);
   });
@@ -48,7 +49,9 @@ export function Graph(props: Props) {
     .tickSize(-graphWidth)
     .tickFormat(
       (d: any) => `${d}${totalPercentOption === 'percentage' ? '%' : ''}`,
-    );
+    )
+    .ticks(5);
+
   const xAxis = axisBottom(x)
     .tickSize(0)
     .tickSizeOuter(0)
@@ -75,26 +78,59 @@ export function Graph(props: Props) {
             <g>
               {data.map((d, i) => (
                 <g key={i}>
-                  <rect
-                    x={x(d.year)}
-                    y={y((d as any)[combiOption])}
-                    width={x.bandwidth()}
-                    height={graphHeight - y((d as any)[combiOption])}
-                    fill={UNDPColorModule.categoricalColors.colors[0]}
-                    opacity={0.8}
-                  />
-                  {Number((d as any)[combiOption]) ? (
-                    <text
-                      className='barLabel'
-                      x={x(d.year)}
-                      dx={x.bandwidth() / 2}
-                      y={y((d as any)[combiOption]) - 5}
-                      opacity={i >= xDomain.length ? 0 : 1}
-                    >
-                      {`${Math.round((d as any)[combiOption])}${
-                        totalPercentOption === 'percentage' ? '%' : ''
-                      }`}
-                    </text>
+                  {(d as any)[combiOption] !== '..' ? (
+                    <>
+                      <rect
+                        x={x(d.year)}
+                        y={y((d as any)[combiOption])}
+                        width={x.bandwidth()}
+                        height={graphHeight - y((d as any)[combiOption])}
+                        fill={UNDPColorModule.categoricalColors.colors[0]}
+                        opacity={hoveredYear === (d as any).year ? 1 : 0.7}
+                        onMouseEnter={() => {
+                          setHoveredYear((d as any).year);
+                        }}
+                        onMouseLeave={() => {
+                          setHoveredYear(undefined);
+                        }}
+                      />
+                      <text
+                        className={
+                          hoveredYear === (d as any).year
+                            ? 'barLabel hover'
+                            : 'barLabel'
+                        }
+                        x={x(d.year)}
+                        dx={x.bandwidth() / 2}
+                        y={y((d as any)[combiOption]) - 5}
+                      >
+                        {`${Math.round((d as any)[combiOption])}${
+                          totalPercentOption === 'percentage' ? '%' : ''
+                        }`}
+                      </text>
+                      <g
+                        transform={`translate(${x(d.year)},${
+                          graphHeight + 17
+                        })`}
+                      >
+                        <rect
+                          y='-15'
+                          x='15'
+                          width={60}
+                          height={20}
+                          fill='#F8F8F8'
+                          opacity={hoveredYear === (d as any).year ? 0.7 : 0}
+                        />
+                        <text
+                          x='15'
+                          opacity={hoveredYear === (d as any).year ? 1 : 0}
+                          className='highlightYear'
+                          textAnchor='middle'
+                        >
+                          {(d as any).year}
+                        </text>
+                      </g>
+                    </>
                   ) : null}
                 </g>
               ))}

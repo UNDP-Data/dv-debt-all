@@ -50,7 +50,7 @@ export function LineChart(props: Props) {
     return () => resizeObserver.disconnect();
   }, []);
   return (
-    <div className='chart-container'>
+    <div className='chart-container flex-half-screen'>
       <div className='flex-div flex-space-between flex-wrap margin-bottom-03'>
         <div>
           <h6 className='undp-typography margin-bottom-01'>{title}</h6>

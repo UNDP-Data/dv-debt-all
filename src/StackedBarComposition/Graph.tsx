@@ -26,14 +26,13 @@ export function Graph(props: Props) {
           <g transform={`translate(${svgWidth / 2 - 200},${margin.top})`}>
             <g>
               {stackedData.map((d, i) => (
-                <g key={i}>
+                <g key={i} className='stackedRect'>
                   <rect
                     y={y(d[0][0])}
                     x={120}
                     height={y(d[0][1] - d[0][0])}
                     width={100}
-                    fill={UNDPColorModule.sequentialColors.negativeColorsx05[i]}
-                    opacity={0.8}
+                    fill={UNDPColorModule.categoricalColors.colors[i]}
                   />
                   {d[0][1] !== d[0][0] ? (
                     <>
@@ -50,7 +49,7 @@ export function Graph(props: Props) {
                       </text>
                       <text
                         textAnchor='end'
-                        className='label'
+                        className='chartLabel'
                         y={y(d[0][0]) + y(d[0][1] - d[0][0]) / 2 + 5}
                         x={110}
                       >

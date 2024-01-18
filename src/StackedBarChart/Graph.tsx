@@ -26,7 +26,7 @@ export function Graph(props: Props) {
           <g transform={`translate(${svgWidth / 2 - 250},${margin.top})`}>
             <g>
               {stackedData.map((d, i) => (
-                <g key={i}>
+                <g key={i} className='stackedRect'>
                   <rect
                     y={y(d[0][0])}
                     x={120}
@@ -58,7 +58,7 @@ export function Graph(props: Props) {
                         }`}
                       </text>
                       <text
-                        className='label'
+                        className='chartLabel'
                         y={y(d[0][0]) + y(d[0][1] - d[0][0]) / 2 + 5}
                         x={230}
                       >

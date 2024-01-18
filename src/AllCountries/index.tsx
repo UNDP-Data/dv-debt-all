@@ -136,38 +136,33 @@ export function AllCountries(props: Props) {
           countries that have debt evaluated under the LIC-DSF framework.
           <sup>2</sup>
         </p>
-        <div className='flex-div'>
-          <div style={{ width: '50%' }}>
-            <LinearDotsComparison
-              data={creditRating}
-              title='Credit Ratings'
-              id='countryCreditRatingScale'
-              year={
-                countriesSources.filter(d => d.graph === 'Credit Ratings')[0]
-                  .year
-              }
-              svgHeight={100}
-              selectedCountryCode={selectedCountry.value}
-              chartSource={
-                countriesSources.filter(d => d.graph === 'Credit Ratings')[0]
-              }
-            />
-          </div>
-          <div style={{ width: '50%' }}>
-            <HorizontalScale
-              countryDsa={countryDsaRating}
-              categories={dsaCategories}
-              title='DSA Ratings'
-              id='countryDsaRatingScale'
-              year={
-                countriesSources.filter(d => d.graph === 'DSA Ratings')[0].year
-              }
-              svgHeight={100}
-              chartSource={
-                countriesSources.filter(d => d.graph === 'DSA Ratings')[0]
-              }
-            />
-          </div>
+        <div className='flex-div flex-wrap'>
+          <LinearDotsComparison
+            data={creditRating}
+            title='Credit Ratings'
+            id='countryCreditRatingScale'
+            year={
+              countriesSources.filter(d => d.graph === 'Credit Ratings')[0].year
+            }
+            svgHeight={100}
+            selectedCountryCode={selectedCountry.value}
+            chartSource={
+              countriesSources.filter(d => d.graph === 'Credit Ratings')[0]
+            }
+          />
+          <HorizontalScale
+            countryDsa={countryDsaRating}
+            categories={dsaCategories}
+            title='DSA Ratings'
+            id='countryDsaRatingScale'
+            year={
+              countriesSources.filter(d => d.graph === 'DSA Ratings')[0].year
+            }
+            svgHeight={100}
+            chartSource={
+              countriesSources.filter(d => d.graph === 'DSA Ratings')[0]
+            }
+          />
         </div>
       </div>
       <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
@@ -269,65 +264,57 @@ export function AllCountries(props: Props) {
             2000-2025.
           </p>
         </div>
-        <div className='flex-div'>
-          <div style={{ width: '50%' }}>
-            <div className='stat-card'>
-              <h3 className='undp-typography'>
-                {countryStats?.netInterestPayments}
-              </h3>
-              <h5 className='undp-typography'>USD</h5>
-              <p className='undp-typography'>
-                Net interest payments General Government Debt (
-                {countryStats?.netInterestPaymentsYear})
-              </p>
-            </div>
+        <div className='flex-div flex-wrap'>
+          <div className='stat-card flex-half-screen'>
+            <h3 className='undp-typography'>
+              {countryStats?.netInterestPayments}
+            </h3>
+            <h5 className='undp-typography'>USD</h5>
+            <p className='undp-typography'>
+              Net interest payments General Government Debt (
+              {countryStats?.netInterestPaymentsYear})
+            </p>
           </div>
-          <div style={{ width: '50%' }}>
-            <div className='stat-card'>
-              <h3 className='undp-typography'>{countryStats?.externalPPG}</h3>
-              <h5 className='undp-typography'>USD</h5>
-              <p className='undp-typography'>
-                Interest and principal payments on external PPG debt (
-                {countryStats?.externalPPGYear})
-              </p>
-            </div>
+          <div className='stat-card flex-half-screen'>
+            <h3 className='undp-typography'>{countryStats?.externalPPG}</h3>
+            <h5 className='undp-typography'>USD</h5>
+            <p className='undp-typography'>
+              Interest and principal payments on external PPG debt (
+              {countryStats?.externalPPGYear})
+            </p>
           </div>
         </div>
-        <div className='flex-div margin-top-05'>
-          <div style={{ width: '50%' }}>
-            {countryNetInterest !== undefined ? (
-              <LineChart
-                data={countryNetInterest}
-                indicators={['percentage']}
-                id='countryNetInterest'
-                title='Net interest payments (% of revenue)'
-                selectedCountryCode={selectedCountry.value}
-                svgHeight={300}
-                chartSource={
-                  countriesSources.filter(
-                    d => d.graph === 'Net interest payments',
-                  )[0]
-                }
-              />
-            ) : null}
-          </div>
-          <div style={{ width: '50%' }}>
-            {countryTdsExternal !== undefined ? (
-              <LineChart
-                data={countryTdsExternal}
-                indicators={['% of revenue', '% of exports']}
-                id='countryDebtService'
-                title='Total debt service - PPG external debt'
-                selectedCountryCode={selectedCountry.value}
-                svgHeight={300}
-                chartSource={
-                  countriesSources.filter(
-                    d => d.graph === 'Total debt service',
-                  )[0]
-                }
-              />
-            ) : null}
-          </div>
+        <div className='flex-div flex-wrap margin-top-05'>
+          {countryNetInterest !== undefined ? (
+            <LineChart
+              data={countryNetInterest}
+              indicators={['percentage']}
+              id='countryNetInterest'
+              title='Net interest payments (% of revenue)'
+              selectedCountryCode={selectedCountry.value}
+              svgHeight={300}
+              chartSource={
+                countriesSources.filter(
+                  d => d.graph === 'Net interest payments',
+                )[0]
+              }
+            />
+          ) : null}
+          {countryTdsExternal !== undefined ? (
+            <LineChart
+              data={countryTdsExternal}
+              indicators={['% of revenue', '% of exports']}
+              id='countryDebtService'
+              title='Total debt service - PPG external debt'
+              selectedCountryCode={selectedCountry.value}
+              svgHeight={300}
+              chartSource={
+                countriesSources.filter(
+                  d => d.graph === 'Total debt service',
+                )[0]
+              }
+            />
+          ) : null}
         </div>
       </div>
     </>

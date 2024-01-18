@@ -6,6 +6,17 @@
 }
 .chart-container.rating{
   min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 40%;
+  flex-grow: 1;
+}
+.flex-half-screen{
+  display: flex;
+  flex-direction: column;
+  flex-basis: 40%;
+  flex-grow: 1;
+  min-width: 400px;
 }
 .yAxis text, .xAxis text, .highlightYear{
   font-family: 'ProximaNova', 'proxima-nova', 'Helvetica Neue', 'sans-serif';
@@ -35,11 +46,26 @@ p.source{
   text-anchor:middle;
   font-size: 14px;
 }
+.barLabel.hover{
+  font-size:18px;
+}
 .chartLabel {
   font-size: 0.875rem;
 }
 .labelSelected{
   font-size: 1.3rem;
+}
+.stackedRect rect{
+  opacity: 0.8;
+}
+.stackedRect:hover rect{
+  transition: 0.2s;
+  opacity: 1;
+}
+.stackedRect:hover .chartLabel{
+  transition: 0.2s;
+  font-size: 1rem;
+  font-weight: 700;
 }
 /* color legend styles for charts */
 .legend-container{

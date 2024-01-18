@@ -41,7 +41,7 @@ export function RegionLineChart(props: Props) {
         <div className='flex-div flex-space-between flex-wrap'>
           <div>
             <h6 className='undp-typography margin-bottom-01 margin-top-03'>
-              General government debt as a percentage of GDP
+              Government debt as a percentage of GDP
             </h6>
           </div>
           <div>

@@ -200,7 +200,7 @@ export function Graph(props: Props) {
                       opacity={hoveredYear === (d as any).year ? 1 : 0}
                       className='highlightYear'
                       textAnchor='middle'
-                      y={graphHeight + 17}
+                      y={graphHeight + 18}
                     >
                       {(d as any).year}
                     </text>

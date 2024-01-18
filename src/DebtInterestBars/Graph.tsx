@@ -37,7 +37,7 @@ export function Graph(props: Props) {
     .range([graphHeight, 0])
     .nice();
 
-  const yAxisTicks = y.ticks().filter(tick => Number.isInteger(tick));
+  const yAxisTicks = y.ticks(5); // .filter(tick => Number.isInteger(tick));
 
   const yAxis = axisLeft(y as any)
     .tickValues(yAxisTicks)
