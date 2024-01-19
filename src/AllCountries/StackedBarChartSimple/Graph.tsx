@@ -22,7 +22,7 @@ export function Graph(props: Props) {
   return (
     <div>
       <svg width={`${svgWidth}px`} height='470px' id={id}>
-        <g transform={`translate(${svgWidth / 2 - 230},${margin.top})`}>
+        <g transform={`translate(${svgWidth / 2 - 210},${margin.top})`}>
           {stackedData.map((d, i) => (
             <g key={i} className='stackedRect'>
               <rect

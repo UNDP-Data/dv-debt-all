@@ -94,14 +94,13 @@ export function LinearDotsComparison(props: Props) {
                   fill={colorScale(countryData.value)}
                   cy={0}
                   cx={x(countryData.value)}
-                  stroke='#000'
                 />
               </Tooltip>
 
               <text
-                className='labelSelected'
+                className='label'
                 x={x(countryData.value as number)}
-                y='30'
+                y='-15'
                 textAnchor='middle'
               >
                 {countryData.value as number}
@@ -109,15 +108,22 @@ export function LinearDotsComparison(props: Props) {
               <text
                 className='label'
                 x={x(countryData.value as number)}
-                y='50'
-                textAnchor='middle'
+                y='24'
+                textAnchor={
+                  x(countryData.value as number) < 45
+                    ? ' start'
+                    : x(countryData.value as number) <
+                      x((xDomain as any)[1]) - 45
+                    ? 'middle'
+                    : 'end'
+                }
               >
                 {categories[ratingScale(countryData.value as number)]}
               </text>
               <text
                 className='label'
                 x={x(xDomain[0] as number)}
-                y='30'
+                y='-15'
                 textAnchor='middle'
               >
                 {xDomain[0] as number}
@@ -125,7 +131,7 @@ export function LinearDotsComparison(props: Props) {
               <text
                 className='label'
                 x={x(xDomain[1] as number)}
-                y='30'
+                y='-15'
                 textAnchor='middle'
               >
                 {xDomain[1] as number}

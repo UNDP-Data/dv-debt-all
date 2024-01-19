@@ -175,7 +175,7 @@ export function AllCountries(props: Props) {
         </p>
         <div className='flex-div'>
           {countryStats !== undefined ? (
-            <div style={{ width: '33%' }} className='flex-div flex-vertical'>
+            <div style={{ width: '38%' }} className='flex-div flex-vertical'>
               <div className='stat-card'>
                 <h3 className='undp-typography'>{countryStats.debtMillion}</h3>
                 <h5 className='undp-typography'>USD</h5>
@@ -192,23 +192,21 @@ export function AllCountries(props: Props) {
               </div>
             </div>
           ) : null}
-          <div style={{ width: '65%' }}>
-            {countryDebtToGdp !== undefined ? (
-              <LineChart
-                data={countryDebtToGdp}
-                indicators={['percentage']}
-                id='countryDebtToGdp'
-                title='Government debt as percentage of GDP'
-                selectedCountryCode={selectedCountry.value}
-                svgHeight={350}
-                chartSource={
-                  countriesSources.filter(
-                    d => d.graph === 'Government debt as a percentage of GDP',
-                  )[0]
-                }
-              />
-            ) : null}
-          </div>
+          {countryDebtToGdp !== undefined ? (
+            <LineChart
+              data={countryDebtToGdp}
+              indicators={['percentage']}
+              id='countryDebtToGdp'
+              title='Government debt as percentage of GDP'
+              selectedCountryCode={selectedCountry.value}
+              svgHeight={350}
+              chartSource={
+                countriesSources.filter(
+                  d => d.graph === 'Government debt as a percentage of GDP',
+                )[0]
+              }
+            />
+          ) : null}
         </div>
       </div>
       <div style={{ maxWidth: '1024px', margin: '0 auto' }}>

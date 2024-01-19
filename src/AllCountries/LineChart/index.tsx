@@ -30,17 +30,17 @@ export function LineChart(props: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
   const yearsDomain = [2000, 2025];
-  // dynamic years domain
-  // const yearsDomain = { min: 0, max: 3000 };
-  /* indicators.forEach(indicator => {
+
+  // dynamic years domain not being used as the domain is fixed to 2000-2025 for all countries even when there's no data
+  /* const yearsDomain = [0, 3000]; // { min: 0, max: 3000 };
+  indicators.forEach(indicator => {
     const indExtent = extent(data, (d: any) =>
       !d[indicator].isNaN ? d.year : null,
     );
     // (indicator, indExtent);
-    if (indExtent[0] > yearsDomain.min) yearsDomain.min = indExtent[0];
-    if (indExtent[1] < yearsDomain.max) yearsDomain.max = indExtent[1]; 
+    if (indExtent[0] > yearsDomain[0]) yearsDomain[0] = indExtent[0];
+    if (indExtent[1] < yearsDomain[1]) yearsDomain[1] = indExtent[1];
   }); */
-  // const yearDomain = [yearsDomain.min as number, yearsDomain.max as number];
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver(entries => {
@@ -79,19 +79,23 @@ export function LineChart(props: Props) {
           ) : null}
         </div>
       </div>
+      <div ref={containerRef} className='margin-bottom-02 flex-half-screen'>
+        {data.length > 0 ? (
+          <Graph
+            data={data}
+            indicators={indicators}
+            id={id}
+            yearDomain={yearsDomain}
+            svgWidth={svgWidth}
+            svgHeight={svgHeight}
+            selectedCountryCode={selectedCountryCode}
+          />
+        ) : (
+          <div className='center-area-error-el'>No data available</div>
+        )}
+      </div>
       {data.length > 0 ? (
         <>
-          <div ref={containerRef} className='margin-bottom-02'>
-            <Graph
-              data={data}
-              indicators={indicators}
-              id={id}
-              yearDomain={yearsDomain}
-              svgWidth={svgWidth}
-              svgHeight={svgHeight}
-              selectedCountryCode={selectedCountryCode}
-            />
-          </div>
           {chartSource?.source ? (
             <p className='source'>{`Source: ${chartSource.source}`}</p>
           ) : null}
@@ -99,9 +103,7 @@ export function LineChart(props: Props) {
             <p className='source'>{`Note: ${chartSource.note}`}</p>
           ) : null}
         </>
-      ) : (
-        <div className='center-area-error-el'>No data available</div>
-      )}
+      ) : null}
     </div>
   );
 }
