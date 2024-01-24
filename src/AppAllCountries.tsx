@@ -153,9 +153,15 @@ function App() {
           <Select
             options={countryList}
             className='undp-select'
-            defaultValue={selectedCountry}
+            value={selectedCountry}
             showSearch
             style={{ width: '400px' }}
+            filterOption={(
+              input: string,
+              option?: { label: string; value: string },
+            ) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+            }
             onChange={d => {
               setSelectedCountry(
                 countryList.filter((k: any) => k.value === d)[0],
