@@ -95,14 +95,14 @@ export function LineChart(props: Props) {
         )}
       </div>
       {data.length > 0 ? (
-        <>
+        <div className='margin-top-04'>
           {chartSource?.source ? (
             <p className='source'>{`Source: ${chartSource.source}`}</p>
           ) : null}
           {chartSource?.note ? (
             <p className='source'>{`Note: ${chartSource.note}`}</p>
           ) : null}
-        </>
+        </div>
       ) : null}
     </div>
   );
