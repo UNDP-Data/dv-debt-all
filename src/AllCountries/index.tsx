@@ -177,15 +177,15 @@ export function AllCountries(props: Props) {
           {countryStats !== undefined ? (
             <div style={{ width: '38%' }} className='flex-div flex-vertical'>
               <div className='stat-card'>
-                <h3 className='undp-typography'>{countryStats.debtMillion}</h3>
-                <h5 className='undp-typography'>USD</h5>
+                <h3>{countryStats.debtMillion}</h3>
+                <h5>USD</h5>
                 <p className='undp-typography'>
                   General gross government debt ({countryStats?.debtYear})
                 </p>
               </div>
               <div className='stat-card'>
-                <h3 className='undp-typography'>{countryStats.debtPercent}</h3>
-                <h5 className='undp-typography'>% of GDP</h5>
+                <h3>{countryStats.debtPercent}</h3>
+                <h5>% of GDP</h5>
                 <p className='undp-typography'>
                   General gross government debt ({countryStats?.debtYear})
                 </p>
@@ -222,10 +222,10 @@ export function AllCountries(props: Props) {
         <div className='flex-div'>
           <div style={{ width: '50%' }}>
             <div className='stat-card'>
-              <h3 className='undp-typography'>
+              <h3>
                 {countryStats?.externalGovDebt}
               </h3>
-              <h5 className='undp-typography'>USD</h5>
+              <h5>USD</h5>
               <p className='undp-typography'>
                 External public and publicly guaranteed (PPG) debt stock (
                 {countryStats?.externalGovDebtYear})
@@ -264,18 +264,18 @@ export function AllCountries(props: Props) {
         </div>
         <div className='flex-div flex-wrap'>
           <div className='stat-card flex-half-screen'>
-            <h3 className='undp-typography'>
+            <h3>
               {countryStats?.netInterestPayments}
             </h3>
-            <h5 className='undp-typography'>USD</h5>
+            <h5>USD</h5>
             <p className='undp-typography'>
               Net interest payments General Government Debt (
               {countryStats?.netInterestPaymentsYear})
             </p>
           </div>
           <div className='stat-card flex-half-screen'>
-            <h3 className='undp-typography'>{countryStats?.externalPPG}</h3>
-            <h5 className='undp-typography'>USD</h5>
+            <h3>{countryStats?.externalPPG}</h3>
+            <h5>USD</h5>
             <p className='undp-typography'>
               Interest and principal payments on external PPG debt (
               {countryStats?.externalPPGYear})
