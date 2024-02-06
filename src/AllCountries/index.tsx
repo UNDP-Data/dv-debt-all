@@ -39,12 +39,17 @@ export function AllCountries(props: Props) {
     selectedCountry,
     countriesSources,
   } = props;
+
+  // {Math.abs(d) < 1 ? d : format('~s')(d).replace('G', 'B')}
   const formatMillion = (d: number | undefined) => {
     if (d === undefined) return 'N/A';
+    // const k = Math.round(d / 10) * 10000000;
     const k = d * 1000000;
-    return Math.abs(k) < 1
-      ? d.toFixed(2)
-      : format('~s')(k).replace('G', 'B').toString();
+    if (d < 1000) return `${d}M`;
+    if (d < 10000) return format('.3~s')(k).replace('G', 'B');
+    if (d < 100000) return format('.4~s')(k).replace('G', 'B');
+    if (d < 1000000) return format('.5~s')(k).replace('G', 'B');
+    return format('.4~s')(k).replace('G', 'B');
   };
   const [countryStats, setCountryStats] = useState<
     CountryStatsType | undefined

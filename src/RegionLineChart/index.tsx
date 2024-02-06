@@ -53,7 +53,7 @@ export function RegionLineChart(props: Props) {
             >
               {totalExternalOptions.map((d, i) => (
                 <Radio key={i} className='undp-radio' value={d}>
-                  {d}
+                  {d[0].toUpperCase() + d.slice(1)}
                 </Radio>
               ))}
             </Radio.Group>
