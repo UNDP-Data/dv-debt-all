@@ -102,8 +102,19 @@ p.source{
 .flex-vertical{
   flex-direction: column;
 }
+.debt-stats-container{
+  width: 38%;
+}
 .flex-vertical .stat-card{
   flex-basis: unset;
+}
+@media (max-width: 780px){
+  .debt-stats-container.flex-vertical{
+    flex-direction: row;
+  }
+  .debt-stats-container{
+    width: 100%;
+  }
 }
 .highlightScale{
   stroke: #000;

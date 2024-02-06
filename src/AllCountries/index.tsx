@@ -49,6 +49,7 @@ export function AllCountries(props: Props) {
     if (d < 10000) return format('.3~s')(k).replace('G', 'B');
     if (d < 100000) return format('.4~s')(k).replace('G', 'B');
     if (d < 1000000) return format('.5~s')(k).replace('G', 'B');
+    if (d < 10000000) return format('.3~s')(k).replace('G', 'B');
     return format('.4~s')(k).replace('G', 'B');
   };
   const [countryStats, setCountryStats] = useState<
@@ -178,9 +179,9 @@ export function AllCountries(props: Props) {
           as a percentage of GDP. The graph shows the development of debt (as a
           percentage of GDP) from 2000-2025.
         </p>
-        <div className='flex-div'>
+        <div className='flex-div flex-wrap'>
           {countryStats !== undefined ? (
-            <div style={{ width: '38%' }} className='flex-div flex-vertical'>
+            <div className='flex-div debt-stats-container flex-vertical'>
               <div className='stat-card'>
                 <h3>{countryStats.debtMillion}</h3>
                 <h4>USD</h4>
@@ -224,8 +225,8 @@ export function AllCountries(props: Props) {
           2022. The graph shows the debt composition on the four categories
           bilateral, multilateral, bonds and ‘other private’ creditors.
         </p>
-        <div className='flex-div'>
-          <div style={{ width: '50%' }}>
+        <div className='flex-div flex-wrap'>
+          <div style={{ flexBasis: '30%', flexGrow: '1' }}>
             <div className='stat-card'>
               <h3>{countryStats?.externalGovDebt}</h3>
               <h4>USD</h4>
@@ -235,7 +236,7 @@ export function AllCountries(props: Props) {
               </p>
             </div>
           </div>
-          <div style={{ width: '50%' }}>
+          <div style={{ flexBasis: '50%', flexGrow: '1' }}>
             <StackedBarChartSimple
               data={countryExternalDebt.filter(
                 d => d.year === Number(countryStats?.externalGovDebtYear),

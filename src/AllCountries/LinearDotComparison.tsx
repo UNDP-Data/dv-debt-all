@@ -94,6 +94,7 @@ export function LinearDotsComparison(props: Props) {
                   fill={colorScale(countryData.value)}
                   cy={0}
                   cx={x(countryData.value)}
+                  stroke='#FFFFFF'
                 />
               </Tooltip>
 
