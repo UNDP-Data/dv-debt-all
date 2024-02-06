@@ -174,8 +174,8 @@ export function AllCountries(props: Props) {
         <h2 className='undp-typography margin-top-10'>Government debt</h2>
         <p className='undp-typography'>
           Figures below show the value of general gross government debt in 2023
-          (or latest available datapoint) in Million (Mn) USD and as a
-          percentage of GDP. The graph shows the development of debt (as a
+          (or latest available datapoint) in million (M) or billion (B) USD and
+          as a percentage of GDP. The graph shows the development of debt (as a
           percentage of GDP) from 2000-2025.
         </p>
         <div className='flex-div'>
@@ -183,14 +183,14 @@ export function AllCountries(props: Props) {
             <div style={{ width: '38%' }} className='flex-div flex-vertical'>
               <div className='stat-card'>
                 <h3>{countryStats.debtMillion}</h3>
-                <h5>USD</h5>
+                <h4>USD</h4>
                 <p className='undp-typography'>
                   General gross government debt ({countryStats?.debtYear})
                 </p>
               </div>
               <div className='stat-card'>
                 <h3>{countryStats.debtPercent}</h3>
-                <h5>% of GDP</h5>
+                <h4>% of GDP</h4>
                 <p className='undp-typography'>
                   General gross government debt ({countryStats?.debtYear})
                 </p>
@@ -220,17 +220,15 @@ export function AllCountries(props: Props) {
         </h2>
         <p className='undp-typography'>
           The figure shows the value of the external public and publicly
-          guaranteed (PPG) debt stock in million (Mn) USD for 2022. The graph
-          shows the debt composition on the four categories bilateral,
-          multilateral, bonds and ‘other private’ creditors.
+          guaranteed (PPG) debt stock in million (M) or billion (B) USD for
+          2022. The graph shows the debt composition on the four categories
+          bilateral, multilateral, bonds and ‘other private’ creditors.
         </p>
         <div className='flex-div'>
           <div style={{ width: '50%' }}>
             <div className='stat-card'>
-              <h3>
-                {countryStats?.externalGovDebt}
-              </h3>
-              <h5>USD</h5>
+              <h3>{countryStats?.externalGovDebt}</h3>
+              <h4>USD</h4>
               <p className='undp-typography'>
                 External public and publicly guaranteed (PPG) debt stock (
                 {countryStats?.externalGovDebtYear})
@@ -260,19 +258,17 @@ export function AllCountries(props: Props) {
           <p className='undp-typography'>
             Figures show the value of net interest payments on total government
             debt, and interest and principal payments on external PPG debt for
-            2023 in million (Mn) USD. The graph on the left depicts government
-            net interest payments (as a percentage of revenue), and the graph on
-            the right total external debt servicing on external PPG debt (as a
-            percentage of revenue or exports). Both graphs cover the period
-            2000-2025.
+            2023 in in million (M) or billion (B) USD. The graph on the left
+            depicts government net interest payments (as a percentage of
+            revenue), and the graph on the right total external debt servicing
+            on external PPG debt (as a percentage of revenue or exports). Both
+            graphs cover the period 2000-2025.
           </p>
         </div>
-        <div className='flex-div flex-wrap'>
+        <div className='flex-div flex-wrap margin-top-08'>
           <div className='stat-card flex-half-screen'>
-            <h3>
-              {countryStats?.netInterestPayments}
-            </h3>
-            <h5>USD</h5>
+            <h3>{countryStats?.netInterestPayments}</h3>
+            <h4>USD</h4>
             <p className='undp-typography'>
               Net interest payments General Government Debt (
               {countryStats?.netInterestPaymentsYear})
@@ -280,7 +276,7 @@ export function AllCountries(props: Props) {
           </div>
           <div className='stat-card flex-half-screen'>
             <h3>{countryStats?.externalPPG}</h3>
-            <h5>USD</h5>
+            <h4>USD</h4>
             <p className='undp-typography'>
               Interest and principal payments on external PPG debt (
               {countryStats?.externalPPGYear})
