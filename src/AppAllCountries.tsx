@@ -40,7 +40,20 @@ function App() {
   const [countriesSources, setCountriesSources] = useState<ChartSourceType[]>(
     [],
   );
-  const groups = ['LIC', 'LMC', 'UMC', 'MIC', 'LDC', 'SIDS', 'Poorest', 'HIPC'];
+  const groups = [
+    'LIC',
+    'LMC',
+    'UMC',
+    'MIC',
+    'LDC',
+    'SIDS',
+    'Poorest',
+    'HIPC',
+    'Very high HDI',
+    'High HDI',
+    'Medium HDI',
+    'Low HDI',
+  ];
   const groupsNames = {
     'All developing': 'All developing',
     LIC: 'Low income (LIC)',

@@ -39,7 +39,7 @@ export function RegionLineChartNoOptions(props: Props) {
         <div className='flex-div flex-space-between flex-wrap'>
           <div>
             <h6 className='undp-typography margin-bottom-01 margin-top-03'>
-              General government net interest payments
+              General government net interest payments as percentage of GDP
             </h6>
           </div>
         </div>
@@ -49,7 +49,7 @@ export function RegionLineChartNoOptions(props: Props) {
           svgWidth={960}
           svgHeight={550}
           id='netInterestLine'
-          yAxisName='Net interest payments as % of ..'
+          yAxisName='Net interest as % of GDP'
         />
         {chartSource?.source ? (
           <p className='source'>{`Source: ${chartSource.source}`}</p>

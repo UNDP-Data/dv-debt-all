@@ -33,7 +33,9 @@ function AppNetInterestQuantiles() {
           data={debtNetInterest}
           categories={categoriesData1}
           chartSource={
-            sourcesData.filter(d => d.graph === 'Net interest payments')[0]
+            sourcesData.filter(
+              d => d.graph === 'Net interest payments to GDP',
+            )[0]
           }
         />
       ) : null}
