@@ -46,6 +46,17 @@ export interface DsaRatingType extends RatingType {
 export interface CountryType {
   label: string;
   value: string;
+  Region: string;
+  'All developing': boolean;
+  IMF: string;
+  LIC: boolean;
+  LMC: boolean;
+  UMC: boolean;
+  MIC: boolean;
+  LDC: boolean;
+  SIDS: boolean;
+  Poorest: boolean;
+  HIPC: boolean;
 }
 export interface CountryValueType {
   code: string;

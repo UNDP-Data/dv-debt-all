@@ -36,13 +36,35 @@ function App() {
   const [countryList, setCountryList] = useState<CountryType[] | undefined>(
     undefined,
   );
-  const [selectedCountry, setSelectedCountry] = useState<CountryType>({
-    label: 'Afghanistan',
-    value: 'AFG',
-  });
+  const [selectedCountry, setSelectedCountry] = useState<CountryType>();
   const [countriesSources, setCountriesSources] = useState<ChartSourceType[]>(
     [],
   );
+  const groups = ['LIC', 'LMC', 'UMC', 'MIC', 'LDC', 'SIDS', 'Poorest', 'HIPC'];
+  const groupsNames = {
+    'All developing': 'All developing',
+    LIC: 'Low income (LIC)',
+    LMC: 'Lower-middle income (LMC)',
+    UMC: 'Upper-middle income (UMC)',
+    MIC: 'Middle income (MIC)',
+    LDC: 'Least developed (LDC)',
+    SIDS: 'Small island developing (SIDS)',
+    EM: 'Emerging market (EM)',
+    LIDC: 'Low income developing (LIDC)',
+    Poorest: 'Poorest (IDA eligible)',
+    HIPC: 'Heavily indebted poor (HIPC)',
+    'Very high HDI': 'Very high HDI',
+    'High HDI': 'High HDI',
+    'Medium HDI': 'Medium HDI',
+    'Low HDI': 'Low HDI',
+    'South Asia': 'South Asia (SA)',
+    'Europe & Central Asia': 'Europe & Central Asia (ECA)',
+    'Middle East & North Africa': 'Middle East and North Africa (MENA)',
+    'East Asia & Pacific': 'East Asia & Pacific (EAP)',
+    'Latin America & Caribbean': 'Latin America & Caribbean (LAC)',
+    'Sub-Saharan Africa': 'Sub-Saharan Africa (SSA)',
+  };
+
   const dataurl =
     'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/countries/';
   useEffect(() => {
@@ -74,9 +96,11 @@ function App() {
         }));
         setCountriesSources(countriesSourcesData);
         const countryData = groupingsCsv.map((d: any) => ({
+          ...d,
           label: d.name,
           value: d.iso,
         }));
+        setSelectedCountry(countryData[0]);
         const dsaRatingData = dsaRatingCsv.map((d: any) => ({
           name: d.Country,
           code: d.iso,
@@ -168,6 +192,23 @@ function App() {
               );
             }}
           />
+          {selectedCountry ? (
+            <div className='margin-top-05'>
+              {selectedCountry.label} belongs to the following groups:{' '}
+              <strong>
+                {(groupsNames as any)[selectedCountry.Region]}
+                {selectedCountry.IMF !== '..'
+                  ? `, ${(groupsNames as any)[selectedCountry.IMF]}`
+                  : ''}
+                {groups.map(group =>
+                  (selectedCountry as any)[group] === '1'
+                    ? `, ${(groupsNames as any)[group]}`
+                    : '',
+                )}
+                .
+              </strong>
+            </div>
+          ) : null}
         </div>
       ) : null}
       {debtToGdp !== undefined &&
@@ -176,6 +217,7 @@ function App() {
       externalDebt &&
       creditRating &&
       dsaRating &&
+      selectedCountry &&
       countriesSources ? (
         <AllCountries
           countryDebtToGdp={debtToGdp?.filter(
