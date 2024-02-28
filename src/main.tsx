@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import AppNetInterest from './AppNetInterest';
+import AppNetInterestQuantiles from './AppNetInterestQuantiles';
 import AppExternalDebt from './AppExternalDebt';
 import AppCompositionGroups from './AppCompositionGroups';
 import AppAllCountries from './AppAllCountries';
@@ -17,6 +18,13 @@ ReactDOM.createRoot(
 ).render(
   <React.StrictMode>
     <AppNetInterest />
+  </React.StrictMode>,
+);
+ReactDOM.createRoot(
+  document.getElementById('debtNetInterestQuantiles') as HTMLElement,
+).render(
+  <React.StrictMode>
+    <AppNetInterestQuantiles />
   </React.StrictMode>,
 );
 ReactDOM.createRoot(

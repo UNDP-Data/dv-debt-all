@@ -40,10 +40,8 @@ export function AllCountries(props: Props) {
     countriesSources,
   } = props;
 
-  // {Math.abs(d) < 1 ? d : format('~s')(d).replace('G', 'B')}
   const formatMillion = (d: number | undefined) => {
     if (d === undefined) return 'N/A';
-    // const k = Math.round(d / 10) * 10000000;
     const k = d * 1000000;
     if (d < 1000) return `${d}M`;
     if (d < 10000) return format('.3~s')(k).replace('G', 'B');

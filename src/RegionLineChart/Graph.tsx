@@ -7,13 +7,14 @@ import { min, max, extent } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { select } from 'd3-selection';
 import UNDPColorModule from 'undp-viz-colors';
-import { DebtGdp } from '../Types';
 
 interface Props {
-  data: DebtGdp[];
+  data: object[];
   option: string;
   svgWidth: number;
   svgHeight: number;
+  id: string;
+  yAxisName: string;
 }
 const colors = {
   Median: UNDPColorModule.categoricalColors.colors[0],
@@ -22,7 +23,7 @@ const colors = {
 };
 /// two lines for mean and median
 export function Graph(props: Props) {
-  const { data, option, svgWidth, svgHeight } = props;
+  const { data, option, svgWidth, svgHeight, id, yAxisName } = props;
   const indicators = ['Median', 'Q1', 'Q3'];
   const margin = { top: 20, right: 40, bottom: 50, left: 80 };
   const graphWidth = svgWidth - margin.left - margin.right;
@@ -39,7 +40,8 @@ export function Graph(props: Props) {
   const maxParam = max(valueArray) ? max(valueArray) : 0;
   // eslint-disable-next-line consistent-return
   const dateDomain = extent(data, d => {
-    if ((d as any)[`${option}DebtMedian`] !== '') return Number(d.year);
+    if ((d as any)[`${option}DebtMedian`] !== '')
+      return Number((d as any).year);
   });
   const x = scaleLinear()
     .domain(dateDomain as [number, number])
@@ -71,7 +73,7 @@ export function Graph(props: Props) {
     .curve(curveMonotoneX);
 
   useEffect(() => {
-    const svg = select('#debtToGdpLine');
+    const svg = select(`#${id}`);
     svg.select('.yAxis').call(yAxis as any);
     svg.select('.xAxis').call(xAxis as any);
     svg.selectAll('.domain').remove();
@@ -112,7 +114,7 @@ export function Graph(props: Props) {
             width='100%'
             height='100%'
             viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-            id='debtToGdpLine'
+            id={id}
           >
             <g transform={`translate(${margin.left},${margin.top})`}>
               <g className='xAxis' transform={`translate(0 ,${graphHeight})`} />
@@ -151,7 +153,7 @@ export function Graph(props: Props) {
                     className='focus'
                     style={{ display: 'block' }}
                     key={i}
-                    transform={`translate(${x(Number(d.year))},0)`}
+                    transform={`translate(${x(Number((d as any).year))},0)`}
                   >
                     <line
                       x1={0}
@@ -160,7 +162,7 @@ export function Graph(props: Props) {
                       y2={graphHeight}
                       stroke='#FFF'
                       strokeWidth={2}
-                      opacity={hoveredYear === d.year ? 1 : 0}
+                      opacity={hoveredYear === (d as any).year ? 1 : 0}
                     />
                     {indicators.map((k, j) => (
                       <g
@@ -176,13 +178,13 @@ export function Graph(props: Props) {
                         }}
                       >
                         <circle
-                          r={hoveredYear === d.year ? 5 : 3}
+                          r={hoveredYear === (d as any).year ? 5 : 3}
                           fill={(colors as any)[k]}
                         />
                         <text
                           x={-25}
                           y={-5}
-                          opacity={hoveredYear === d.year ? 1 : 0}
+                          opacity={hoveredYear === (d as any).year ? 1 : 0}
                         >
                           {(d as any)[`${option}Debt${k}`]}%
                         </text>
@@ -206,7 +208,7 @@ export function Graph(props: Props) {
                     </text>
                     <rect
                       onMouseEnter={() => {
-                        setHoveredYear(d.year);
+                        setHoveredYear((d as any).year);
                       }}
                       onMouseLeave={() => {
                         setHoveredYear(undefined);
@@ -235,7 +237,7 @@ export function Graph(props: Props) {
               transform='rotate(-90)'
               textAnchor='middle'
             >
-              Debt as % of GDP
+              {yAxisName}
             </text>
           </svg>
         </>

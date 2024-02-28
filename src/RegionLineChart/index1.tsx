@@ -1,20 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import { useState } from 'react';
-import { Select, Radio, RadioChangeEvent } from 'antd';
-import { DebtGdp, CategoryData, ChartSourceType } from '../Types';
+import { Select } from 'antd';
+import { CategoryData, ChartSourceType } from '../Types';
 import { Graph } from './Graph';
 
 interface Props {
-  data: DebtGdp[];
+  data: object[];
   categories: CategoryData[];
   chartSource: ChartSourceType;
 }
 
-const totalExternalOptions = ['total', 'external'];
-
-export function RegionLineChart(props: Props) {
+export function RegionLineChartNoOptions(props: Props) {
   const { data, categories, chartSource } = props;
-  const [totalExternalSelection, setTotalExternalSelection] = useState('total');
   const [categorySelection, setCategorySelection] = useState('All developing');
   return (
     <>
@@ -41,31 +39,17 @@ export function RegionLineChart(props: Props) {
         <div className='flex-div flex-space-between flex-wrap'>
           <div>
             <h6 className='undp-typography margin-bottom-01 margin-top-03'>
-              Government debt as a percentage of GDP
+              General government net interest payments
             </h6>
-          </div>
-          <div>
-            <Radio.Group
-              defaultValue={totalExternalSelection}
-              onChange={(el: RadioChangeEvent) =>
-                setTotalExternalSelection(el.target.value)
-              }
-            >
-              {totalExternalOptions.map((d, i) => (
-                <Radio key={i} className='undp-radio' value={d}>
-                  {d[0].toUpperCase() + d.slice(1)}
-                </Radio>
-              ))}
-            </Radio.Group>
           </div>
         </div>
         <Graph
-          data={data.filter(d => d.Group === categorySelection)}
-          option={totalExternalSelection}
+          data={data.filter(d => (d as any).Group === categorySelection)}
+          option='netInterest'
           svgWidth={960}
           svgHeight={550}
-          id='debtToGdpLine'
-          yAxisName='Debt as % of GDP'
+          id='netInterestLine'
+          yAxisName='Net interest payments as % of ..'
         />
         {chartSource?.source ? (
           <p className='source'>{`Source: ${chartSource.source}`}</p>
