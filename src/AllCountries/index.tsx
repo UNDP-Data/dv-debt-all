@@ -131,7 +131,7 @@ export function AllCountries(props: Props) {
   return (
     <>
       <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
-        <h2 className='undp-typography margin-top-10'>Ratings</h2>
+        <h2 className='undp-typography margin-top-08'>Ratings</h2>
         <p className='undp-typography margin-top-05'>
           Credit ratings are translated into a numerical rating following the
           scale and categories used in Jensen (2022).<sup>1</sup>

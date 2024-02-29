@@ -206,8 +206,9 @@ function App() {
             }}
           />
           {selectedCountry ? (
-            <div className='margin-top-05'>
-              {selectedCountry.label} belongs to the following groups:{' '}
+            <div className='margin-top-08'>
+              {selectedCountry.label} is part to the following groups:
+              <br />
               <strong>
                 {(groupsNames as any)[selectedCountry.Region]}
                 {selectedCountry.IMF !== '..'
