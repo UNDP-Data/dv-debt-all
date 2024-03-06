@@ -43,7 +43,7 @@ export function Graph(props: Props) {
                         y={y(d[0][0]) + y(d[0][1] - d[0][0]) / 2}
                         x={110}
                       >
-                        {`${(d[0][1] - d[0][0]).toFixed(2)}% `}
+                        {`${(d[0][1] - d[0][0]).toFixed(1)}% `}
                       </text>
                       <text
                         textAnchor='end'

@@ -57,8 +57,9 @@ export function BarChart(props: Props) {
         <div className='margin-bottom-03'>
           <div>
             <h6 className='undp-typography margin-bottom-01'>
-              Number of countries for which external public total (AMT+INT) debt
-              service exceeds 20% of revenue/exports and primary income
+              Number/percentage of countries for which external public total
+              (AMT+INT) debt service exceeds 20% of revenue/exports and primary
+              income
             </h6>
             <p className='undp-typography small-font margin-bottom-01'>
               Years: {domain[0]} - {domain[1]}
