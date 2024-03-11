@@ -134,11 +134,9 @@ export function AllCountries(props: Props) {
         <h2 className='undp-typography margin-top-08'>Ratings</h2>
         <p className='undp-typography margin-top-05'>
           Credit ratings are translated into a numerical rating following the
-          scale and categories used in Jensen (2022).<sup>1</sup>
-          <br />
-          Debts Sustainability Analysis (DSA) ratings are the latest rating for
-          countries that have debt evaluated under the LIC-DSF framework.
-          <sup>2</sup>
+          scale and categories used in Jensen (2022).<sup>1</sup> Debt distress
+          ratings are from countries latest Debt Sustainability Analysis (DSA)
+          for countries that have debt evaluated under the LIC-DSF framework.
         </p>
         <div className='flex-div flex-wrap'>
           <LinearDotsComparison
@@ -157,7 +155,7 @@ export function AllCountries(props: Props) {
           <HorizontalScale
             countryDsa={countryDsaRating}
             categories={dsaCategories}
-            title='DSA Ratings'
+            title='DSA debt distress rating'
             id='countryDsaRatingScale'
             year={
               countriesSources.filter(d => d.graph === 'DSA Ratings')[0].year
@@ -174,8 +172,9 @@ export function AllCountries(props: Props) {
         <p className='undp-typography'>
           Figures below show the value of general gross government debt in 2023
           (or latest available datapoint) in million (M) or billion (B) USD and
-          as a percentage of GDP. The graph shows the development of debt (as a
-          percentage of GDP) from 2000-2025.
+          as a percentage of GDP. The graph shows the historical development of
+          debt as a percentage of GDP from 2000 to 2023 and the forecast for
+          2024 and 2025.
         </p>
         <div className='flex-div flex-wrap'>
           {countryStats !== undefined ? (
@@ -220,8 +219,9 @@ export function AllCountries(props: Props) {
         <p className='undp-typography'>
           The figure shows the value of the external public and publicly
           guaranteed (PPG) debt stock in million (M) or billion (B) USD for
-          2022. The graph shows the debt composition on the four categories
-          bilateral, multilateral, bonds and ‘other private’ creditors.
+          2022.The graph shows the corresponding debt composition on the four
+          creditor categories bilateral, multilateral, bonds and ‘other private’
+          creditors.
         </p>
         <div className='flex-div flex-wrap'>
           <div style={{ flexBasis: '30%', flexGrow: '1' }}>

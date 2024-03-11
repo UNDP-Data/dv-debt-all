@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
+import parse from 'html-react-parser';
 import { scaleLinear } from 'd3-scale';
 import { extent } from 'd3-array';
 import { Tooltip } from 'antd';
@@ -143,7 +144,7 @@ export function LinearDotsComparison(props: Props) {
             <p className='source'>{`Source: ${chartSource.source}`}</p>
           ) : null}
           {chartSource.note ? (
-            <p className='source'>{`Note: ${chartSource.note}`}</p>
+            <p className='source'>Note: {parse(chartSource.note)}</p>
           ) : null}
         </>
       ) : (
