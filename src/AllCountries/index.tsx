@@ -178,15 +178,15 @@ export function AllCountries(props: Props) {
         </p>
         <div className='flex-div flex-wrap'>
           {countryStats !== undefined ? (
-            <div className='flex-div debt-stats-container flex-vertical'>
-              <div className='stat-card'>
+            <div className='flex-div flex-wrap debt-stats-container flex-vertical'>
+              <div className='stat-card stat-cart-debt'>
                 <h3>{countryStats.debtMillion}</h3>
                 <h4>USD</h4>
                 <p className='undp-typography'>
                   General gross government debt ({countryStats?.debtYear})
                 </p>
               </div>
-              <div className='stat-card'>
+              <div className='stat-card stat-cart-debt'>
                 <h3>{countryStats.debtPercent}</h3>
                 <h4>% of GDP</h4>
                 <p className='undp-typography'>

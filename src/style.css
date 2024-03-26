@@ -123,6 +123,9 @@ p.source{
   .debt-stats-container{
     width: 100%;
   }
+  .stat-card-debt{
+    min-width: 400px;
+  }
 }
 .highlightScale{
   stroke: #000;
