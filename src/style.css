@@ -108,13 +108,13 @@ p.source{
 .flex-vertical .stat-card{
   flex-basis: unset;
 }
-.ant-select-item-option-content{
-  font-size: 1rem;
-  padding: 0.5rem;
-  margin-top: 0;
-}
-.ant-select-item{
-  border-top: 1px solid var(--gray-300);
+.ant-select-item-option{
+  font-size: 1.25rem !important;
+  white-space: normal !important;
+  padding: 1rem !important;
+  border-top: 1px solid var(--gray-400) !important;
+  line-height: 1.4 !important;
+  font-family: var(--fontFamily) !important;
 }
 @media (max-width: 780px){
   .debt-stats-container.flex-vertical{
