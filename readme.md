@@ -1,5 +1,5 @@
 # Project Title
-#### Project description [Click here to see the interface]({{link to the site here}}).
+#### Project description [Click here to see the interface]({{https://white-beach-040ec2f03.4.azurestaticapps.net}}).
 
 ## Table of Contents
 * [Link for the visualization](#section-01)
@@ -15,10 +15,10 @@
 * [Tooling Setup](#section-10)
 
 ## Link for the visualization<a name="section-01"></a>
-[{{link to the site here}}]({{link to the site here}})
+[https://white-beach-040ec2f03.4.azurestaticapps.net]({{https://white-beach-040ec2f03.4.azurestaticapps.net}})
 
 ## Deployment<a name="deployment"></a>
-The Production site deployed using Azure Static Web App and work flow can be found [here]({{link to the site here}})
+The Production site deployed using Azure Static Web App and work flow can be found [here]({{https://github.com/UNDP-Data/dv-debt-all}})
 
 ## Steps to Integrating the Visualization in the Data Future Platform or Any Other Page<a name="section-02"></a>
 Add the following div in the page
@@ -34,11 +34,11 @@ Apart from the mentioned `div` above the following `script` and `link` needs to 
 <link rel="stylesheet" href="https://undp-data.github.io/stylesheets-for-viz/style/StyleForGraph.css" />
 ```
 
-## Pages on DFP Where the Visualization is Used<a name="section-03"></a>
-_All the pages on the DFP or other places like viva topics etc. where this visualization is embeded or used._
+## Pages on DFP Where the Visualization is Used<a name="section-03" src=""></a>
+[_https://data.undp.org/insights/debt-in-developing-economies_](https://data.undp.org/insights/debt-in-developing-economies)
 
 ## Related Repos<a name="section-04"></a>
-* [__name of the data repo__](link to data repo): This is the data sheet for visualization
+* [__dv-debt-all-data-repo__](https://github.com/UNDP-Data/dv-debt-all-data-repo): These are the data sheets for the visualization
 * [__stylesheet-for-viz__](https://github.com/UNDP-Data/stylesheets-for-viz): Repo which defines the css settings for the project
 
 ## Global CSS for UI and Graphs<a name="section-05"></a>
@@ -66,8 +66,8 @@ This project is bootstrapped with [`Vite`](https://vitejs.dev/) and was created 
 Run the terminal or command prompt and then run the following
 
 ```
-git clone https://github.com/UNDP-Data/{{projectName}}.git
-cd {{projectName}}
+git clone https://github.com/UNDP-Data/dv-debt-all.git
+cd dv-debt-all
 npm install
 ```
 
