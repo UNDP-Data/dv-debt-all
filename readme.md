@@ -13,6 +13,7 @@
 * [Local Deployment](#section-08)
 * [Available Scripts](#section-09)
 * [Tooling Setup](#section-10)
+* [Contact](#section-11)
 
 ## Link for the visualization<a name="section-01"></a>
 [https://white-beach-040ec2f03.4.azurestaticapps.net]({{https://white-beach-040ec2f03.4.azurestaticapps.net}})
@@ -86,3 +87,6 @@ The page will reload if you make edits. You will also see any lint errors in the
 This project uses ESLint integrated with prettier, which verifies and formats your code so you don't have to do it manually. You should have your editor set up to display lint errors and automatically fix those which it is possible to fix. See [http://eslint.org/docs/user-guide/integrations](http://eslint.org/docs/user-guide/integrations).
 
 This project is build in Visual Studio Code, therefore the project is already set up to work with. Install it from [here](https://code.visualstudio.com/) and then install this [eslint plugin](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) and you should be good to go.
+
+## Contact<a name="section-11"></a>
+Roxana Torre (roxana.torre@undp.org)
