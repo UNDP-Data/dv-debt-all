@@ -14,12 +14,11 @@
 .flex-half-screen{
   display: flex;
   flex-direction: column;
-  flex-basis: 40%;
   flex-grow: 1;
-  min-width: 400px;
+  flex-basis: 40%;
 }
 .yAxis text, .xAxis text, .highlightYear{
-  font-family: 'ProximaNova', 'proxima-nova', 'Helvetica Neue', 'sans-serif';
+  font-family: var(--fontFamily);
   font-size: 1rem;
 }
 .yAxis text{
@@ -44,10 +43,10 @@ p.source{
 }
 .barLabel{
   text-anchor:middle;
-  font-size: 14px;
+  font-size: 1rem;
 }
 .barLabel.hover{
-  font-size:18px;
+  font-size:1.1rem;
 }
 .chartLabel {
   font-size: 0.875rem;
@@ -126,6 +125,12 @@ p.source{
   .stat-card-debt{
     min-width: 400px;
   }
+  .flex-half-screen{
+    flex-basis: auto;
+  }
+  .chart-container.rating{
+    flex-basis: auto;
+  }
 }
 .highlightScale{
   stroke: #000;
@@ -133,7 +138,10 @@ p.source{
 }
 @media (max-width: 600px) {
   .yAxis text, .xAxis text{
-    font-size: 9px;
+    font-size: 0.9rem;
+  }
+  .chart-container{
+    padding: 20px 10px;
   }
 }
 @media (max-width: 420px) {
