@@ -43,7 +43,7 @@ Countries
 
 Apart from the mentioned `divs` above the following `script` and `link` needs to be added to the `head` or in the embed code
 ```
-<script defer src="https://white-beach-040ec2f03.4.azurestaticapps.net/static/js/main.js"></script>
+<script defer src="https://white-beach-040ec2f03.4.azurestaticapps.net/index.js"></script>
 <link rel="stylesheet" href="https://undp-data.github.io/stylesheets-for-viz/style/mainStyleSheet.css" />
 <link rel="stylesheet" href="https://undp-data.github.io/stylesheets-for-viz/style/StyleForGraphingInterface.css" />
 <link rel="stylesheet" href="https://undp-data.github.io/stylesheets-for-viz/style/StyleForGraph.css" />
