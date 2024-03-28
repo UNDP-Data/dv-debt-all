@@ -108,11 +108,14 @@ function App() {
           year: Number(d.year),
         }));
         setCountriesSources(countriesSourcesData);
-        const countryData = groupingsCsv.map((d: any) => ({
-          ...d,
-          label: d.name,
-          value: d.iso,
-        }));
+        // ----- filtering Mongolia temporarily!!
+        const countryData = groupingsCsv
+          .filter(k => k.name !== 'Mongolia')
+          .map((d: any) => ({
+            ...d,
+            label: d.name,
+            value: d.iso,
+          }));
         setSelectedCountry(countryData[0]);
         const dsaRatingData = dsaRatingCsv.map((d: any) => ({
           name: d.Country,
