@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import { useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
@@ -15,6 +16,7 @@ const numberPercentOptions = ['Number', 'Percentage'];
 
 export function DebtInterestBars(props: Props) {
   const { data, categories, chartSource } = props;
+  const periods = [...new Set(data.map(d => d.period))].sort();
   const [totalPercentSelection, setTotalPercentSelection] = useState('Number');
   const [categorySelection, setCategorySelection] = useState('All developing');
   return (
@@ -54,7 +56,7 @@ export function DebtInterestBars(props: Props) {
                       UNDPColorModule.categoricalColors.colors[0],
                   }}
                 />
-                <div className='small-font'>2011-2013</div>
+                <div className='small-font'>{(periods as any)[0]}</div>
               </div>
               <div className='legend-item'>
                 <div
@@ -64,7 +66,7 @@ export function DebtInterestBars(props: Props) {
                       UNDPColorModule.categoricalColors.colors[1],
                   }}
                 />
-                <div className='small-font'>2021-2023</div>
+                <div className='small-font'>{(periods as any)[1]}</div>
               </div>
             </div>
             <div>

@@ -17,9 +17,9 @@ function App() {
     'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/';
   useEffect(() => {
     Promise.all([
-      csv(`${dataUrl1}debtNetInterest.csv`),
-      csv(`${dataUrl1}categories.csv`),
-      csv(`${dataUrl1}groups-sources.csv`),
+      csv(`${dataUrl1}debtNetInterest1.csv`),
+      csv(`${dataUrl1}categories1.csv`),
+      csv(`${dataUrl1}groups-sources1.csv`),
     ]).then(([data, categories, sources]) => {
       const newData = data.map((d: any) => ({
         Group: d.Group,

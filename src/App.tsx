@@ -15,9 +15,9 @@ function App() {
     'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/';
   useEffect(() => {
     Promise.all([
-      csv(`${dataurl}debtToGDPquantiles.csv`),
-      csv(`${dataurl}categories.csv`),
-      csv(`${dataurl}groups-sources.csv`),
+      csv(`${dataurl}debtToGDPquantiles1.csv`),
+      csv(`${dataurl}categories1.csv`),
+      csv(`${dataurl}groups-sources1.csv`),
     ]).then(([data, categories, sources]) => {
       setDebtToGdpData(data as any);
       setCategoriesData(categories as any);

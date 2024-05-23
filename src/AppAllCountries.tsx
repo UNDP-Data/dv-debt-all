@@ -46,6 +46,7 @@ function App() {
     'UMC',
     'MIC',
     'LDC',
+    'LLDC',
     'SIDS',
     'Poorest',
     'HIPC',
@@ -64,6 +65,7 @@ function App() {
     SIDS: 'Small island developing (SIDS)',
     EM: 'Emerging market (EM)',
     LIDC: 'Low income developing (LIDC)',
+    LLDC: 'Landlocked developing (LLDC)',
     Poorest: 'Poorest (IDA eligible)',
     HIPC: 'Heavily indebted poor (HIPC)',
     'Very high HDI': 'Very high HDI',
@@ -79,7 +81,7 @@ function App() {
   };
 
   const dataurl =
-    'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/countries/';
+    'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/countries1/';
   useEffect(() => {
     Promise.all([
       csv(`${dataurl}groupings.csv`), // 1. Groupings
@@ -152,7 +154,7 @@ function App() {
             code: d.iso,
             year: Number(d.year),
             percentage: Number(d['GG debt (% of GDP)']),
-            million: Number(d['GG debt ($ billion)']),
+            million: Number(d['GG debt ($ million)']),
           }));
         const externalDebtData = externalDebtCsv.map((d: any) => ({
           code: d.iso,

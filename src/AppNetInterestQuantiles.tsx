@@ -17,9 +17,9 @@ function AppNetInterestQuantiles() {
     'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/';
   useEffect(() => {
     Promise.all([
-      csv(`${dataUrl1}debtNetInterestQuantiles.csv`),
-      csv(`${dataUrl1}categories.csv`),
-      csv(`${dataUrl1}groups-sources.csv`),
+      csv(`${dataUrl1}debtNetInterestQuantiles1.csv`),
+      csv(`${dataUrl1}categories1.csv`),
+      csv(`${dataUrl1}groups-sources1.csv`),
     ]).then(([data, categories, sources]) => {
       setDebtNetInterest(data as any);
       setCategoriesData1(categories as any);

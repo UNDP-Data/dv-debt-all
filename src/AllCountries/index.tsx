@@ -96,6 +96,11 @@ export function AllCountries(props: Props) {
     )[0];
     // --- debt servicing
     const debtServicing = countryExternalDebt[countryExternalDebt.length - 1];
+    const interestAndPaymentsPPG = Number(
+      (
+        debtServicing['principal payments'] + debtServicing['interest payment']
+      ).toFixed(12),
+    );
     const allStats: CountryStatsType = {
       debtPercent:
         debtValue !== undefined ? `${debtValue.percentage.toFixed(1)}%` : 'N/A',
@@ -118,10 +123,7 @@ export function AllCountries(props: Props) {
         netInterest !== undefined ? yearNetInterest.toString() : 'N/A',
       externalPPG:
         debtServicing !== undefined
-          ? formatMillion(
-              debtServicing['principal payments'] +
-                debtServicing['interest payment'],
-            )
+          ? formatMillion(interestAndPaymentsPPG)
           : 'N/A',
       externalPPGYear:
         debtServicing !== undefined ? debtServicing.year.toString() : 'N/A',

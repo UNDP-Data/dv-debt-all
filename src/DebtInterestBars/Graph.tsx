@@ -17,7 +17,7 @@ interface Props {
 
 export function Graph(props: Props) {
   const { data, option1, svgWidth1, svgHeight1 } = props;
-  const periods = ['2011-2013', '2021-2023'];
+  const periods = [...new Set(data.map(d => d.period))].sort();
   const margin = { top: 20, right: 30, bottom: 50, left: 80 };
   const graphWidth = svgWidth1 - margin.left - margin.right;
   const graphHeight = svgHeight1 - margin.top - margin.bottom;
