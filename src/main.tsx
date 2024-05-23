@@ -1,14 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-/* import App from './App';
+import App from './App';
 import AppNetInterest from './AppNetInterest';
 import AppNetInterestQuantiles from './AppNetInterestQuantiles';
 import AppExternalDebt from './AppExternalDebt';
 import AppCompositionGroups from './AppCompositionGroups';
-import AppCreditDsaRating from './AppCreditDsaRating'; */
+import AppCreditDsaRating from './AppCreditDsaRating';
+import AppExternalDebtQuantiles from './AppExternalDebtQuantiles';
 import AppAllCountries from './AppAllCountries';
 
-/* ReactDOM.createRoot(document.getElementById('debtToGdp') as HTMLElement).render(
+ReactDOM.createRoot(
+  document.getElementById('debtCreditDsaRating') as HTMLElement,
+).render(
+  <React.StrictMode>
+    <AppCreditDsaRating />
+  </React.StrictMode>,
+);
+ReactDOM.createRoot(document.getElementById('debtToGdp') as HTMLElement).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
@@ -27,6 +35,7 @@ ReactDOM.createRoot(
     <AppNetInterestQuantiles />
   </React.StrictMode>,
 );
+
 ReactDOM.createRoot(
   document.getElementById('externalDebt') as HTMLElement,
 ).render(
@@ -35,10 +44,10 @@ ReactDOM.createRoot(
   </React.StrictMode>,
 );
 ReactDOM.createRoot(
-  document.getElementById('debtCreditDsaRating') as HTMLElement,
+  document.getElementById('externalDebtQuantiles') as HTMLElement,
 ).render(
   <React.StrictMode>
-    <AppCreditDsaRating />
+    <AppExternalDebtQuantiles />
   </React.StrictMode>,
 );
 ReactDOM.createRoot(
@@ -48,7 +57,6 @@ ReactDOM.createRoot(
     <AppCompositionGroups />
   </React.StrictMode>,
 );
-*/
 ReactDOM.createRoot(
   document.getElementById('debtAllCountries') as HTMLElement,
 ).render(
