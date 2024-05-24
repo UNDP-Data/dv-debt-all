@@ -39,7 +39,8 @@ export function QuantilesLinesExternalDebt(props: Props) {
         <div className='flex-div flex-space-between flex-wrap'>
           <div>
             <h6 className='undp-typography margin-bottom-01 margin-top-03'>
-              External Debt Quantiles
+              Public and publicly guaranteed total external debt service as a
+              percentage of revenue
             </h6>
           </div>
         </div>
@@ -49,7 +50,7 @@ export function QuantilesLinesExternalDebt(props: Props) {
           svgWidth={960}
           svgHeight={550}
           id='externalDebtQuantilesLines'
-          yAxisName='xxxxx'
+          yAxisName='Total debt service as % of revenue'
         />
         {chartSource?.source ? (
           <p className='source'>{`Source: ${chartSource.source}`}</p>
