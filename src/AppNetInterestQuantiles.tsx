@@ -2,7 +2,7 @@
 import { csv } from 'd3-fetch';
 import { useEffect, useState } from 'react';
 import { CategoryData, ChartSourceType } from './Types';
-import { RegionLineChartNoOptions } from './RegionLineChart/index1';
+import { QuantilesLineChartNoOptions } from './QuantilesLineChart/index1';
 import './style.css';
 
 function AppNetInterestQuantiles() {
@@ -29,7 +29,7 @@ function AppNetInterestQuantiles() {
   return (
     <div className='undp-container'>
       {debtNetInterest && categoriesData1 ? (
-        <RegionLineChartNoOptions
+        <QuantilesLineChartNoOptions
           data={debtNetInterest}
           categories={categoriesData1}
           title='General government net interest payments as percentage of revenue'

@@ -2,7 +2,7 @@
 import { csv } from 'd3-fetch';
 import { useEffect, useState } from 'react';
 import { DebtGdp, CategoryData, ChartSourceType } from './Types';
-import { RegionLineChart } from './RegionLineChart';
+import { QuantilesLineChart } from './QuantilesLineChart';
 import './style.css';
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
   return (
     <div className='undp-container'>
       {debtToGdpData && categoriesData ? (
-        <RegionLineChart
+        <QuantilesLineChart
           data={debtToGdpData}
           categories={categoriesData}
           chartSource={sourcesData.filter(d => d.graph === 'Debt to GDP')[0]}
