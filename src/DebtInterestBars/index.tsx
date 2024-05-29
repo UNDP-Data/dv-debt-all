@@ -56,7 +56,7 @@ export function DebtInterestBars(props: Props) {
                       UNDPColorModule.categoricalColors.colors[0],
                   }}
                 />
-                <div className='small-font'>{(periods as any)[0]}</div>
+                <div className='small-font'>Average {(periods as any)[0]}</div>
               </div>
               <div className='legend-item'>
                 <div
@@ -66,7 +66,7 @@ export function DebtInterestBars(props: Props) {
                       UNDPColorModule.categoricalColors.colors[1],
                   }}
                 />
-                <div className='small-font'>{(periods as any)[1]}</div>
+                <div className='small-font'>Average {(periods as any)[1]}</div>
               </div>
             </div>
             <div>

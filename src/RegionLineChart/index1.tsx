@@ -8,11 +8,15 @@ import { Graph } from './Graph';
 interface Props {
   data: object[];
   categories: CategoryData[];
+  title: string;
+  yAxisName: string;
+  id: string;
   chartSource: ChartSourceType;
+  option: string;
 }
 
 export function RegionLineChartNoOptions(props: Props) {
-  const { data, categories, chartSource } = props;
+  const { data, categories, title, yAxisName, id, chartSource, option } = props;
   const [categorySelection, setCategorySelection] = useState('All developing');
   return (
     <>
@@ -39,17 +43,17 @@ export function RegionLineChartNoOptions(props: Props) {
         <div className='flex-div flex-space-between flex-wrap'>
           <div>
             <h6 className='undp-typography margin-bottom-01 margin-top-03'>
-              General government net interest payments as percentage of revenue
+              {title}
             </h6>
           </div>
         </div>
         <Graph
           data={data.filter(d => (d as any).Group === categorySelection)}
-          option='netInterest'
+          option={option}
           svgWidth={960}
           svgHeight={550}
-          id='netInterestLine'
-          yAxisName='Net interest as % of revenue'
+          id={id}
+          yAxisName={yAxisName}
         />
         {chartSource?.source ? (
           <p className='source'>{`Source: ${chartSource.source}`}</p>

@@ -32,11 +32,15 @@ function AppNetInterestQuantiles() {
         <RegionLineChartNoOptions
           data={debtNetInterest}
           categories={categoriesData1}
+          title='General government net interest payments as percentage of revenue'
+          yAxisName='Net interest as % of revenue'
+          id='netInterestLine'
           chartSource={
             sourcesData.filter(
               d => d.graph === 'Net interest payments to revenue',
             )[0]
           }
+          option='netInterest'
         />
       ) : null}
     </div>

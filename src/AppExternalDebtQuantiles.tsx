@@ -2,7 +2,7 @@
 import { csv } from 'd3-fetch';
 import { useEffect, useState } from 'react';
 import { CategoryData, ChartSourceType } from './Types';
-import { QuantilesLinesExternalDebt } from './RegionLineChart/index2';
+import { RegionLineChartNoOptions } from './RegionLineChart/index1';
 import './style.css';
 
 function AppNetInterestQuantiles() {
@@ -29,12 +29,17 @@ function AppNetInterestQuantiles() {
   return (
     <div className='undp-container'>
       {externalDebtQuantiles && categoriesData1 ? (
-        <QuantilesLinesExternalDebt
+        <RegionLineChartNoOptions
           data={externalDebtQuantiles}
           categories={categoriesData1}
+          title='Public and publicly guaranteed total external debt service as a
+          percentage of revenue'
+          yAxisName='Total debt service as % of revenue'
+          id='externalDebtQuantilesLines'
           chartSource={
             sourcesData.filter(d => d.graph === 'External debt quantiles')[0]
           }
+          option='external'
         />
       ) : null}
     </div>
