@@ -145,9 +145,6 @@ export function AllCountries(props: Props) {
             data={creditRating}
             title='Credit Ratings'
             id='countryCreditRatingScale'
-            year={
-              countriesSources.filter(d => d.graph === 'Credit Ratings')[0].year
-            }
             svgHeight={100}
             selectedCountryCode={selectedCountry.value}
             chartSource={
@@ -159,9 +156,6 @@ export function AllCountries(props: Props) {
             categories={dsaCategories}
             title='DSA debt distress rating'
             id='countryDsaRatingScale'
-            year={
-              countriesSources.filter(d => d.graph === 'DSA Ratings')[0].year
-            }
             svgHeight={100}
             chartSource={
               countriesSources.filter(d => d.graph === 'DSA Ratings')[0]
@@ -262,8 +256,9 @@ export function AllCountries(props: Props) {
             2023 in in million (M) or billion (B) USD. The graph on the left
             depicts government net interest payments (as a percentage of
             revenue), and the graph on the right total external debt servicing
-            on external PPG debt (as a percentage of revenue or exports). Both
-            graphs cover the period 2000-2025.
+            on external public and publicly guaranteed (PPG) debt (as a
+            percentage of revenue or exports). Both graphs cover the period
+            2000-2025.
           </p>
         </div>
         <div className='flex-div flex-wrap margin-top-08'>

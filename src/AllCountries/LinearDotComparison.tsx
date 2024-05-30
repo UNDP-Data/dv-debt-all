@@ -12,14 +12,13 @@ interface Props {
   data: CountryValueType[];
   selectedCountryCode: string;
   id: string;
-  year: number;
   title: string;
   svgHeight: number;
   chartSource: ChartSourceType;
 }
 
 export function LinearDotsComparison(props: Props) {
-  const { data, selectedCountryCode, id, year, title, svgHeight, chartSource } =
+  const { data, selectedCountryCode, id, title, svgHeight, chartSource } =
     props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
@@ -61,10 +60,7 @@ export function LinearDotsComparison(props: Props) {
   }, [svgWidth]);
   return (
     <div ref={containerRef} className='chart-container rating'>
-      <h6 className='undp-typography margin-bottom-01'>{title}</h6>
-      <p className='undp-typography small-font margin-bottom-01'>
-        Year: {year}
-      </p>
+      <h6 className='undp-typography margin-bottom-08'>{title}</h6>
       {countryData !== undefined && data.length > 0 ? (
         <>
           <svg
