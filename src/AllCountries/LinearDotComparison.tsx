@@ -22,7 +22,7 @@ export function LinearDotsComparison(props: Props) {
     props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgWidth, setSvgWidth] = useState<number | 400>(400);
-  const margin = { top: 30, right: 10, bottom: 20, left: 10 };
+  const margin = { top: 35, right: 10, bottom: 40, left: 10 };
   const xDomain = extent(data, d => Number(d.value));
   const colors = UNDPColorModule.sequentialColors.negativeColorsx07
     .slice()
@@ -60,15 +60,10 @@ export function LinearDotsComparison(props: Props) {
   }, [svgWidth]);
   return (
     <div ref={containerRef} className='chart-container rating'>
-      <h6 className='undp-typography margin-bottom-08'>{title}</h6>
+      <h6 className='undp-typography margin-bottom-04'>{title}</h6>
       {countryData !== undefined && data.length > 0 ? (
         <>
-          <svg
-            width='100%'
-            height='100%'
-            viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-            id={id}
-          >
+          <svg width='100%' viewBox={`0 0 ${svgWidth} ${svgHeight}`} id={id}>
             <g transform={`translate(${margin.left},${margin.top})`}>
               <rect
                 x={x(1) - 6}

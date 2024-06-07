@@ -17,8 +17,7 @@ export function Graph(props: Props) {
   const stackedData = stack().keys(subgroups)([data as any]);
   const y = scaleLinear()
     .domain([0, (data as any).Total])
-    .range([0, graphHeight])
-    .nice();
+    .range([0, graphHeight]);
   return (
     <div>
       {Object.keys(data).length > 0 ? (

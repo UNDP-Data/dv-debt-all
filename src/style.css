@@ -51,6 +51,9 @@ p.source{
 .chartLabel {
   font-size: 0.875rem;
 }
+.chartLabelLarge {
+  font-size: 1rem; 
+}
 .labelSelected{
   font-size: 1.3rem;
 }
@@ -151,5 +154,4 @@ p.source{
 }
 .not-available{
   font-size: 2rem;
-  font-weight: bold;
 }

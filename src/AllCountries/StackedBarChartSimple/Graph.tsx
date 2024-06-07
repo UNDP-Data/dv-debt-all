@@ -15,13 +15,13 @@ interface Props {
 
 export function Graph(props: Props) {
   const { data, sections, id, maxValue, svgWidth } = props;
-  const margin = { top: 20, right: 30, bottom: 50, left: 60 };
-  const graphHeight = 500 - margin.top - margin.bottom;
+  const margin = { top: 20, right: 30, bottom: 20, left: 60 };
+  const graphHeight = 400 - margin.top - margin.bottom;
   const stackedData = stack().keys(sections)(data as any);
-  const y = scaleLinear().domain([0, maxValue]).range([0, graphHeight]).nice();
+  const y = scaleLinear().domain([0, maxValue]).range([0, graphHeight]);
   return (
     <div>
-      <svg width={`${svgWidth}px`} height='470px' id={id}>
+      <svg width={`${svgWidth}px`} height='400px' id={id}>
         <g transform={`translate(${svgWidth / 2 - 210},${margin.top})`}>
           {stackedData.map((d, i) => (
             <g key={i} className='stackedRect'>

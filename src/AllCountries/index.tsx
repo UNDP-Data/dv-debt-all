@@ -220,8 +220,15 @@ export function AllCountries(props: Props) {
           creditors.
         </p>
         <div className='flex-div flex-wrap'>
-          <div style={{ flexBasis: '30%', flexGrow: '1' }}>
-            <div className='stat-card'>
+          <div style={{ flexBasis: '30%', flexGrow: '1', display: 'flex' }}>
+            <div
+              className='stat-card'
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+            >
               <h3>{countryStats?.externalGovDebt}</h3>
               <h4>USD</h4>
               <p className='undp-typography'>

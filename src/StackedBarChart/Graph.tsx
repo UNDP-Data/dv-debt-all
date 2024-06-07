@@ -18,7 +18,7 @@ export function Graph(props: Props) {
   const numberData = data.filter(d => (d as any).Value === 'Number')[0];
   const subgroups = Object.keys(data[0]).slice(2);
   const stackedData = stack().keys(subgroups)(percentageData as any);
-  const y = scaleLinear().domain([0, 100]).range([0, graphHeight]).nice();
+  const y = scaleLinear().domain([0, 100]).range([0, graphHeight]);
   return (
     <div>
       {valueArray.length > 0 ? (
@@ -39,7 +39,7 @@ export function Graph(props: Props) {
                     <>
                       <text
                         textAnchor='end'
-                        className='chartLabel'
+                        className='chartLabelLarge'
                         y={y(d[0][0]) + y(d[0][1] - d[0][0]) / 2}
                         x={110}
                       >
