@@ -41,6 +41,7 @@ function AppNetInterestQuantiles() {
             )[0]
           }
           option='netInterest'
+          link='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/DebtNetInterestQuantiles.xlsx'
         />
       ) : null}
     </div>

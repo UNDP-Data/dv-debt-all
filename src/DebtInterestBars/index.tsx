@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
-import UNDPColorModule from 'undp-viz-colors';
 import { DebtNetInterestType, CategoryData, ChartSourceType } from '../Types';
 import { Graph } from './Graph';
+import { DownloadImageButton } from '../Components/DownloadImageButton';
+import { DownloadDataButton } from '../Components/DownloadDataButton';
 
 interface Props {
   data: DebtNetInterestType[];
@@ -16,14 +17,44 @@ const numberPercentOptions = ['Number', 'Percentage'];
 
 export function DebtInterestBars(props: Props) {
   const { data, categories, chartSource } = props;
-  const periods = [...new Set(data.map(d => d.period))].sort();
+  const graphDiv = useRef<HTMLDivElement>(null);
+  const [divToBeDownloaded, setDivToBeDownloaded] = useState<any>(null);
   const [totalPercentSelection, setTotalPercentSelection] = useState('Number');
   const [categorySelection, setCategorySelection] = useState('All developing');
+  useEffect(() => {
+    setDivToBeDownloaded(graphDiv.current);
+  }, [graphDiv.current]);
   return (
-    <>
-      <div>
-        <div className='margin-bottom-05'>
-          <p className='label undp-typography'>Select a category</p>
+    <div className='chart-container'>
+      <div ref={graphDiv}>
+        <div className='margin-bottom-07 flex-div flex-space-between flex-vert-align-center'>
+          <h6 className='undp-typography margin-bottom-00'>
+            Number of countries with net interest payments higher than 5 to 40
+            percent of revenue today relative to a decade ago
+          </h6>
+          <div className='flex-div flex-vert-align-center no-shrink'>
+            <Radio.Group
+              optionType='button'
+              className='undp-button-radio'
+              size='small'
+              defaultValue={totalPercentSelection}
+              onChange={(el: RadioChangeEvent) => {
+                setTotalPercentSelection(el.target.value);
+              }}
+            >
+              {numberPercentOptions.map((d, i) => (
+                <Radio key={i} className='undp-radio' value={d}>
+                  {d}
+                </Radio>
+              ))}
+            </Radio.Group>
+            {divToBeDownloaded ? (
+              <DownloadImageButton element={divToBeDownloaded} />
+            ) : null}
+            <DownloadDataButton link='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/DebtNetInterest.xlsx' />
+          </div>
+        </div>
+        <div className='margin-bottom-07'>
           <Select
             options={categories.map(d => ({
               label: d.description,
@@ -36,54 +67,6 @@ export function DebtInterestBars(props: Props) {
             }}
             value={categorySelection}
           />
-        </div>
-      </div>
-      <div className='chart-container'>
-        <div className='margin-bottom-03'>
-          <div>
-            <h6 className='undp-typography margin-bottom-01'>
-              Number of countries with net interest payments higher than 5 to 40
-              percent of revenue today relative to a decade ago
-            </h6>
-          </div>
-          <div className='flex-div flex-space-between flex-wrap'>
-            <div className='legend-container'>
-              <div className='legend-item'>
-                <div
-                  className='legend-circle-medium'
-                  style={{
-                    backgroundColor:
-                      UNDPColorModule.categoricalColors.colors[0],
-                  }}
-                />
-                <div className='small-font'>Average {(periods as any)[0]}</div>
-              </div>
-              <div className='legend-item'>
-                <div
-                  className='legend-circle-medium'
-                  style={{
-                    backgroundColor:
-                      UNDPColorModule.categoricalColors.colors[1],
-                  }}
-                />
-                <div className='small-font'>Average {(periods as any)[1]}</div>
-              </div>
-            </div>
-            <div>
-              <Radio.Group
-                defaultValue={totalPercentSelection}
-                onChange={(el: RadioChangeEvent) => {
-                  setTotalPercentSelection(el.target.value);
-                }}
-              >
-                {numberPercentOptions.map((d, i) => (
-                  <Radio key={i} className='undp-radio' value={d}>
-                    {d}
-                  </Radio>
-                ))}
-              </Radio.Group>
-            </div>
-          </div>
         </div>
         <Graph
           data={data.filter(
@@ -102,6 +85,6 @@ export function DebtInterestBars(props: Props) {
           <p className='source'>{`Note: ${chartSource.note}`}</p>
         ) : null}
       </div>
-    </>
+    </div>
   );
 }

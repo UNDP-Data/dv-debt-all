@@ -186,7 +186,7 @@ function App() {
       {countryList !== undefined ? (
         <div
           className='margin-bottom-08'
-          style={{ maxWidth: '1024px', margin: '0 auto' }}
+          style={{ maxWidth: '1024px', margin: '0 auto', width: '100%' }}
         >
           <p className='undp-typography label'>Select a country</p>
           <Select
@@ -194,7 +194,6 @@ function App() {
             className='undp-select'
             value={selectedCountry}
             showSearch
-            style={{ width: '400px' }}
             filterOption={(
               input: string,
               option?: { label: string; value: string },

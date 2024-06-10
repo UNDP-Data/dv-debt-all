@@ -62,60 +62,85 @@ export function Graph(props: Props) {
   return (
     <div>
       {valueArray.length > 0 ? (
-        <svg viewBox={`0 0 ${svgWidth1} ${svgHeight1}`} id='debtNetInterestSvg'>
-          <g transform={`translate(${margin.left},${margin.top})`}>
-            <g className='xAxis' transform={`translate(0 ,${graphHeight})`} />
-            <g className='yAxis' transform='translate(0,0)' />
-            <g>
-              {periods.map((k, j) => (
-                <g key={j} transform={`translate(${j * 35},0)`}>
-                  {data
-                    .filter(h => h.period === k)[0]
-                    .percentages.map((d, i) => (
-                      <g key={i} className={`percent${x(d[0])}_value${d[1]}`}>
-                        <rect
-                          x={x(d[0])}
-                          y={y(d[1])}
-                          width={x.bandwidth() / 2}
-                          height={graphHeight - y(d[1])}
-                          fill={UNDPColorModule.categoricalColors.colors[j]}
-                          opacity={0.8}
-                        />
-                        <text
-                          className='barLabel'
-                          x={x(d[0])}
-                          dx={x.bandwidth() / 4}
-                          y={y(d[1]) - 5}
-                        >
-                          {option1 === 'Percentage'
-                            ? `${Number(d[1]).toFixed(1)}%`
-                            : Number(d[1]).toFixed(0)}
-                        </text>
-                      </g>
-                    ))}
-                </g>
-              ))}
-            </g>
-            <line
-              x1={0}
-              y1={graphHeight}
-              x2={graphWidth}
-              y2={graphHeight}
-              stroke='#232E3D'
-              strokeWidth={2}
-            />
-          </g>
-          <text
-            x={-graphHeight / 2}
-            y='20'
-            transform='rotate(-90)'
-            textAnchor='middle'
+        <>
+          <div className='legend-container'>
+            <div className='legend-item'>
+              <div
+                className='legend-circle-medium'
+                style={{
+                  backgroundColor: UNDPColorModule.categoricalColors.colors[0],
+                }}
+              />
+              <div className='small-font'>Average {periods[0]}</div>
+            </div>
+            <div className='legend-item'>
+              <div
+                className='legend-circle-medium'
+                style={{
+                  backgroundColor: UNDPColorModule.categoricalColors.colors[1],
+                }}
+              />
+              <div className='small-font'>Average {periods[1]}</div>
+            </div>
+          </div>
+          <svg
+            viewBox={`0 0 ${svgWidth1} ${svgHeight1}`}
+            id='debtNetInterestSvg'
           >
-            {option1 === 'Percentage'
-              ? 'Percentage of countries'
-              : 'Number of countries'}
-          </text>
-        </svg>
+            <g transform={`translate(${margin.left},${margin.top})`}>
+              <g className='xAxis' transform={`translate(0 ,${graphHeight})`} />
+              <g className='yAxis' transform='translate(0,0)' />
+              <g>
+                {periods.map((k, j) => (
+                  <g key={j} transform={`translate(${j * 35},0)`}>
+                    {data
+                      .filter(h => h.period === k)[0]
+                      .percentages.map((d, i) => (
+                        <g key={i} className={`percent${x(d[0])}_value${d[1]}`}>
+                          <rect
+                            x={x(d[0])}
+                            y={y(d[1])}
+                            width={x.bandwidth() / 2}
+                            height={graphHeight - y(d[1])}
+                            fill={UNDPColorModule.categoricalColors.colors[j]}
+                            opacity={0.8}
+                          />
+                          <text
+                            className='barLabel'
+                            x={x(d[0])}
+                            dx={x.bandwidth() / 4}
+                            y={y(d[1]) - 5}
+                          >
+                            {option1 === 'Percentage'
+                              ? `${Number(d[1]).toFixed(1)}%`
+                              : Number(d[1]).toFixed(0)}
+                          </text>
+                        </g>
+                      ))}
+                  </g>
+                ))}
+              </g>
+              <line
+                x1={0}
+                y1={graphHeight}
+                x2={graphWidth}
+                y2={graphHeight}
+                stroke='#232E3D'
+                strokeWidth={2}
+              />
+            </g>
+            <text
+              x={-graphHeight / 2}
+              y='20'
+              transform='rotate(-90)'
+              textAnchor='middle'
+            >
+              {option1 === 'Percentage'
+                ? 'Percentage of countries'
+                : 'Number of countries'}
+            </text>
+          </svg>
+        </>
       ) : (
         <div className='center-area-error-el'>No data available</div>
       )}

@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Select } from 'antd';
 import { CategoryData, ChartSourceType } from '../Types';
 import { Graph } from './Graph';
+import { DownloadImageButton } from '../Components/DownloadImageButton';
+import { DownloadDataButton } from '../Components/DownloadDataButton';
 
 interface Props {
   data: object[];
@@ -13,39 +15,44 @@ interface Props {
   id: string;
   chartSource: ChartSourceType;
   option: string;
+  link: string;
 }
 
 export function QuantilesLineChartNoOptions(props: Props) {
-  const { data, categories, title, yAxisName, id, chartSource, option } = props;
+  const { data, categories, title, yAxisName, id, chartSource, option, link } =
+    props;
+  const graphDiv = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [divToBeDownloaded, setDivToBeDownloaded] = useState<any>(null);
   const [categorySelection, setCategorySelection] = useState('All developing');
+  useEffect(() => {
+    setDivToBeDownloaded(graphDiv.current);
+  }, [graphDiv.current]);
   return (
-    <>
-      <div>
-        <div className='margin-bottom-05'>
-          <div>
-            <p className='label undp-typography'>Select a category</p>
-            <Select
-              options={categories.map(d => ({
-                label: d.description,
-                value: d.description,
-              }))}
-              className='undp-select'
-              style={{ width: '100%' }}
-              onChange={el => {
-                setCategorySelection(el);
-              }}
-              value={categorySelection}
-            />
+    <div className='chart-container'>
+      <div ref={graphDiv}>
+        <div className='margin-bottom-07 flex-div flex-space-between flex-vert-align-center'>
+          <h6 className='undp-typography margin-bottom-01 margin-top-03'>
+            {title}
+          </h6>
+          <div className='flex-div no-shrink'>
+            <DownloadImageButton element={divToBeDownloaded} />
+            <DownloadDataButton link={link} />
           </div>
         </div>
-      </div>
-      <div className='chart-container'>
-        <div className='flex-div flex-space-between flex-wrap'>
-          <div>
-            <h6 className='undp-typography margin-bottom-01 margin-top-03'>
-              {title}
-            </h6>
-          </div>
+        <div className='margin-bottom-07'>
+          <Select
+            options={categories.map(d => ({
+              label: d.description,
+              value: d.description,
+            }))}
+            className='undp-select'
+            style={{ width: '100%' }}
+            onChange={el => {
+              setCategorySelection(el);
+            }}
+            value={categorySelection}
+          />
         </div>
         <Graph
           data={data.filter(d => (d as any).Group === categorySelection)}
@@ -62,6 +69,6 @@ export function QuantilesLineChartNoOptions(props: Props) {
           <p className='source'>{`Note: ${chartSource.note}`}</p>
         ) : null}
       </div>
-    </>
+    </div>
   );
 }
