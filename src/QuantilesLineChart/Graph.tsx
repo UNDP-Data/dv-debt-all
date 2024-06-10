@@ -87,9 +87,6 @@ export function Graph(props: Props) {
     <div>
       {valueArray.length > 0 ? (
         <>
-          <p className='undp-typography small-font margin-bottom-01'>
-            {`${dateDomain[0]} - ${dateDomain[1]}`}
-          </p>
           <div className='legend-container'>
             <div className='legend-item'>
               <div

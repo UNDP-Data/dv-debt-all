@@ -204,6 +204,7 @@ export function AllCountries(props: Props) {
                   d => d.graph === 'Government debt as a percentage of GDP',
                 )[0]
               }
+              dataLink='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/CountriesDebtAsPercentOfGDP.xlsx'
             />
           ) : null}
         </div>
@@ -300,6 +301,7 @@ export function AllCountries(props: Props) {
                   d => d.graph === 'Net interest payments',
                 )[0]
               }
+              dataLink='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/CountriesNetInterest.xlsx'
             />
           ) : null}
           {countryTdsExternal !== undefined ? (
@@ -315,6 +317,7 @@ export function AllCountries(props: Props) {
                   d => d.graph === 'Total debt service',
                 )[0]
               }
+              dataLink='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/CountriesTDSExternalDebt.xlsx'
             />
           ) : null}
         </div>

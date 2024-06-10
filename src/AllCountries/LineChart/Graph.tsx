@@ -75,136 +75,169 @@ export function Graph(props: Props) {
       .attr('text-anchor', 'end');
   }, [selectedCountryCode, svgWidth, svgHeight]);
   return (
-    <svg
-      width='100%'
-      height='100%'
-      viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-      id={id}
-    >
-      <g transform={`translate(${margin.left},${margin.top})`}>
-        <g className='xAxis' transform={`translate(0 ,${graphHeight})`} />
-        <g className='yAxis' transform='translate(0,0)' />
-        <g>
-          {indicators.map((d, i) => (
-            <g key={i}>
-              <path
-                d={lineShape1(d as string)(data as any) as string}
-                fill='none'
-                stroke={UNDPColorModule.categoricalColors.colors[i]}
-                strokeWidth={2}
+    <>
+      {indicators.length > 1 ? (
+        <div className='legend-container'>
+          {indicators.map((k, j) => (
+            <div key={j} className='legend-item'>
+              <div
+                className='legend-circle-medium'
+                style={{
+                  backgroundColor: UNDPColorModule.categoricalColors.colors[j],
+                }}
               />
-            </g>
+              <div className='small-font'>
+                {k[0].toUpperCase() + k.slice(1)}
+              </div>
+            </div>
           ))}
-        </g>
-        <g className='overlay'>
-          {data.map((d, i) => (
-            <g
-              className='focus'
-              style={{ display: 'block' }}
-              key={i}
-              transform={`translate(${x(Number((d as any).year))},0)`}
-            >
-              <line
-                x1={0}
-                y1={0}
-                x2={0}
-                y2={graphHeight}
-                stroke='#FFF'
-                strokeWidth={2}
-                opacity={hoveredYear === (d as any).year ? 1 : 0}
-              />
-              {indicators.map((k, j) => (
-                <g
-                  key={j}
-                  style={{
-                    display: (d as any)[k] !== '' ? 'block' : 'none',
-                  }}
-                >
+        </div>
+      ) : null}
+      <svg
+        width='100%'
+        height='100%'
+        viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+        id={id}
+      >
+        <g transform={`translate(${margin.left},${margin.top})`}>
+          <g className='xAxis' transform={`translate(0 ,${graphHeight})`} />
+          <g className='yAxis' transform='translate(0,0)' />
+          <g>
+            {indicators.map((d, i) => (
+              <g key={i}>
+                <path
+                  d={lineShape1(d as string)(data as any) as string}
+                  fill='none'
+                  stroke={UNDPColorModule.categoricalColors.colors[i]}
+                  strokeWidth={2}
+                />
+                {data.map((el, j) => (
                   <g
-                    transform={`translate(0,${
-                      indicators.length === 1 ? y((d as any)[k]) : -30 + j * 20
-                    })`}
+                    className='focus'
+                    style={{ display: 'block' }}
+                    key={j}
+                    transform={`translate(${x(Number((el as any).year))},${y(
+                      (el as any)[d],
+                    )})`}
                   >
-                    {indicators.length === 1 ? (
-                      <>
+                    <circle
+                      r={3}
+                      fill={UNDPColorModule.categoricalColors.colors[i]}
+                    />
+                  </g>
+                ))}
+              </g>
+            ))}
+          </g>
+          <g className='overlay'>
+            {data.map((d, i) => (
+              <g
+                className='focus'
+                style={{ display: 'block' }}
+                key={i}
+                transform={`translate(${x(Number((d as any).year))},0)`}
+              >
+                <line
+                  x1={0}
+                  y1={0}
+                  x2={0}
+                  y2={graphHeight}
+                  style={{
+                    stroke: 'var(--gray-400)',
+                  }}
+                  strokeWidth={2}
+                  opacity={hoveredYear === (d as any).year ? 1 : 0}
+                />
+                {indicators.map((k, j) => (
+                  <g key={j}>
+                    <g
+                      transform={`translate(0,${
+                        indicators.length === 1
+                          ? y((d as any)[k])
+                          : -30 + j * 20
+                      })`}
+                    >
+                      {indicators.length === 1 ? (
+                        <>
+                          <circle
+                            r={hoveredYear === (d as any).year ? 5 : 0}
+                            fill={UNDPColorModule.categoricalColors.colors[j]}
+                          />
+                          <rect
+                            x={-25}
+                            y={-32}
+                            width={65}
+                            height={20}
+                            style={{
+                              fill: 'var(--gray-200)',
+                            }}
+                            opacity={hoveredYear === (d as any).year ? 1 : 0}
+                          />
+                        </>
+                      ) : (
                         <circle
-                          r={hoveredYear === (d as any).year ? 5 : 3}
+                          r={5}
                           fill={UNDPColorModule.categoricalColors.colors[j]}
-                        />
-                        <rect
-                          x={-25}
-                          y={-32}
-                          width={65}
-                          height={20}
-                          fill='#F5F5F5'
                           opacity={hoveredYear === (d as any).year ? 1 : 0}
                         />
-                      </>
-                    ) : (
-                      <circle
-                        r={5}
-                        fill={UNDPColorModule.categoricalColors.colors[j]}
+                      )}
+                      <text
+                        className='label'
+                        x={0}
+                        dx={indicators.length === 1 ? 0 : 30}
+                        y={indicators.length === 1 ? -15 : 5}
                         opacity={hoveredYear === (d as any).year ? 1 : 0}
-                      />
-                    )}
+                        textAnchor='middle'
+                      >
+                        {(d as any)[k] ? `${(d as any)[k].toFixed(2)}%` : '-'}
+                      </text>
+                    </g>
+                    <rect
+                      x={-30}
+                      y={graphHeight}
+                      width={60}
+                      height={20}
+                      style={{
+                        fill: 'var(--gray-200)',
+                      }}
+                      opacity={hoveredYear === (d as any).year ? 0.7 : 0}
+                    />
                     <text
-                      className='label'
-                      x={
-                        indicators.length === 1
-                          ? -25
-                          : i > data.length - 3
-                          ? -60
-                          : 10
-                      }
-                      y={indicators.length === 1 ? -15 : 5}
                       opacity={hoveredYear === (d as any).year ? 1 : 0}
+                      className='highlightYear'
+                      textAnchor='middle'
+                      y={graphHeight + 17}
                     >
-                      {(d as any)[k] ? `${(d as any)[k].toFixed(2)}%` : '-'}
+                      {(d as any).year}
                     </text>
                   </g>
-                  <rect
-                    x={-30}
-                    y={graphHeight}
-                    width={60}
-                    height={20}
-                    fill='#F8F8F8'
-                    opacity={hoveredYear === (d as any).year ? 0.7 : 0}
-                  />
-                  <text
-                    opacity={hoveredYear === (d as any).year ? 1 : 0}
-                    className='highlightYear'
-                    textAnchor='middle'
-                    y={graphHeight + 17}
-                  >
-                    {(d as any).year}
-                  </text>
-                </g>
-              ))}
-              <rect
-                onMouseEnter={() => {
-                  setHoveredYear((d as any).year);
-                }}
-                onMouseLeave={() => {
-                  setHoveredYear(undefined);
-                }}
-                x='-15px'
-                y={0}
-                width='30px'
-                height={svgHeight}
-                opacity={0}
-              />
-            </g>
-          ))}
+                ))}
+                <rect
+                  onMouseEnter={() => {
+                    setHoveredYear((d as any).year);
+                  }}
+                  onMouseLeave={() => {
+                    setHoveredYear(undefined);
+                  }}
+                  x='-15px'
+                  y={0}
+                  width='30px'
+                  height={svgHeight}
+                  opacity={0}
+                />
+              </g>
+            ))}
+          </g>
+          <line
+            x1={0}
+            y1={graphHeight}
+            x2={graphWidth}
+            y2={graphHeight}
+            stroke='#232E3D'
+            strokeWidth={2}
+          />
         </g>
-        <line
-          x1={0}
-          y1={graphHeight}
-          x2={graphWidth}
-          y2={graphHeight}
-          stroke='#232E3D'
-          strokeWidth={2}
-        />
-      </g>
-    </svg>
+      </svg>
+    </>
   );
 }

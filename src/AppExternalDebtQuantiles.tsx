@@ -40,6 +40,7 @@ function AppNetInterestQuantiles() {
             sourcesData.filter(d => d.graph === 'External debt quantiles')[0]
           }
           option='external'
+          link='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/ExternalDebtQuantiles.xlsx'
         />
       ) : null}
     </div>
