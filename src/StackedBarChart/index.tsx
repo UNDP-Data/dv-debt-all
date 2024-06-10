@@ -60,26 +60,11 @@ export function StackedBarChart(props: Props) {
             rating classes
           </h6>
           <div className='flex-div flex-vert-align-center no-shrink'>
-            <Radio.Group
-              optionType='button'
-              className='undp-button-radio'
-              size='small'
-              defaultValue={creditDsaSelection}
-              onChange={(el: RadioChangeEvent) => {
-                setCreditDsaSelection(el.target.value);
-              }}
-            >
-              {creditDsaOptions.map((d, i) => (
-                <Radio key={i} className='undp-radio' value={d}>
-                  {d}
-                </Radio>
-              ))}
-            </Radio.Group>
             <DownloadImageButton element={divToBeDownloaded} />
             <DownloadDataButton link='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/CreditAndDSARating.xlsx' />
           </div>
         </div>
-        <div className='margin-bottom-07'>
+        <div className='margin-bottom-07 flex-div flex-vert-align-center'>
           <Select
             options={categories.map(d => ({
               label: d.description,
@@ -92,6 +77,22 @@ export function StackedBarChart(props: Props) {
             }}
             value={categorySelection}
           />
+          <div className='flex-div no-shrink'>
+            <Radio.Group
+              optionType='button'
+              className='undp-button-radio'
+              defaultValue={creditDsaSelection}
+              onChange={(el: RadioChangeEvent) => {
+                setCreditDsaSelection(el.target.value);
+              }}
+            >
+              {creditDsaOptions.map((d, i) => (
+                <Radio key={i} className='undp-radio' value={d}>
+                  {d}
+                </Radio>
+              ))}
+            </Radio.Group>
+          </div>
         </div>
         <div ref={containerRef}>
           <Graph data={selectedData} svgWidth={svgWidth} />

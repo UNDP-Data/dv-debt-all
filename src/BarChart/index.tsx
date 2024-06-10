@@ -50,10 +50,27 @@ export function BarChart(props: Props) {
             income {domain[0]} - {domain[1]}
           </h6>
           <div className='flex-div flex-vert-align-center no-shrink'>
+            <DownloadImageButton element={divToBeDownloaded} />
+            <DownloadDataButton link='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/ExternalDebtService.xlsx' />
+          </div>
+        </div>
+        <div className='margin-bottom-07 flex-div flex-vert-align-center'>
+          <Select
+            options={categories.map(d => ({
+              label: d.description,
+              value: d.description,
+            }))}
+            className='undp-select'
+            style={{ width: '100%' }}
+            onChange={el => {
+              setCategorySelection(el);
+            }}
+            value={categorySelection}
+          />
+          <div className='no-shrink flex-div flex-vert-align-center'>
             <Radio.Group
               optionType='button'
               className='undp-button-radio'
-              size='small'
               defaultValue={totalPercentSelection}
               onChange={(el: RadioChangeEvent) => {
                 setTotalPercentSelection(el.target.value);
@@ -68,7 +85,6 @@ export function BarChart(props: Props) {
             <Radio.Group
               optionType='button'
               className='undp-button-radio'
-              size='small'
               defaultValue={revenueExportsSelection}
               onChange={(el: RadioChangeEvent) => {
                 setRevenueExportsSelection(el.target.value);
@@ -80,23 +96,7 @@ export function BarChart(props: Props) {
                 </Radio>
               ))}
             </Radio.Group>
-            <DownloadImageButton element={divToBeDownloaded} />
-            <DownloadDataButton link='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/ExternalDebtService.xlsx' />
           </div>
-        </div>
-        <div className='margin-bottom-07'>
-          <Select
-            options={categories.map(d => ({
-              label: d.description,
-              value: d.description,
-            }))}
-            className='undp-select'
-            style={{ width: '100%' }}
-            onChange={el => {
-              setCategorySelection(el);
-            }}
-            value={categorySelection}
-          />
         </div>
         <Graph
           data={data.filter(d => d.Group === categorySelection)}

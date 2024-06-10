@@ -36,26 +36,11 @@ export function QuantilesLineChart(props: Props) {
             {Math.max(...dateDomain)})
           </h6>
           <div className='flex-div flex-vert-align-center no-shrink'>
-            <Radio.Group
-              optionType='button'
-              className='undp-button-radio'
-              size='small'
-              defaultValue={totalExternalSelection}
-              onChange={(el: RadioChangeEvent) =>
-                setTotalExternalSelection(el.target.value)
-              }
-            >
-              {totalExternalOptions.map((d, i) => (
-                <Radio key={i} className='undp-radio' value={d}>
-                  {d[0].toUpperCase() + d.slice(1)}
-                </Radio>
-              ))}
-            </Radio.Group>
             <DownloadImageButton element={divToBeDownloaded} />
             <DownloadDataButton link='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/DebtToGDPQuantile.xlsx' />
           </div>
         </div>
-        <div className='margin-bottom-07'>
+        <div className='margin-bottom-07 flex-div flex-vert-align-center'>
           <Select
             options={categories.map(d => ({
               label: d.description,
@@ -68,6 +53,22 @@ export function QuantilesLineChart(props: Props) {
             }}
             value={categorySelection}
           />
+          <div className='flex-div no-shrink'>
+            <Radio.Group
+              optionType='button'
+              className='undp-button-radio'
+              defaultValue={totalExternalSelection}
+              onChange={(el: RadioChangeEvent) =>
+                setTotalExternalSelection(el.target.value)
+              }
+            >
+              {totalExternalOptions.map((d, i) => (
+                <Radio key={i} className='undp-radio' value={d}>
+                  {d[0].toUpperCase() + d.slice(1)}
+                </Radio>
+              ))}
+            </Radio.Group>
+          </div>
         </div>
         <Graph
           data={data.filter(d => d.Group === categorySelection)}

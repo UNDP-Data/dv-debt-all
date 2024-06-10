@@ -33,28 +33,13 @@ export function DebtInterestBars(props: Props) {
             percent of revenue today relative to a decade ago
           </h6>
           <div className='flex-div flex-vert-align-center no-shrink'>
-            <Radio.Group
-              optionType='button'
-              className='undp-button-radio'
-              size='small'
-              defaultValue={totalPercentSelection}
-              onChange={(el: RadioChangeEvent) => {
-                setTotalPercentSelection(el.target.value);
-              }}
-            >
-              {numberPercentOptions.map((d, i) => (
-                <Radio key={i} className='undp-radio' value={d}>
-                  {d}
-                </Radio>
-              ))}
-            </Radio.Group>
             {divToBeDownloaded ? (
               <DownloadImageButton element={divToBeDownloaded} />
             ) : null}
             <DownloadDataButton link='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/DebtNetInterest.xlsx' />
           </div>
         </div>
-        <div className='margin-bottom-07'>
+        <div className='margin-bottom-07 flex-div flex-vert-align-center'>
           <Select
             options={categories.map(d => ({
               label: d.description,
@@ -67,6 +52,22 @@ export function DebtInterestBars(props: Props) {
             }}
             value={categorySelection}
           />
+          <div className='flex-div no-shrink'>
+            <Radio.Group
+              optionType='button'
+              className='undp-button-radio'
+              defaultValue={totalPercentSelection}
+              onChange={(el: RadioChangeEvent) => {
+                setTotalPercentSelection(el.target.value);
+              }}
+            >
+              {numberPercentOptions.map((d, i) => (
+                <Radio key={i} className='undp-radio' value={d}>
+                  {d}
+                </Radio>
+              ))}
+            </Radio.Group>
+          </div>
         </div>
         <Graph
           data={data.filter(
