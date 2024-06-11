@@ -16,6 +16,7 @@ export function DownloadDataButton(props: Props) {
       href={link}
       target='_blank'
       rel='noreferrer'
+      title='Download data'
     >
       <Sheet size={24} stroke='var(--gray-700)' strokeWidth={1.5} />
     </a>

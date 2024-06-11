@@ -11,6 +11,7 @@ export function DownloadImageButton(props: Props) {
     <button
       type='button'
       className='undp-button'
+      title='Download graph as image'
       style={{
         backgroundColor: 'var(--gray-300)',
         padding: '0.625rem',
