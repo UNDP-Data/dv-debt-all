@@ -5,19 +5,11 @@ import AppNetInterest from './AppNetInterest';
 import AppNetInterestQuantiles from './AppNetInterestQuantiles';
 import AppExternalDebt from './AppExternalDebt';
 import AppCompositionGroups from './AppCompositionGroups';
-import AppCreditDsaRating from './AppCreditDsaRating';
 import AppExternalDebtQuantiles from './AppExternalDebtQuantiles';
 import AppAllCountries from './AppAllCountries';
 import AppCreditRating from './AppCreditRating';
 import AppDsaRating from './AppDSARating';
 
-ReactDOM.createRoot(
-  document.getElementById('debtCreditDsaRating') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppCreditDsaRating />
-  </React.StrictMode>,
-);
 ReactDOM.createRoot(
   document.getElementById('debtCreditRating') as HTMLElement,
 ).render(
