@@ -5,7 +5,7 @@ import { CategoryData, ChartSourceType, CompositionGroupsType } from './Types';
 import { StackedBarComposition } from './StackedBarComposition';
 import './style.css';
 
-function App() {
+function AppCompositionGroups() {
   const [compositionGroupsData, setCompositionGroupsData] = useState<
     CompositionGroupsType[] | undefined
   >();
@@ -41,4 +41,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppCompositionGroups;

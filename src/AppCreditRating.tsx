@@ -11,7 +11,7 @@ import {
 import './style.css';
 import { DSACreditStackedBarChart } from './DSACreditStackedBarChart';
 
-function App() {
+function AppCreditRating() {
   const [creditRatingData, setCreditRatingData] = useState<
     CreditRatingType[] | undefined
   >();
@@ -54,4 +54,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppCreditRating;

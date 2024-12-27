@@ -1,0 +1,55 @@
+{
+  "graphType": "lineChartWithConfidenceInterval",
+  "dataSettings": {
+    "dataURL": "https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/refs/heads/main/data-2024/country-groups/debtToGDP.csv",
+    "fileType": "csv",
+    "delimiter": ","
+  },
+  "graphDataConfiguration": [
+    {
+      "chartConfigId": "date",
+      "columnId": "year"
+    },
+    {
+      "chartConfigId": "y",
+      "columnId": "totalDebt"
+    }
+  ],
+  "filters": [
+    {
+      "column": "group",
+      "width": "100%",
+      "clearable": false,
+      "singleSelect": true,
+      "defaultValue": "All developing"
+    }
+  ],
+  "dataSelectionOptions": [
+    {
+      "chartConfigId": "y",
+      "ui": "radio",
+      "label": "Select indicator",
+      "allowedColumnIds": [
+        { "label": "Total", "value": "totalDebt" },
+        { "label": "External", "value": "externalDebt" }
+      ]
+    }
+  ],
+  "graphSettings": {
+    "tooltip": "<div style='display: flex; flex-direction: row; justify-content: space-between; min-width: 240px;'><p class='undp-viz-typography' style='margin:0;'>Median</p><p class='undp-viz-typography' style='margin:0;'><b>{{y}}%</b></p></div><div style='display: flex; flex-direction: row; justify-content: space-between; min-width: 240px;'><p class='undp-viz-typography' style='margin:0;'>Interquartile range</p><p class='undp-viz-typography' style='margin:0;'><b>{{yMin}}%–{{yMax}}%</b></p></div>",
+    "backgroundColor": true,
+    "padding": "1.25rem",
+    "suffix": "%",
+    "maxValue": 100,
+    "minValue": 0,
+    "dataDownload": true,
+    "graphDownload": true,
+    "graphTitle": "Government debt as a percentage of GDP (2000-2024)",
+    "sources": [
+      {
+        "source": "Source: Based on IMF WEO, April 2024 and World Bank International Debt Statistics 2023. "
+      }
+    ],
+    "footNote": "Note: Total debt refers to general government debt as reported by the IMF. External debt refers to public and publicly guaranteed debt as reported by the World Bank."
+  }
+}

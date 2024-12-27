@@ -10,11 +10,11 @@ import {
   CountryValueType,
   CountryCategoryType,
   ChartSourceType,
-} from './Types';
-import './style.css';
-import { AllCountries } from './AllCountries';
+} from '../Types';
+import '../style.css';
+import { AllCountries } from '../AllCountries';
 
-function AppAllCountries() {
+function AppAllCountriesUpd() {
   const [netInterest, setNetInterest] = useState<
     CountryPercentType[] | undefined
   >();
@@ -40,6 +40,15 @@ function AppAllCountries() {
   const [countriesSources, setCountriesSources] = useState<ChartSourceType[]>(
     [],
   );
+  const regions = [
+    'South Asia',
+    'Europe & Central Asia',
+    'Middle East & North Africa',
+    'East Asia & Pacific',
+    'Latin America & Caribbean',
+    'Sub-Saharan Africa',
+    'North America',
+  ];
   const groups = [
     'LIC',
     'LMC',
@@ -81,7 +90,7 @@ function AppAllCountries() {
   };
 
   const dataurl =
-    'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/main/countries1/';
+    'https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/refs/heads/main/data-2024/countries/';
   useEffect(() => {
     Promise.all([
       csv(`${dataurl}groupings.csv`), // 1. Groupings
@@ -161,11 +170,13 @@ function AppAllCountries() {
           year: Number(d.year),
           multilateral: Number(d['Multilateral ($ million)']),
           bilateral: Number(d['Bilateral ($ million)']),
+          TDS: Number(d['TDS external debt ($ million)']),
           bonds: Number(d['Bonds ($ million)']),
           'other private': Number(d['Other private ($ million)']),
           total:
             Number(d['Multilateral ($ million)']) +
             Number(d['Bilateral ($ million)']) +
+            Number(d['TDS external debt ($ million)']) +
             Number(d['Bonds ($ million)']) +
             Number(d['Other private ($ million)']),
           'principal payments': Number(d['INT ($ million)']),
@@ -211,7 +222,11 @@ function AppAllCountries() {
               {selectedCountry.label} is part to the following groups:
               <br />
               <strong>
-                {(groupsNames as any)[selectedCountry.Region]}
+                {regions.map(region =>
+                  (selectedCountry as any)[region] === '1'
+                    ? `${(groupsNames as any)[region]}`
+                    : '',
+                )}
                 {selectedCountry.IMF !== '..'
                   ? `, ${(groupsNames as any)[selectedCountry.IMF]}`
                   : ''}
@@ -259,4 +274,4 @@ function AppAllCountries() {
   );
 }
 
-export default AppAllCountries;
+export default AppAllCountriesUpd;

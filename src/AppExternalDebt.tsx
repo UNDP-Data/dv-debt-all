@@ -5,7 +5,7 @@ import { CategoryData, ChartSourceType, DebtServiceType } from './Types';
 import { BarChart } from './BarChart';
 import './style.css';
 
-function App() {
+function AppExternalDebt() {
   const [debtServiceData, setDebtServiceData] = useState<
     DebtServiceType[] | undefined
   >();
@@ -41,4 +41,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppExternalDebt;

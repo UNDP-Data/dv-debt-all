@@ -5,7 +5,7 @@ import { DebtNetInterestType, CategoryData, ChartSourceType } from './Types';
 import { DebtInterestBars } from './DebtInterestBars';
 import './style.css';
 
-function App() {
+function AppNetInterest() {
   const [debtNetInterest, setDebtNetInterest] = useState<
     DebtNetInterestType[] | undefined
   >();
@@ -47,4 +47,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppNetInterest;
