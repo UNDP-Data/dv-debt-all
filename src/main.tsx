@@ -20,137 +20,33 @@ import AppDebtCompositionUpd from './updated/AppDebtCompositionUpd';
 import AppAllCountriesUpd from './updated/AppAllCountriesUpd';
 import AppCreditDsaRating from './AppCreditDsaRating';
 
-ReactDOM.createRoot(
-  document.getElementById('debtCreditRating') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppCreditRating />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('creditDsaRating') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppCreditDsaRating />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('debtCreditRatingUpd') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppCreditRatingUpd />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('debtDSARating') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppDsaRating />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('debtDSARatingUpd') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppDsaRatingUpd />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(document.getElementById('debtToGdp') as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('debtToGdpUpd') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppDebtToGdpUpd />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('debtNetInterest') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppNetInterest />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('netInterestGroupedUpd') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppNetInterestGroupedUpd />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('debtNetInterestQuantiles') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppNetInterestQuantiles />
-  </React.StrictMode>,
-);
+function safeRender(elementId: string, Component: JSX.Element): void {
+  const rootElement = document.getElementById(elementId);
+  if (rootElement) {
+    ReactDOM.createRoot(rootElement).render(
+      <React.StrictMode>{Component}</React.StrictMode>,
+    );
+  } else {
+    console.warn(`Element with ID '${elementId}' does not exist.`);
+  }
+}
 
-ReactDOM.createRoot(
-  document.getElementById('netInterestIntervalUpd') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppNetInterestIntervalUpd />
-  </React.StrictMode>,
-);
-
-ReactDOM.createRoot(
-  document.getElementById('externalDebt') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppExternalDebt />
-  </React.StrictMode>,
-);
-
-ReactDOM.createRoot(
-  document.getElementById('externalDebtServiceUpd') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppExternalDebtServiceUpd />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('externalDebtQuantiles') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppExternalDebtQuantiles />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('externalDebtIntervalUpd') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppExternalDebtIntervalUpd />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('compositionGroups') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppCompositionGroups />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('debtCompositionUpd') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppDebtCompositionUpd />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('debtAllCountries') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppAllCountries />
-  </React.StrictMode>,
-);
-ReactDOM.createRoot(
-  document.getElementById('debtAllCountriesUpd') as HTMLElement,
-).render(
-  <React.StrictMode>
-    <AppAllCountriesUpd />
-  </React.StrictMode>,
-);
+safeRender('debtCreditRating', <AppCreditRating />);
+safeRender('creditDsaRating', <AppCreditDsaRating />);
+safeRender('debtCreditRatingUpd', <AppCreditRatingUpd />);
+safeRender('debtDSARating', <AppDsaRating />);
+safeRender('debtDSARatingUpd', <AppDsaRatingUpd />);
+safeRender('debtToGdp', <App />);
+safeRender('debtToGdpUpd', <AppDebtToGdpUpd />);
+safeRender('debtNetInterest', <AppNetInterest />);
+safeRender('netInterestGroupedUpd', <AppNetInterestGroupedUpd />);
+safeRender('debtNetInterestQuantiles', <AppNetInterestQuantiles />);
+safeRender('netInterestIntervalUpd', <AppNetInterestIntervalUpd />);
+safeRender('externalDebt', <AppExternalDebt />);
+safeRender('externalDebtServiceUpd', <AppExternalDebtServiceUpd />);
+safeRender('externalDebtQuantiles', <AppExternalDebtQuantiles />);
+safeRender('externalDebtIntervalUpd', <AppExternalDebtIntervalUpd />);
+safeRender('compositionGroups', <AppCompositionGroups />);
+safeRender('debtCompositionUpd', <AppDebtCompositionUpd />);
+safeRender('debtAllCountries', <AppAllCountries />);
+safeRender('debtAllCountriesUpd', <AppAllCountriesUpd />);
