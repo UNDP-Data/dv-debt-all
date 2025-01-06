@@ -47,11 +47,16 @@ export function LineChart(props: Props) {
     <div className='chart-container flex-half-screen'>
       <div ref={graphDiv}>
         <div className='margin-bottom-07 flex-div flex-space-between flex-vert-align-center'>
-          <h6 className='undp-typography margin-bottom-00'>
-            {title}{' '}
-            {data.length > 0 ? `${yearsDomain[0]}–${yearsDomain[1]}` : ''}
-          </h6>
-          <div className='flex-div no-shrink'>
+          <div>
+            <p className='undp-typography margin-bottom-02'>{title} </p>
+            <p
+              className='undp-typography small-font margin-bottom-00'
+              style={{ color: 'var(--gray-600)' }}
+            >
+              {data.length > 0 ? `${yearsDomain[0]}–${yearsDomain[1]}` : ''}
+            </p>
+          </div>
+          <div className='flex-div no-shrink gap-04'>
             <DownloadImageButton element={divToBeDownloaded} />
             <DownloadDataButton link={dataLink} />
           </div>

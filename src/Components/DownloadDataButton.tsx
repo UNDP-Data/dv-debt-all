@@ -1,4 +1,4 @@
-import { Sheet } from 'lucide-react';
+import { FileDown } from 'lucide-react';
 
 interface Props {
   link: string;
@@ -9,16 +9,16 @@ export function DownloadDataButton(props: Props) {
     <a
       className='undp-button'
       style={{
-        backgroundColor: 'var(--gray-300)',
-        padding: '0.625rem',
-        border: '1px solid var(--gray-400)',
+        backgroundColor: '#f7f7f7',
+        padding: '0.5rem',
+        border: '1px solid #EDEFF0',
       }}
       href={link}
       target='_blank'
       rel='noreferrer'
       title='Download data'
     >
-      <Sheet size={24} stroke='var(--gray-700)' strokeWidth={1.5} />
+      <FileDown size={20} stroke='#000000' strokeWidth={1.2} />
     </a>
   );
 }

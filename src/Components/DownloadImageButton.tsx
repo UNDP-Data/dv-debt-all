@@ -13,9 +13,9 @@ export function DownloadImageButton(props: Props) {
       className='undp-button'
       title='Download graph as image'
       style={{
-        backgroundColor: 'var(--gray-300)',
-        padding: '0.625rem',
-        border: '1px solid var(--gray-400)',
+        backgroundColor: '#f7f7f7',
+        padding: '0.5rem',
+        border: '1px solid #EDEFF0',
       }}
       onClick={() => {
         if (element) {
@@ -26,7 +26,7 @@ export function DownloadImageButton(props: Props) {
         }
       }}
     >
-      <ImageDown size={24} stroke='var(--gray-700)' strokeWidth={1.5} />
+      <ImageDown size={20} stroke='#000000' strokeWidth={1.2} />
     </button>
   );
 }

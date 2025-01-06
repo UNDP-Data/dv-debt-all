@@ -18,6 +18,7 @@ import AppExternalDebtIntervalUpd from './updated/AppExternalDebtIntervalUpd';
 import AppDebtCompositionUpd from './updated/AppDebtCompositionUpd';
 import AppAllCountriesUpd from './updated/AppAllCountriesUpd';
 import AppCreditDsaRating from './AppCreditDsaRating';
+import AppDebtToGdpUpd from './updated/AppDebtGDP';
 
 function safeRender(elementId: string, Component: JSX.Element): void {
   const rootElement = document.getElementById(elementId);
@@ -36,6 +37,7 @@ safeRender('debtCreditRatingUpd', <AppCreditRatingUpd />);
 safeRender('debtDSARating', <AppDsaRating />);
 safeRender('debtDSARatingUpd', <AppDsaRatingUpd />);
 safeRender('debtToGdp', <App />);
+safeRender('debtToGdpUpd', <AppDebtToGdpUpd />);
 safeRender('debtNetInterest', <AppNetInterest />);
 safeRender('netInterestGroupedUpd', <AppNetInterestGroupedUpd />);
 safeRender('debtNetInterestQuantiles', <AppNetInterestQuantiles />);

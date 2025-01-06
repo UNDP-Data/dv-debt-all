@@ -59,7 +59,7 @@ export function LinearDotsComparison(props: Props) {
   }, [svgWidth]);
   return (
     <div ref={containerRef} className='chart-container rating'>
-      <h6 className='undp-typography margin-bottom-04'>{title}</h6>
+      <p className='undp-typography margin-bottom-04'>{title}</p>
       {countryData !== undefined && data.length > 0 ? (
         <>
           <svg width='100%' viewBox={`0 0 ${svgWidth} ${svgHeight}`} id={id}>
