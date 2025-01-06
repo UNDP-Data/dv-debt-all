@@ -4,7 +4,7 @@ import '@undp-data/undp-visualization-library/dist/style.css';
 function AppDebtCompositionUpd() {
   return (
     <div>
-      <SingleGraphDashboardFromConfig config='/debtComposition.json' />
+      <SingleGraphDashboardFromConfig config='https://raw.githubusercontent.com/UNDP-Data/dv-debt-all-data-repo/refs/heads/main/config-2024/debtComposition.json' />
     </div>
   );
 }
