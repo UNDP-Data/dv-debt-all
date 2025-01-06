@@ -12,7 +12,7 @@ import {
   ChartSourceType,
 } from '../Types';
 import '../style.css';
-import { AllCountries } from '../AllCountries';
+import { AllCountries } from '../AllCountriesUpd';
 
 function AppAllCountriesUpd() {
   const [netInterest, setNetInterest] = useState<
