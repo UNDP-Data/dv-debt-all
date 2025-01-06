@@ -11,7 +11,6 @@ import AppCreditRating from './AppCreditRating';
 import AppCreditRatingUpd from './updated/AppCreditRatingUpd';
 import AppDsaRating from './AppDSARating';
 import AppDsaRatingUpd from './updated/AppDSARatingUpd';
-import AppDebtToGdpUpd from './updated/AppDebtToGdpUpd';
 import AppNetInterestGroupedUpd from './updated/AppNetInterestGroupedUpd';
 import AppNetInterestIntervalUpd from './updated/AppNetInterestIntervalUpd';
 import AppExternalDebtServiceUpd from './updated/AppExternalDebtServiceUpd';
@@ -19,6 +18,7 @@ import AppExternalDebtIntervalUpd from './updated/AppExternalDebtIntervalUpd';
 import AppDebtCompositionUpd from './updated/AppDebtCompositionUpd';
 import AppAllCountriesUpd from './updated/AppAllCountriesUpd';
 import AppCreditDsaRating from './AppCreditDsaRating';
+import AppDebtToGdpUpd from './updated/AppdebtToGdpUpd';
 
 function safeRender(elementId: string, Component: JSX.Element): void {
   const rootElement = document.getElementById(elementId);

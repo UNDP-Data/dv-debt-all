@@ -118,6 +118,7 @@ function AppAllCountriesUpd() {
           note: d.note,
           year: Number(d.year),
         }));
+        console.log('sourcedata', countriesSourcesData);
         setCountriesSources(countriesSourcesData);
         const countryData = groupingsCsv.map((d: any) => ({
           ...d,
