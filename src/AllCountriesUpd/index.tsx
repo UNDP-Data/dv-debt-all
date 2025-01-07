@@ -302,6 +302,9 @@ export function AllCountries(props: Props) {
                 graphDownload: true,
                 dataDownload: true,
                 prefix: '$',
+                radius: 164,
+                strokeWidth: 40,
+                bottomMargin: 24,
                 colorDomain: [
                   'Bilateral',
                   'Multilateral',
