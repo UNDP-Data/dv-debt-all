@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@undp-data/undp-visualization-library": "^1.0.32",
+    "@undp-data/undp-visualization-library": "^1.0.34",
     "antd": "^5.11.0",
     "d3-array": "^3.2.4",
     "d3-axis": "^3.0.0",
