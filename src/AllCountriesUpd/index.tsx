@@ -368,9 +368,12 @@ export function AllCountries(props: Props) {
             </p>
           </div>
         </div>
-        <div className='flex-div flex-wrap margin-top-05'>
+        <div
+          className='flex-div flex-wrap margin-top-05'
+          style={{ height: '100%' }}
+        >
           {countryNetInterest !== undefined ? (
-            <div style={{ width: 'calc(50% - 0.5rem)' }}>
+            <div style={{ width: 'calc(50% - 0.5rem)', height: '100%' }}>
               <SingleGraphDashboard
                 dataSettings={{ data: countryNetInterest }}
                 graphType='lineChart'
@@ -381,6 +384,7 @@ export function AllCountries(props: Props) {
                 graphSettings={{
                   graphTitle: 'Net interest payments (% of revenue)',
                   suffix: ' %',
+                  height: 512,
                   tooltip: '{{data.year}} <b>{{formatNumber y}} %</b>',
                   sources: [
                     {
@@ -412,6 +416,7 @@ export function AllCountries(props: Props) {
                 graphSettings={{
                   graphTitle: 'Total debt service - PPG external debt',
                   suffix: ' %',
+                  height: 480,
                   tooltip:
                     '{{data.year}}</br><span class="tooltipCircle" style="background-color: #006eb5;"></span><b>{{formatNumber data.[% of revenue]}} %</b></br><span class="tooltipCircle" style="background-color: #5dd4f0;"></span><b>{{formatNumber data.[% of exports]}} %</b>',
                   sources: [
