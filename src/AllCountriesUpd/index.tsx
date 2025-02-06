@@ -221,7 +221,10 @@ export function AllCountries(props: Props) {
         </p>
         <div className='flex-div flex-wrap'>
           {countryStats !== undefined ? (
-            <div className='flex-div flex-wrap debt-stats-container flex-vertical'>
+            <div
+              className='flex-div flex-wrap debt-stats-container flex-vertical'
+              style={{ flexBasis: '30%', flexGrow: '1', display: 'flex' }}
+            >
               <div className='stat-card stat-cart-debt'>
                 <h3>{countryStats.debtMillion}</h3>
                 <h4>USD</h4>
