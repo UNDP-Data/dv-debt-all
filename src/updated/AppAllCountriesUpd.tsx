@@ -118,7 +118,7 @@ function AppAllCountriesUpd() {
           note: d.note,
           year: Number(d.year),
         }));
-        console.log('sourcedata', countriesSourcesData);
+        // console.log('sourcedata', countriesSourcesData);
         setCountriesSources(countriesSourcesData);
         const countryData = groupingsCsv.map((d: any) => ({
           ...d,
@@ -174,12 +174,7 @@ function AppAllCountriesUpd() {
           TDS: Number(d['TDS external debt ($ million)']),
           bonds: Number(d['Bonds ($ million)']),
           'other private': Number(d['Other private ($ million)']),
-          total:
-            Number(d['Multilateral ($ million)']) +
-            Number(d['Bilateral ($ million)']) +
-            Number(d['TDS external debt ($ million)']) +
-            Number(d['Bonds ($ million)']) +
-            Number(d['Other private ($ million)']),
+          total: Number(d['PPG stock ($ million)']),
           'principal payments': Number(d['INT ($ million)']),
           'interest payment': Number(d['AMT ($ million)']),
         }));

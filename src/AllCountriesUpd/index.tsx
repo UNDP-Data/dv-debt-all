@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import { useState, useEffect, useMemo } from 'react';
@@ -12,7 +13,6 @@ import {
   CountryType,
   ChartSourceType,
 } from '../Types';
-import { LineChart } from './LineChart';
 import '../style.css';
 import { LinearDotsComparison } from './LinearDotComparison';
 import { HorizontalScale } from './HorizontalScale';
@@ -43,7 +43,7 @@ export function AllCountries(props: Props) {
   const formatMillion = (d: number | undefined) => {
     if (d === undefined) return 'N/A';
     const k = d * 1000000;
-    if (d < 1000) return `${d}M`;
+    if (d < 1000) return `${d} M`;
     if (d < 10000) return format('.3~s')(k).replace('G', 'B');
     if (d < 100000) return format('.4~s')(k).replace('G', 'B');
     if (d < 1000000) return format('.5~s')(k).replace('G', 'B');
@@ -94,7 +94,6 @@ export function AllCountries(props: Props) {
     const netInterest = countryNetInterest.filter(
       d => d.year === yearNetInterest,
     )[0];
-    console.log(yearNetInterest);
     // --- debt servicing
     const debtServicing = countryExternalDebt[countryExternalDebt.length - 1];
     const interestAndPaymentsPPG = Number(
@@ -139,7 +138,7 @@ export function AllCountries(props: Props) {
     const debtData = countryExternalDebt.find(
       d => d.year === Number(countryStats.externalGovDebtYear),
     );
-
+    // console.log(countryTdsExternal);
     if (!debtData) return [];
 
     // Define the keys you want to include with capitalized labels
@@ -178,7 +177,6 @@ export function AllCountries(props: Props) {
       })
       .filter(item => item.size !== 0 && item.size !== undefined);
   }, [countryExternalDebt, countryStats]);
-
   return (
     <>
       <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
@@ -215,10 +213,10 @@ export function AllCountries(props: Props) {
       <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
         <h2 className='undp-typography margin-top-10'>Government debt</h2>
         <p className='undp-typography'>
-          Figures below show the value of general gross government debt in 2023
+          Figures below show the value of general gross government debt in 2024
           (or latest available datapoint) in million (M) or billion (B) USD and
           as a percentage of GDP. The graph shows the historical development of
-          debt as a percentage of GDP from 2000 to 2023 and the forecast for
+          debt as a percentage of GDP from 2000 to 2025 and the forecast for
           2024 and 2025.
         </p>
         <div className='flex-div flex-wrap'>
@@ -241,19 +239,29 @@ export function AllCountries(props: Props) {
             </div>
           ) : null}
           {countryDebtToGdp !== undefined ? (
-            <LineChart
-              data={countryDebtToGdp}
-              indicators={['percentage']}
-              id='countryDebtToGdp'
-              title='Government debt as percentage of GDP'
-              selectedCountryCode={selectedCountry.value}
-              svgHeight={350}
-              chartSource={
-                countriesSources.filter(
-                  d => d.graph === 'Government debt as a percentage of GDP',
-                )[0]
-              }
-              dataLink='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/CountriesDebtAsPercentOfGDP.xlsx'
+            <SingleGraphDashboard
+              dataSettings={{ data: countryDebtToGdp }}
+              graphType='lineChart'
+              graphDataConfiguration={[
+                { columnId: 'year', chartConfigId: 'date' },
+                { columnId: 'percentage', chartConfigId: 'y' },
+              ]}
+              graphSettings={{
+                graphTitle: 'Government debt as a percentage of GDP',
+                graphDescription: '2000–2025',
+                suffix: ' %',
+                tooltip: '{{data.year}} <b>{{formatNumber y}} %</b>',
+                width: 580,
+                sources: [
+                  {
+                    source:
+                      'Based on data from the IMF World Economic Outlook, October 2024',
+                  },
+                ],
+                backgroundColor: true,
+                graphDownload: true,
+                dataDownload: true,
+              }}
             />
           ) : null}
         </div>
@@ -265,7 +273,7 @@ export function AllCountries(props: Props) {
         <p className='undp-typography'>
           The figure shows the value of the external public and publicly
           guaranteed (PPG) debt stock in million (M) or billion (B) USD for
-          2022.The graph shows the corresponding debt composition on the four
+          2023. The graph shows the corresponding debt composition on the four
           creditor categories bilateral, multilateral, bonds and ‘other private’
           creditors.
         </p>
@@ -330,13 +338,12 @@ export function AllCountries(props: Props) {
           <h2 className='undp-typography margin-top-10'>Debt servicing</h2>
           <p className='undp-typography'>
             Figures show the value of net interest payments on total government
-            debt, and interest and principal payments on external PPG debt for
-            2023 in in million (M) or billion (B) USD. The graph on the left
-            depicts government net interest payments (as a percentage of
-            revenue), and the graph on the right total external debt servicing
-            on external public and publicly guaranteed (PPG) debt (as a
-            percentage of revenue or exports). Both graphs cover the period
-            2000-2025.
+            debt, and interest and principal payments on external PPG debt in
+            million (M) or billion (B) USD. The graph on the left depicts
+            government net interest payments (as a percentage of revenue), and
+            the graph on the right total external debt servicing on external
+            public and publicly guaranteed (PPG) debt (as a percentage of
+            revenue or exports). Both graphs cover the period 2000-2025.
           </p>
         </div>
         <div className='flex-div flex-wrap margin-top-08'>
@@ -359,36 +366,65 @@ export function AllCountries(props: Props) {
         </div>
         <div className='flex-div flex-wrap margin-top-05'>
           {countryNetInterest !== undefined ? (
-            <LineChart
-              data={countryNetInterest}
-              indicators={['percentage']}
-              id='countryNetInterest'
-              title='Net interest payments (% of revenue)'
-              selectedCountryCode={selectedCountry.value}
-              svgHeight={300}
-              chartSource={
-                countriesSources.filter(
-                  d => d.graph === 'Net interest payments',
-                )[0]
-              }
-              dataLink='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/CountriesNetInterest.xlsx'
-            />
+            <div style={{ width: 'calc(50% - 0.5rem)' }}>
+              <SingleGraphDashboard
+                dataSettings={{ data: countryNetInterest }}
+                graphType='lineChart'
+                graphDataConfiguration={[
+                  { columnId: 'year', chartConfigId: 'date' },
+                  { columnId: 'percentage', chartConfigId: 'y' },
+                ]}
+                graphSettings={{
+                  graphTitle: 'Net interest payments (% of revenue)',
+                  suffix: ' %',
+                  tooltip: '{{data.year}} <b>{{formatNumber y}} %</b>',
+                  sources: [
+                    {
+                      source:
+                        'Based on IMF World Economic Outlook, October 2024.',
+                    },
+                  ],
+                  footNote:
+                    'Note: Net interests are calculated as the difference between the overall and primary balance.',
+                  backgroundColor: true,
+                  graphDownload: true,
+                  dataDownload: true,
+                }}
+              />
+            </div>
           ) : null}
           {countryTdsExternal !== undefined ? (
-            <LineChart
-              data={countryTdsExternal}
-              indicators={['% of revenue', '% of exports']}
-              id='countryDebtService'
-              title='Total debt service - PPG external debt'
-              selectedCountryCode={selectedCountry.value}
-              svgHeight={300}
-              chartSource={
-                countriesSources.filter(
-                  d => d.graph === 'Total debt service',
-                )[0]
-              }
-              dataLink='https://github.com/UNDP-Data/dv-debt-all-data-repo/raw/main/ExcelData/CountriesTDSExternalDebt.xlsx'
-            />
+            <div style={{ width: 'calc(50% - 0.5rem)' }}>
+              <SingleGraphDashboard
+                dataSettings={{ data: countryTdsExternal }}
+                graphType='multiLineChart'
+                graphDataConfiguration={[
+                  { columnId: 'year', chartConfigId: 'date' },
+                  {
+                    columnId: ['% of revenue', '% of exports'],
+                    chartConfigId: 'y',
+                  },
+                ]}
+                graphSettings={{
+                  graphTitle: 'Total debt service - PPG external debt',
+                  suffix: ' %',
+                  tooltip:
+                    '{{data.year}}</br><span class="tooltipCircle" style="background-color: #006eb5;"></span><b>{{formatNumber data.[% of revenue]}} %</b></br><span class="tooltipCircle" style="background-color: #5dd4f0;"></span><b>{{formatNumber data.[% of exports]}} %</b>',
+                  sources: [
+                    {
+                      source:
+                        'Based on IMF World Economic Outlook, October 2024 and World Bank International Debts Statistics 2024.',
+                    },
+                  ],
+                  footNote:
+                    'Note: Total debt servicing covers interest plus principal payments.',
+                  backgroundColor: true,
+                  graphDownload: true,
+                  dataDownload: true,
+                  showColorLegendAtTop: true,
+                }}
+              />
+            </div>
           ) : null}
         </div>
       </div>
