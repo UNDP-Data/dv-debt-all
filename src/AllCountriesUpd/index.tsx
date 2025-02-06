@@ -252,7 +252,6 @@ export function AllCountries(props: Props) {
                 ]}
                 graphSettings={{
                   graphTitle: 'Government debt as a percentage of GDP',
-                  graphDescription: '2000–2025',
                   suffix: ' %',
                   tooltip: '{{data.year}} <b>{{formatNumber y}} %</b>',
                   width: 580,
