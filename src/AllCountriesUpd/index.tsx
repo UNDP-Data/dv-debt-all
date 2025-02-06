@@ -239,30 +239,32 @@ export function AllCountries(props: Props) {
             </div>
           ) : null}
           {countryDebtToGdp !== undefined ? (
-            <SingleGraphDashboard
-              dataSettings={{ data: countryDebtToGdp }}
-              graphType='lineChart'
-              graphDataConfiguration={[
-                { columnId: 'year', chartConfigId: 'date' },
-                { columnId: 'percentage', chartConfigId: 'y' },
-              ]}
-              graphSettings={{
-                graphTitle: 'Government debt as a percentage of GDP',
-                graphDescription: '2000–2025',
-                suffix: ' %',
-                tooltip: '{{data.year}} <b>{{formatNumber y}} %</b>',
-                width: 580,
-                sources: [
-                  {
-                    source:
-                      'Based on data from the IMF World Economic Outlook, October 2024',
-                  },
-                ],
-                backgroundColor: true,
-                graphDownload: true,
-                dataDownload: true,
-              }}
-            />
+            <div style={{ flexBasis: '50%', flexGrow: '1' }}>
+              <SingleGraphDashboard
+                dataSettings={{ data: countryDebtToGdp }}
+                graphType='lineChart'
+                graphDataConfiguration={[
+                  { columnId: 'year', chartConfigId: 'date' },
+                  { columnId: 'percentage', chartConfigId: 'y' },
+                ]}
+                graphSettings={{
+                  graphTitle: 'Government debt as a percentage of GDP',
+                  graphDescription: '2000–2025',
+                  suffix: ' %',
+                  tooltip: '{{data.year}} <b>{{formatNumber y}} %</b>',
+                  width: 580,
+                  sources: [
+                    {
+                      source:
+                        'Based on data from the IMF World Economic Outlook, October 2024',
+                    },
+                  ],
+                  backgroundColor: true,
+                  graphDownload: true,
+                  dataDownload: true,
+                }}
+              />
+            </div>
           ) : null}
         </div>
       </div>
