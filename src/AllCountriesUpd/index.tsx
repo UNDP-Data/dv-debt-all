@@ -355,7 +355,7 @@ export function AllCountries(props: Props) {
             <h3>{countryStats?.netInterestPayments}</h3>
             <h4>USD</h4>
             <p className='undp-typography'>
-              Net interest payments General Government Debt (
+              Net interest payments general government debt (
               {countryStats?.netInterestPaymentsYear})
             </p>
           </div>
@@ -414,7 +414,7 @@ export function AllCountries(props: Props) {
                   },
                 ]}
                 graphSettings={{
-                  graphTitle: 'Total debt service - PPG external debt',
+                  graphTitle: 'Total debt service – PPG external debt',
                   suffix: ' %',
                   height: 480,
                   tooltip:
