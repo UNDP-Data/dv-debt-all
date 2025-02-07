@@ -255,6 +255,7 @@ export function AllCountries(props: Props) {
                   suffix: ' %',
                   tooltip: '{{data.year}} <b>{{formatNumber y}} %</b>',
                   width: 580,
+                  noOfXTicks: 7,
                   sources: [
                     {
                       source:
@@ -384,7 +385,10 @@ export function AllCountries(props: Props) {
                 graphSettings={{
                   graphTitle: 'Net interest payments (% of revenue)',
                   suffix: ' %',
+                  rightMargin: 24,
+                  leftMargin: 56,
                   height: 512,
+                  noOfXTicks: 7,
                   tooltip: '{{data.year}} <b>{{formatNumber y}} %</b>',
                   sources: [
                     {
@@ -416,7 +420,10 @@ export function AllCountries(props: Props) {
                 graphSettings={{
                   graphTitle: 'Total debt service – PPG external debt',
                   suffix: ' %',
+                  rightMargin: 24,
+                  leftMargin: 56,
                   height: 480,
+                  noOfXTicks: 7,
                   tooltip:
                     '{{data.year}}</br><span class="tooltipCircle" style="background-color: #006eb5;"></span><b>{{formatNumber data.[% of revenue]}} %</b></br><span class="tooltipCircle" style="background-color: #5dd4f0;"></span><b>{{formatNumber data.[% of exports]}} %</b>',
                   sources: [
