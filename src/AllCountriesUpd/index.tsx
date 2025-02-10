@@ -420,7 +420,7 @@ export function AllCountries(props: Props) {
                 graphSettings={{
                   graphTitle: 'Total debt service – PPG external debt',
                   suffix: ' %',
-                  rightMargin: 24,
+                  rightMargin: 32,
                   leftMargin: 56,
                   height: 480,
                   noOfXTicks: 7,
