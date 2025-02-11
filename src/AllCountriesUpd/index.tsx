@@ -388,7 +388,7 @@ export function AllCountries(props: Props) {
                   graphTitle: 'Net interest payments (% of revenue)',
                   suffix: ' %',
                   rightMargin: 24,
-                  leftMargin: 56,
+                  leftMargin: 64,
                   height: 512,
                   noOfXTicks: 7,
                   tooltip: '{{data.year}} <b>{{formatNumber y}} %</b>',
@@ -424,7 +424,7 @@ export function AllCountries(props: Props) {
                   suffix: ' %',
                   labels: ['% of revenue', '% of exports'],
                   rightMargin: 32,
-                  leftMargin: 56,
+                  leftMargin: 64,
                   height: 480,
                   noOfXTicks: 7,
                   tooltip:
