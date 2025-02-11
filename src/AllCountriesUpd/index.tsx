@@ -156,7 +156,6 @@ export function AllCountries(props: Props) {
       Bonds: 'bonds',
       'Other private': 'other private',
     };
-
     // Transform the data into the desired format, scale to million, and exclude unwanted entries
     return keysToInclude
       .map(label => {
@@ -177,6 +176,9 @@ export function AllCountries(props: Props) {
       })
       .filter(item => item.size !== 0 && item.size !== undefined);
   }, [countryExternalDebt, countryStats]);
+
+  console.log('chart data', countryTdsExternal);
+
   return (
     <>
       <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
@@ -420,6 +422,7 @@ export function AllCountries(props: Props) {
                 graphSettings={{
                   graphTitle: 'Total debt service – PPG external debt',
                   suffix: ' %',
+                  labels: ['% of revenue', '% of exports'],
                   rightMargin: 32,
                   leftMargin: 56,
                   height: 480,

@@ -118,7 +118,7 @@ function AppAllCountriesUpd() {
           note: d.note,
           year: Number(d.year),
         }));
-        // console.log('sourcedata', countriesSourcesData);
+        // console.log('dataToLookAt', tdsExternalCsv);
         setCountriesSources(countriesSourcesData);
         const countryData = groupingsCsv.map((d: any) => ({
           ...d,
@@ -148,13 +148,24 @@ function AppAllCountriesUpd() {
           }));
         const tdsDebtData = tdsExternalCsv
           .filter((d: any) => {
-            return Number(d['%  of revenue']) || Number(d['%  of exports']);
+            const revenue = Number(d['%  of revenue']);
+            const exports = Number(d['%  of exports']);
+            return (
+              (!Number.isNaN(revenue) && revenue !== 0) ||
+              (!Number.isNaN(exports) && exports !== 0)
+            );
           })
           .map((d: any) => ({
             code: d.iso,
             year: Number(d.year),
-            '% of revenue': Number(d['%  of revenue']),
-            '% of exports': Number(d['%  of exports']),
+            '% of revenue':
+              d['%  of revenue'] === null || d['%  of revenue'] === ''
+                ? undefined
+                : Number(d['%  of revenue']),
+            '% of exports':
+              d['%  of exports'] === null || d['%  of exports'] === ''
+                ? undefined
+                : Number(d['%  of exports']),
           }));
         const debtToGdpData = ggDebtCsv
           .filter((d: any) => {
